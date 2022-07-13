@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout';
 import Chat from './pages/Chat';
 import Favorites from './pages/Favorites';
