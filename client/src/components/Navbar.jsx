@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Navbar() {
-  return (<>
+  return (
     <nav className="
     relative
     w-full
@@ -37,7 +37,7 @@ export default function Navbar() {
     </button>
     <div className="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent">
     <a className="text-xl text-black" href="#">Navbar</a>
-    {/* <!-- Left links --> */}
+   
     <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
       <li className="nav-item px-2">
         <a className="nav-link active" aria-current="page" href="#">Home</a>
@@ -54,11 +54,11 @@ export default function Navbar() {
         >
       </li>
     </ul>
-    {/* <!-- Left links --> */}
+    
     </div>
-    {/* <!-- Collapsible wrapper --> */}
+   
     </div>
       </nav>
-      </>
+      
   )
 }
