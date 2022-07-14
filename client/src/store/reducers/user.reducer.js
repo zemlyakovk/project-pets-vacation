@@ -1,20 +1,12 @@
-import { SET_USER } from '../types'
-import { IUser } from '../../models/models'
-import { PayloadAction } from '@reduxjs/toolkit';
+import { SET_USER } from '../types';
 
-interface userState {
-  isLoading: boolean;
-  value: IUser | {};
-  err: string;
-}
-
-const initState: userState = {
+const initState = {
   isLoading: false,
   value: {},
   err: ''
 }
 
-export default function userReducer(state = initState, action: PayloadAction) {
+export default function userReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
     case `${SET_USER}_START`:

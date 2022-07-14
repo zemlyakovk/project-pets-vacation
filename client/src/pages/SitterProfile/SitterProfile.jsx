@@ -90,6 +90,7 @@ export default function SitterProfile() {
                     Передержка
                   </label>
                 </div>
+                <br />
                 <div className="mb-3">
                   <label htmlFor="priceDay" className="form-label inline-block mb-2 text-gray-700">Цена за сутки</label>
                   <input
@@ -107,6 +108,7 @@ export default function SitterProfile() {
                     Выгул
                   </label>
                 </div>
+                <br />
                 <div className="mb-3">
                   <label htmlFor="priceHour" className="form-label inline-block mb-2 text-gray-700">Цена за час</label>
                   <input
