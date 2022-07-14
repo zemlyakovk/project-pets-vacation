@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
@@ -36,18 +37,34 @@ export default function Navbar() {
     </svg>
     </button>
     <div className="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent">
-    <a className="text-xl text-black" href="#">Navbar</a>
+    <Link className="text-xl text-black" to="#">Navbar</Link>
    
     <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
       <li className="nav-item px-2">
-        <a className="nav-link active" aria-current="page" href="#">Home</a>
+        <Link className="nav-link active" aria-current="page" to="/">Home</Link>
       </li>
       <li className="nav-item pr-2">
-        <a className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="#">Features</a>
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/favorites">Избранное</Link>
       </li>
       <li className="nav-item pr-2">
-        <a className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" href="#">Pricing</a>
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/login">Вход</Link>
       </li>
+      <li className="nav-item pr-2">
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/registration">Регистрация</Link>
+      </li>
+      <li className="nav-item pr-2">
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/profile">Личный кабинет</Link>
+      </li>
+      <li className="nav-item pr-2">
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/chat/:id">Чат</Link>
+      </li>
+      <li className="nav-item pr-2">
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile/new">Стать ситтером</Link>
+      </li>
+      <li className="nav-item pr-2">
+        <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile">ЛК ситтер</Link>
+      </li>
+    
       <li className="nav-item pr-2">
         <a className="nav-link disabled text-gray-300 p-0"
           >Disabled</a
