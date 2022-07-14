@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.navMain {
+  display: flex;
+  flex-direction: row;
+}
+
+/* .h-screen {
+  flex-direction: start;
+} */
+
+.formCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.formPosition {
+  margin-top: 80px;
+}
+
+.green-logo {
+  background-color: rgb(29, 128, 18);
+}

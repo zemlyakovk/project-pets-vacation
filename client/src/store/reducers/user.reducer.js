@@ -1,4 +1,7 @@
-import { SET_USER } from '../types';
+// import { SET_USER } from '../types';
+
+import { SET_USER } from "../types";
+
 
 const initState = {
   isLoading: false,
@@ -6,7 +9,7 @@ const initState = {
   err: ''
 }
 
-export default function userReducer(state = initState, action) {
+export  function userReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
     case `${SET_USER}_START`:
@@ -39,3 +42,4 @@ export default function userReducer(state = initState, action) {
       return state;
   }
 }
+

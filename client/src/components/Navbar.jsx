@@ -1,7 +1,22 @@
+/* eslint-disable no-lone-blocks */
+/* eslint-disable no-undef */
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { setLogoutData } from '../store/actions/auth.action';
 
 export default function Navbar() {
+
+  const { auth: { id } } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  function logoutHandler(evt) {
+    evt.preventDefault();
+
+    dispatch(setLogoutData());
+
+  }
+
   return (
     <nav className="
     relative
@@ -40,36 +55,53 @@ export default function Navbar() {
           <Link className="text-xl text-black" to="#">Navbar</Link>
 
           <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
-            <li className="nav-item px-2">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/favorites">Избранное</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/login">Вход</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/registration">Регистрация</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/profile">Личный кабинет</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/chat/:id">Чат</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile/new">Стать ситтером</Link>
-            </li>
-            <li className="nav-item pr-2">
-              <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile">ЛК ситтер</Link>
-            </li>
+
+            {id ? <>
+              <li className="nav-item px-2">
+                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              </li>
+
+              <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/favorites">Избранное</Link>
+              </li>
+              <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/profile">Личный кабинет</Link>
+              </li>
+
+              <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/chat/:id">Чат</Link>
+              </li>
+
+              <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile/new">Стать ситтером</Link>
+              </li>
+
+              <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile">ЛК ситтер</Link>
+              </li> </> : <></>
+            }
+            {id ? <></>
+              : <>  <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="login">Вход</Link>
+              </li>
+
+                <li className="nav-item pr-2">
+                  <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="registration">Регистрация</Link>
+                </li></>
+            }
+            {id ? <>
+              <li className="nav-item pr-2">
+                <Link onClick={logoutHandler} className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/login">Выйти</Link>
+              </li></>
+              : <></>
+            }
+
           </ul>
 
         </div>
 
       </div>
     </nav>
-
   )
 }
+
