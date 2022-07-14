@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { IMainPageState } from '../models/models';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from 'react-datepicker';
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
+import { useNavigate } from 'react-router-dom';
 
 //{radioValue: 'Собака', 
 // textValue: '123', 
@@ -12,6 +12,7 @@ import 'react-dadata/dist/react-dadata.css';
 // serviceType: 'Передержка'}
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [valueInput, setValueInput] = useState({ radioValue: '', textValue: '', dateFrom: null, dateTo: null, serviceType: 'Передержка' });
 
   const changeHandler = (event) => {
@@ -19,12 +20,14 @@ export default function MainPage() {
   };
 
   const changeTextHandler = (event) => {
-    setValueInput({ ...valueInput, textValue: event.target.value });
+    console.log(event);
+    setValueInput({ ...valueInput, textValue: event.value });
   };
 
   function submitHandler(e) {
     e.preventDefault();
     console.log(valueInput);
+    navigate('/search', { state: valueInput })
   }
 
   const handleChange = (event) => {
@@ -50,33 +53,25 @@ export default function MainPage() {
           <div className="flex">
             <div className="mb-3 xl:w-96">
               <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
-              <input value={valueInput.textValue} onChange={changeTextHandler} type="text" className="form-control block w-full px-3  py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none relative" id="exampleFormControlInput1" placeholder="Адрес" />
-              {valueInput.textValue ? (<div className="flex absolute">
-                <ul className="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
-                  <li className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">An item</li>
-                  <li className="px-6 py-2 border-b border-gray-200 w-full">A second item</li>
-                  <li className="px-6 py-2 border-b border-gray-200 w-full">A third item</li>
-                </ul>
-              </div>) : (<h1></h1>)}
+              <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
             </div>
           </div>
 
           <div className='flex justify-center max-w-xl h-5 items-baseline'>
-            <h1>С: </h1>
+            <p>С: </p>
             <DatePicker className='form-control block w-60 px-3  py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded
                           transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1'
               selected={valueInput.dateFrom}
-              onChange={(date: Date) => setValueInput({ ...valueInput, dateFrom: date })}
+              onChange={(date) => setValueInput({ ...valueInput, dateFrom: date })}
               selectsStart
               startDate={valueInput.dateFrom}
               endDate={valueInput.dateTo}
             />
-            <h1>По: </h1>
+            <p>По: </p>
             <DatePicker className='form-control block w-60 px-3  py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded
                           transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1'
               selected={valueInput.dateTo}
-              onChange={(date: Date) => setValueInput({ ...valueInput, dateTo: date })}
+              onChange={(date) => setValueInput({ ...valueInput, dateTo: date })}
               selectsEnd
               startDate={valueInput.dateFrom}
               endDate={valueInput.dateTo}
@@ -92,7 +87,6 @@ export default function MainPage() {
             </select>
           </div>
         </div>
-        <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
         <div className='flex justify-center'>
           <button type='submit' className='bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded'>Найти догситтера</button>
         </div>

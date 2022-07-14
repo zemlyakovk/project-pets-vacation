@@ -10,6 +10,7 @@ import Registration from './pages/Registration';
 import SitterCard from './pages/SitterCard';
 import SitterProfile from './pages/SitterProfile/SitterProfile';
 import 'tw-elements';
+import SearchResult from './pages/SearchResult';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<MainPage />} />
+          <Route path='search' element={<SearchResult />} />
           <Route path='users'>
             <Route path='login' element={<Login />} />
             <Route path='registration' element={<Registration />} />
