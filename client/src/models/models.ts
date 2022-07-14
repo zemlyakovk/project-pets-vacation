@@ -5,3 +5,10 @@ export const a = '';
 //   name: string;
 //   email: string;
 // }
+export interface IMainPageState {
+  radioValue: string;
+  textValue: string
+  dateFrom: Date | null;
+  dateTo: Date | null;
+  serviceType: string
+}
