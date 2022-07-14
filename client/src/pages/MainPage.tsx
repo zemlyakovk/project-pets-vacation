@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { IMainPageState } from '../models/models';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from 'react-datepicker';
+import { AddressSuggestions } from 'react-dadata';
+import 'react-dadata/dist/react-dadata.css';
 
 //{radioValue: 'Собака', 
 // textValue: '123', 
@@ -49,7 +51,14 @@ export default function MainPage() {
             <div className="mb-3 xl:w-96">
               <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
               <input value={valueInput.textValue} onChange={changeTextHandler} type="text" className="form-control block w-full px-3  py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1" placeholder="Адрес" />
+                transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none relative" id="exampleFormControlInput1" placeholder="Адрес" />
+              {valueInput.textValue ? (<div className="flex absolute">
+                <ul className="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
+                  <li className="px-6 py-2 border-b border-gray-200 w-full rounded-t-lg">An item</li>
+                  <li className="px-6 py-2 border-b border-gray-200 w-full">A second item</li>
+                  <li className="px-6 py-2 border-b border-gray-200 w-full">A third item</li>
+                </ul>
+              </div>) : (<h1></h1>)}
             </div>
           </div>
 
@@ -83,7 +92,7 @@ export default function MainPage() {
             </select>
           </div>
         </div>
-
+        <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
         <div className='flex justify-center'>
           <button type='submit' className='bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded'>Найти догситтера</button>
         </div>
