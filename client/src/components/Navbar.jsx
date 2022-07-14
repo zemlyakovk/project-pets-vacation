@@ -37,7 +37,7 @@ export default function Navbar() {
     </svg>
     </button>
     <div className="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent">
-    <Link className="text-xl text-black" to="#">Navbar</Link>
+    <Link className="text-xl text-black" to="/">Navbar</Link>
    
     <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
       <li className="nav-item px-2">
