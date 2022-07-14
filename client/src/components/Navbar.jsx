@@ -66,14 +66,11 @@ export default function Navbar() {
       </li>
     
       <li className="nav-item pr-2">
-        <a className="nav-link disabled text-gray-300 p-0"
-          >Disabled</a
-        >
+        <Link className="nav-link disabled text-gray-300 p-0"
+          >Disabled </Link>
       </li>
     </ul>
-    
-    </div>
-   
+    </div> 
     </div>
       </nav>
       
