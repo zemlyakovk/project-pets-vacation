@@ -14,7 +14,7 @@ import SearchResult from './pages/SearchResult';
 
 function App() {
   return (
-    <div>
+    <>
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<MainPage />} />
@@ -33,7 +33,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 
