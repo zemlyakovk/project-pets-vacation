@@ -12,22 +12,22 @@ import 'react-dadata/dist/react-dadata.css';
 // serviceType: 'Передержка'}
 
 export default function MainPage() {
-  const [valueInput, setValueInput] = useState<IMainPageState>({ radioValue: '', textValue: '', dateFrom: null, dateTo: null, serviceType: 'Передержка' });
+  const [valueInput, setValueInput] = useState({ radioValue: '', textValue: '', dateFrom: null, dateTo: null, serviceType: 'Передержка' });
 
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
   };
 
-  const changeTextHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeTextHandler = (event) => {
     setValueInput({ ...valueInput, textValue: event.target.value });
   };
 
-  function submitHandler(e: React.FormEvent<HTMLFormElement>) {
+  function submitHandler(e) {
     e.preventDefault();
     console.log(valueInput);
   }
 
-  const handleChange = (event: any) => {
+  const handleChange = (event) => {
     setValueInput({ ...valueInput, serviceType: event.target.value });
   };
 
