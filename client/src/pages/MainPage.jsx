@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { IMainPageState } from '../models/models';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from 'react-datepicker';
 

@@ -17,7 +17,7 @@
   bg-no-repeat
   bg-center
   bg-contain
-  float-left
+  /* float-left */
   mr-2
   cursor-pointer
 }
