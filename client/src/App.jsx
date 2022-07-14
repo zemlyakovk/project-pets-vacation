@@ -24,7 +24,7 @@ function App() {
   }, [dispatch])
 
   return (
-    <div>
+    <>
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<MainPage />} />
@@ -44,7 +44,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 
