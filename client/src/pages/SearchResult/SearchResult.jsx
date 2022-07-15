@@ -8,7 +8,7 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
-import Icon from "react-multi-date-picker/components/icon"
+import MiniCardSitter from '../MiniCardSitter';
 
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
@@ -27,13 +27,18 @@ function CustomRangeInput({ openCalendar, value }) {
 }
 
 export default function SearchResult() {
-  const { value, error, isLoading } = useSelector((state) => state.search)
+  const { value,
+    // error, 
+    isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
   const { state } = useLocation()
   const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 0, housingType: 'Квартира', pricePerDay: 0, petSyze: '', petAge: '' });
-  // console.log(valueInput.dateFrom, valueInput.dateTo);
+  const [users, setUsers] = useState(value);
+  console.log(value);
+
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
+    dispatch(search(valueInput))
   };
 
   const changeTextHandler = (event) => {
@@ -67,12 +72,13 @@ export default function SearchResult() {
     }
     console.log(valueInput);
   };
-  console.log(isLoading);
+  // console.log(isLoading);
 
   useEffect(() => {
-    console.log(valueInput);
+    // console.log(valueInput);
     dispatch(search(valueInput))
-  }, [state, valueInput])
+    // setUsers(...value)
+  }, [dispatch, state, valueInput])
 
   return (
     <>
@@ -222,6 +228,14 @@ export default function SearchResult() {
             </div>
           </div>
         </form >
+        {isLoading ? (
+          <div className="flex items-center justify-center space-x-2">
+            <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : users?.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
+        }
       </div >
     </>
   )
