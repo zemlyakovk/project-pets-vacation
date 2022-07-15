@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../../store/actions/search.actions';
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from 'react-datepicker';
+// import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from 'react-datepicker';
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
+import DatePicker from 'react-multi-date-picker';
+import Icon from "react-multi-date-picker/components/icon"
+
 
 
 export default function SearchResult() {
@@ -14,13 +17,13 @@ export default function SearchResult() {
   const dispatch = useDispatch();
   const { state } = useLocation()
   const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 0, housingType: 'Квартира', pricePerDay: 0, petSyze: '', petAge: '' });
-  console.log(valueInput.textValue);
+  console.log(valueInput.dateFrom, valueInput.dateTo);
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
   };
 
   const changeTextHandler = (event) => {
-    console.log(event);
+    console.log(event.inputProps);
     setValueInput({ ...valueInput, textValue: event.value });
   };
 
@@ -76,12 +79,25 @@ export default function SearchResult() {
             <div className="flex">
               <div className="mb-3 xl:w-96">
                 <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
-                <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
+                <AddressSuggestions defaultQuery={valueInput.textValue} token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
               </div>
             </div>
 
-            <div className='flex justify-center max-w-xl h-5 items-baseline'>
-              <p>С: </p>
+            <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
+              <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
+              <DatePicker value={valueInput.dateFrom}
+                onChange={(date) => setValueInput({
+                  ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
+                  dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
+                })}
+                multiple={true}
+                numberOfMonths={2}
+                minDate={new Date()}
+                maxDate={new Date().setDate(90)}
+                render={<Icon />}
+                range />
+
+              {/* <p>С: </p>
               <DatePicker className={classes.date} id='exampleFormControlInput1'
                 selected={valueInput.dateFrom}
                 onChange={(date) => setValueInput({ ...valueInput, dateFrom: date })}
@@ -97,7 +113,7 @@ export default function SearchResult() {
                 startDate={valueInput.dateFrom}
                 endDate={valueInput.dateTo}
                 minDate={valueInput.dateFrom}
-              />
+              /> */}
             </div>
 
             <div>

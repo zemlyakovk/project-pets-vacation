@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from 'react-datepicker';
+// import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from 'react-datepicker';
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-multi-date-picker';
+import Icon from "react-multi-date-picker/components/icon"
 
 //{radioValue: 'Собака', 
 // textValue: '123', 
@@ -57,26 +59,19 @@ export default function MainPage() {
             </div>
           </div>
 
-          <div className='flex justify-center max-w-xl h-5 items-baseline'>
-            <p>С: </p>
-            <DatePicker className='form-control block w-60 px-3  py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                          transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1'
-              selected={valueInput.dateFrom}
-              onChange={(date) => setValueInput({ ...valueInput, dateFrom: date })}
-              selectsStart
-              startDate={valueInput.dateFrom}
-              endDate={valueInput.dateTo}
-            />
-            <p>По: </p>
-            <DatePicker className='form-control block w-60 px-3  py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded
-                          transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleFormControlInput1'
-              selected={valueInput.dateTo}
-              onChange={(date) => setValueInput({ ...valueInput, dateTo: date })}
-              selectsEnd
-              startDate={valueInput.dateFrom}
-              endDate={valueInput.dateTo}
-              minDate={valueInput.dateFrom}
-            />
+          <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
+            <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
+            <DatePicker id="date" value={valueInput.dateFrom}
+              onChange={(date) => setValueInput({
+                ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
+                dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
+              })}
+              multiple={true}
+              numberOfMonths={2}
+              minDate={new Date()}
+              maxDate={new Date().setDate(90)}
+              render={<Icon />}
+              range />
           </div>
 
           <div>
