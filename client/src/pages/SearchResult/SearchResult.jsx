@@ -10,20 +10,34 @@ import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
 import Icon from "react-multi-date-picker/components/icon"
 
+// функция для иконки календаря
+function CustomRangeInput({ openCalendar, value }) {
+  let from = value[0] || ""
+  let to = value[1] || ""
 
+  value = from && to ? "from " + from + ", to " + to : from
+
+  return (
+    <input
+      onFocus={openCalendar}
+      value={value}
+      readOnly
+    />
+  )
+}
 
 export default function SearchResult() {
   const { value, error, isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
   const { state } = useLocation()
   const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 0, housingType: 'Квартира', pricePerDay: 0, petSyze: '', petAge: '' });
-  console.log(valueInput.dateFrom, valueInput.dateTo);
+  // console.log(valueInput.dateFrom, valueInput.dateTo);
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
   };
 
   const changeTextHandler = (event) => {
-    console.log(event.inputProps);
+    // console.log(event.inputProps);
     setValueInput({ ...valueInput, textValue: event.value });
   };
 
@@ -32,8 +46,8 @@ export default function SearchResult() {
   };
 
   const hasPetEtcHandler = (e) => {
-    console.log(e.target.checked);
-    console.log(e.target.name);
+    // console.log(e.target.checked);
+    // console.log(e.target.name);
     if (e.target.name === 'has_pet_flag') {
       setValueInput({ ...valueInput, hasPetFlag: !e.target.checked });
     } else if (e.target.name === 'has_child') {
@@ -53,11 +67,12 @@ export default function SearchResult() {
     }
     console.log(valueInput);
   };
+  console.log(isLoading);
 
   useEffect(() => {
-    dispatch(search(state))
-    // console.log(isLoading);
-  }, [])
+    console.log(valueInput);
+    dispatch(search(valueInput))
+  }, [state, valueInput])
 
   return (
     <>
@@ -94,26 +109,8 @@ export default function SearchResult() {
                 numberOfMonths={2}
                 minDate={new Date()}
                 maxDate={new Date().setDate(90)}
-                render={<Icon />}
+                render={<CustomRangeInput />}
                 range />
-
-              {/* <p>С: </p>
-              <DatePicker className={classes.date} id='exampleFormControlInput1'
-                selected={valueInput.dateFrom}
-                onChange={(date) => setValueInput({ ...valueInput, dateFrom: date })}
-                selectsStart
-                startDate={valueInput.dateFrom}
-                endDate={valueInput.dateTo}
-              />
-              <p>По: </p>
-              <DatePicker className={classes.date} id="exampleFormControlInput1"
-                selected={valueInput.dateTo}
-                onChange={(date) => setValueInput({ ...valueInput, dateTo: date })}
-                selectsEnd
-                startDate={valueInput.dateFrom}
-                endDate={valueInput.dateTo}
-                minDate={valueInput.dateFrom}
-              /> */}
             </div>
 
             <div>
