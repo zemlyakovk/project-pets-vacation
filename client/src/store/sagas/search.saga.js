@@ -19,15 +19,15 @@ function* searchWorker(data) {
     })
     // console.log(data.params);
     const result = yield call(getDataFromServer, '/search', data.params)
-
-    // yield put ({
-    //   type: `${SEARCH}__SUCCESS`,
-    //   payload: result
-    // })
+    console.log(result);
+    yield put ({
+      type: `${SEARCH}_SUCCESS`,
+      payload: result
+    })
 
   } catch (err) {
     yield put({
-      type: `${SEARCH}__ERR`,
+      type: `${SEARCH}_ERR`,
       error: err.message
     })
   }
