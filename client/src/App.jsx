@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout';
 import Chat from './pages/Chat';
@@ -10,8 +10,15 @@ import Registration from './pages/Registration';
 import SitterCard from './pages/SitterCard';
 import SitterProfile from './pages/SitterProfile/SitterProfile';
 import 'tw-elements';
+import { useDispatch } from 'react-redux';
+import { setSitter } from './store/actions/sitter.action';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setSitter());
+  }, [dispatch])
+
   return (
     <div>
       <Routes>
