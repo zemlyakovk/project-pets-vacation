@@ -5,7 +5,6 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-multi-date-picker';
-import Icon from "react-multi-date-picker/components/icon"
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../store/actions/search.actions';
 

@@ -60,13 +60,14 @@ router.post('/', async (req, res) => {
         if (serviceType === 'Передержка') {
           const requestUser = resultArrSitterID.map((el) => User.findAll({ include: { model: Sitter, where: { dog_flag: true, id: el, staying: true, active: true } } }).then())
           sitters = await Promise.all(requestUser); // sitters: массив ситтеров из бд, которые могут в эти даты
+          console.log('ajdsf;lkjsdflksdjf', sitters);
           res.json(sitters)
         } else {
           const requestUser = resultArrSitterID.map((el) => User.findAll({ include: { model: Sitter, where: { dog_flag: true, id: el, staying: false, active: true } } }).then())
           sitters = await Promise.all(requestUser); // sitters: массив ситтеров из бд, которые могут в эти даты
           res.json(sitters)
         }
-        console.log(sitters);
+        // console.log(sitters);
       } else if (radioValue === 'Кошка') {
         if (serviceType === 'Передержка') {
           const requestUser = resultArrSitterID.map((el) => User.findAll({ include: { model: Sitter, where: { cat_flag: true, id: el, staying: true, active: true } } }).then())
