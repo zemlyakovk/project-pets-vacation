@@ -3,8 +3,12 @@ import MiniCardSitter from './MiniCardSitter'
 
 export default function Favorites() {
   return (
-    <div>
+    <div className='flex max-w-4xl'>
+      <div>
       <MiniCardSitter />
+      <MiniCardSitter />
+      </div>
+ 
     </div>
   )
 }
