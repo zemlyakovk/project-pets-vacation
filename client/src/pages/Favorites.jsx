@@ -1,5 +1,6 @@
 import React from 'react'
 import MiniCardSitter from './MiniCardSitter'
+import StarRating from './StarRating'
 
 export default function Favorites() {
   return (
@@ -7,7 +8,7 @@ export default function Favorites() {
     
       <MiniCardSitter />
       <MiniCardSitter />
-    
+      <StarRating />
  
     </div>
   )

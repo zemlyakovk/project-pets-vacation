@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const sittersRouter = require('./routes/sitters.route');
 const search = require('./routes/search.router');
+const reviews = require('./routes/reviews.router');
 
 const { User } = require("./db/models");
 
@@ -138,6 +139,8 @@ app.get("/logout", async (req, res) => {
 
 app.use('/sitters', sittersRouter);
 app.use('/search', search);
+app.use('/reviews', reviews);
+
 
 app.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}!`);
