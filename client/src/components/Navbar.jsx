@@ -11,11 +11,11 @@ export default function Navbar() {
   const dispatch = useDispatch();
 
   function logoutHandler(evt) {
-    evt.preventDefault();
-
+    
     dispatch(setLogoutData());
-
   }
+
+
 
   return (
     <nav className="
@@ -69,8 +69,12 @@ export default function Navbar() {
               </li>
 
               <li className="nav-item pr-2">
-                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/chat/:id">Чат</Link>
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/chat">Чат</Link>
               </li>
+
+              {/* <li className="nav-item pr-2">
+                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/chat/:id">Чат</Link>
+              </li> */}
 
               <li className="nav-item pr-2">
                 <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile/new">Стать ситтером</Link>
@@ -91,7 +95,7 @@ export default function Navbar() {
             }
             {id ? <>
               <li className="nav-item pr-2">
-                <Link onClick={logoutHandler} className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="users/login">Выйти</Link>
+                <Link  to="/" onClick={logoutHandler} className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" >Выйти</Link>
               </li></>
               : <></>
             }

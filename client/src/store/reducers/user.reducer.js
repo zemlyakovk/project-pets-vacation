@@ -9,7 +9,7 @@ const initState = {
   err: ''
 }
 
-export  function userReducer(state = initState, action) {
+export default function userReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
     case `${SET_USER}_START`:

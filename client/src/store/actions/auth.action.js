@@ -48,7 +48,7 @@ export const setLogoutData = task => async dispatch => {
     dispatch({
       type: SET_LOGOUT_USER,
     });
-
+    
     console.log("result.data", result.data);
   } catch (error) {
     console.log(error);

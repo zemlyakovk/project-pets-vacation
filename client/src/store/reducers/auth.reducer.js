@@ -2,7 +2,7 @@ import { SET_LOGOUT_USER } from "../types/auth.type";
 import { SET_USER_DATA } from "../types/session.type";
 
 
-export function authReducer(state={}, action) {
+export default function authReducer(state={}, action) {
   const {type} = action
   switch (type) {
     case SET_USER_DATA: {

@@ -7,6 +7,8 @@ const path = require("path");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const sittersRouter = require('./routes/sitters.route');
+const search = require('./routes/search.router');
 
 const { User } = require("./db/models");
 
@@ -132,6 +134,9 @@ app.get("/logout", async (req, res) => {
 
   res.sendStatus(200); // делает редирект
 });
+
+app.use('/sitters', sittersRouter);
+app.use('/search', search);
 
 app.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}!`);
