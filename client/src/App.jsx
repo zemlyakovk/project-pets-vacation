@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout';
-import Chat from './pages/Chat';
+import Chat from './components/Chat';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
@@ -22,17 +22,17 @@ function App() {
   useEffect(() => {
     dispatch(getUser())
   }, [dispatch])
-
+ 
   return (
-    <div>
+    <>
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="registration" element={id ? <Navigate to="/" replace={true} /> : <Registration />} />
-            <Route path="login" element={id ? <Navigate to="/" replace={true} /> : <Login />} />
+          <Route path="login" element={id ? <Navigate to="/" replace={true} /> : <Login />} />
           <Route path='search' element={<SearchResult />} />
           <Route path='users'>
-
+            <Route path='chat' element={<Chat />} />
             <Route path='chat/:id' element={<Chat />} />
             <Route path='profile' element={<Profile />} />
             <Route path='favorites' element={<Favorites />} />
@@ -44,7 +44,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 

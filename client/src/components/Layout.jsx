@@ -1,20 +1,22 @@
 //* Основной шаблон
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import Footer from './Footer'
 import Navbar from './Navbar'
 
 export default function Layout() {
   return (
-    <>
+    <div className='page'>
       <header>
         <Navbar />
       </header>
       <main className="formCenter">
         <Outlet />
       </main>
+
       <footer>
-        Footer
+        <Footer />
       </footer>
-    </>
+    </div>
   )
 }

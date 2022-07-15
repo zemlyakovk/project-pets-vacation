@@ -4,11 +4,12 @@ import DatePicker from 'react-datepicker';
 import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-//{radioValue: 'Собака', 
-// textValue: '123', 
-// dateFrom: Wed Jul 06 2022 00:00:00 GMT+0300 (Москва, стандартное время), 
-// dateTo: Wed Jul 13 2022 00:00:00 GMT+0300 (Москва, стандартное время), 
+//{radioValue: 'Собака',
+// textValue: '123',
+// dateFrom: Wed Jul 06 2022 00:00:00 GMT+0300 (Москва, стандартное время),
+// dateTo: Wed Jul 13 2022 00:00:00 GMT+0300 (Москва, стандартное время),
 // serviceType: 'Передержка'}
 
 export default function MainPage() {
@@ -34,8 +35,13 @@ export default function MainPage() {
     setValueInput({ ...valueInput, serviceType: event.target.value });
   };
 
+  const { auth: { id } } = useSelector((state) => state);
+
   return (
-    <div className='container mx-auto'>
+
+
+<>{id ?
+  <div className='container mx-auto'>
       <form onSubmit={submitHandler}>
 
         <div className='flex justify-center'>
@@ -92,5 +98,10 @@ export default function MainPage() {
         </div>
       </form>
     </div>
+  : <></>
+}
+</>
+
+
   )
 }

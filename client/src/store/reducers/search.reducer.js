@@ -1,7 +1,4 @@
-// import { SET_USER } from '../types';
-
-import { SET_USER } from "../types";
-
+import { SEARCH } from '../types';
 
 const initState = {
   isLoading: false,
@@ -9,29 +6,23 @@ const initState = {
   err: ''
 }
 
-export default function userReducer(state = initState, action) {
+export default function searchReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
-    case `${SET_USER}_START`:
+    case `${SEARCH}_START`:
       return {
         ...state,
         isLoading: true,
         err: ''
       };
-    case `${SET_USER}_SUCCESS`:
-      console.log({
-        ...state,
-        value: payload,
-        err: '',
-        isLoading: false
-      });
+    case `${SEARCH}_SUCCESS`:
       return {
         ...state,
         value: payload,
         err: '',
         isLoading: false
       };
-    case `${SET_USER}_ERROR`:
+    case `${SEARCH}_ERROR`:
       return {
         ...state,
         isLoading: false,
@@ -42,4 +33,3 @@ export default function userReducer(state = initState, action) {
       return state;
   }
 }
-
