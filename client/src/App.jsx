@@ -10,7 +10,7 @@ import Registration from './pages/Registration';
 import SitterCard from './pages/SitterCard';
 import SitterProfile from './pages/SitterProfile/SitterProfile';
 import 'tw-elements';
-import SearchResult from './pages/SearchResult';
+import SearchResult from './pages/SearchResult/SearchResult';
 
 function App() {
   return (
