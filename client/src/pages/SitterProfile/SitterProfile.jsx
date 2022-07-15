@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'
 import classes from './SitterProfile.module.css'
 import { MultiSelect } from "react-multi-select-component";
@@ -11,14 +11,26 @@ export default function SitterProfile() {
   const [state, setState] = useState({});
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedSize, setSelectedSize] = useState([]);
-  const [date, setDate] = useState(new Date());
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
-    setState({ ...sitter.value })
+    if (Object.values(sitter.value).length) {
+      setState((prev) => ({ ...prev, ...sitter.value }));
+    }
+    if (sitter.value.Pet_ages) {
+      console.log(sitter.value.Pet_ages);
+      setSelectedAge(sitter.value.Pet_ages.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
+    }
+    if (sitter.value.Pet_sizes) {
+      console.log(sitter.value.Pet_ages);
+      setSelectedSize(sitter.value.Pet_sizes.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
+    }
+    if (sitter.value.Sitter_dates) {
+      setDates(sitter.value.Sitter_dates.map(date => date.aval_date));
+    }
   }, [sitter.value])
 
   function onChangeHendler(event) {
-    console.log(event.target);
     setState((prev) => ({ ...prev, [event.target.name]: event.target.value }))
   }
   function onChangeCheckHendler(event) {
@@ -26,16 +38,16 @@ export default function SitterProfile() {
   }
   //* Для отслкживания изменения множественного выбора возрастов
   useEffect(() => {
-    console.log(selectedAge);
+    setState((prev) => ({ ...prev, Pet_ages: selectedAge.map(el => ({ title: el.value, desc: el.desc })) }))
   }, [selectedAge])
   //* Для отслкживания изменения множественного выбора размеров
   useEffect(() => {
-    console.log(selectedSize);
+    setState((prev) => ({ ...prev, Pet_sizes: selectedSize.map(el => ({ title: el.value, desc: el.desc })) }))
   }, [selectedSize])
-
-  function onSaveHandler() {
-
-  }
+  //* Для отслеживания расписания
+  useEffect(() => {
+    setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
+  }, [dates])
 
   return (
     <>
@@ -44,12 +56,12 @@ export default function SitterProfile() {
           <form method="POST" className='w-[70%] mt-10'>
             <div className="shadow overflow-hidden">
               <div className="px-4 py-5 bg-white sm:p-6">
-                <div className="grid grid-cols-6 gap-6">
-                  <div className="col-span-10">
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="col-span-4">
                     <label className="block text-sm font-medium text-gray-700">Карточка ситтера</label>
                     <hr />
                   </div>
-                  <div className="col-span-10">
+                  <div className="col-span-4">
                     <label htmlFor="personalInfoShort" className="block text-sm font-medium text-gray-700">Краткое описание</label>
                     <textarea name="title"
                       rows={3}
@@ -59,7 +71,7 @@ export default function SitterProfile() {
                       onChange={onChangeHendler}>
                     </textarea>
                   </div>
-                  <div className="col-span-10">
+                  <div className="col-span-4">
                     <label htmlFor="personalInfo" className="block text-sm font-medium text-gray-700">Расскажите о себе</label>
                     <textarea name="desc"
                       rows={6}
@@ -69,11 +81,11 @@ export default function SitterProfile() {
                       onChange={onChangeHendler}>
                     </textarea>
                   </div>
-                  <div className="col-span-10">
+                  <div className="col-span-4">
                     <label className="block text-sm font-medium text-gray-700">Параметры</label>
                     <hr />
                   </div>
-                  <div className="flex col-span-2">
+                  <div className="flex col-span-1">
                     <label className="block text-left">
                       <span className="text-gray-700">Присмотрю за</span>
                       <div className="form-check">
@@ -102,7 +114,7 @@ export default function SitterProfile() {
                       </div>
                     </label>
                   </div>
-                  <div className="flex col-span-2">
+                  <div className="flex col-span-1">
                     <div>
                       <div className="form-check">
                         <input className={classes.checkInput}
@@ -113,7 +125,7 @@ export default function SitterProfile() {
                           onChange={onChangeCheckHendler}
                         />
                         <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheckHasPet" >
-                          Есть собственный питомец
+                          Есть свои питомцы
                         </label>
                       </div>
                       <div className="form-check">
@@ -137,25 +149,7 @@ export default function SitterProfile() {
                     </div>
                   </div>
                   {/* <label className="block text-left col-span-6"> */}
-                  <div className="block text-left col-span-5">
-                    <label className="form-label inline-block mb-2 text-gray-700">Размер питомца</label>
-                    <MultiSelect
-                      options={[{ label: 'Маленький (от 1 до 10 кг)', value: 'Маленький', desc: '(от 1 до 10 кг)' },
-                      { label: 'Средний (от 10 до 30 кг)', value: 'Средний', desc: '(от 10 до 30 кг)' },
-                      { label: 'Большой (от 30 кг)', value: 'Большой', desc: '(от 30 кг)' },
-                      ]}
-                      value={selectedSize}
-                      onChange={setSelectedSize}
-                      disableSearch={true}
-                      overrideStrings={{
-                        "allItemsAreSelected": "Выбраны все размеры",
-                        "selectAll": "Выбрать все",
-                        "selectAllFiltered": "Выбрать все",
-                        "selectSomeItems": "Выберите размеры",
-                      }}
-                    />
-                  </div>
-                  <div className="flex col-span-2">
+                  <div className="flex col-span-1">
                     <div>
                       <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Опыт присмотра (лет)</label>
                       <input
@@ -168,14 +162,14 @@ export default function SitterProfile() {
                       />
                     </div>
                   </div>
-                  <div className="text-left col-span-2">
+                  <div className="text-left col-span-1">
                     <label className="form-label inline-block mb-2 text-gray-700">Тип жилья</label>
                     <select className={classes.formControl} name="housing_type" value={state.housing_type} onChange={onChangeHendler}>
                       <option value="Квартира">Квартира</option>
                       <option value="Частный дом">Частный дом</option>
                     </select>
                   </div>
-                  <div className="text-left col-span-5">
+                  <div className="text-left col-span-2">
                     <label className="form-label inline-block mb-2 text-gray-700">Возраст питомца</label>
                     <MultiSelect
                       options={[{ label: 'Щенок (до 1 года)', value: 'Щенок', desc: '(до 1 года)' },
@@ -193,7 +187,25 @@ export default function SitterProfile() {
                       }}
                     />
                   </div>
-                  <div className='col-span-3'>
+                  <div className="text-left col-span-2">
+                    <label className="form-label inline-block mb-2 text-gray-700">Размер питомца</label>
+                    <MultiSelect
+                      options={[{ label: 'Маленький (от 1 до 10 кг)', value: 'Маленький', desc: '(от 1 до 10 кг)' },
+                      { label: 'Средний (от 10 до 30 кг)', value: 'Средний', desc: '(от 10 до 30 кг)' },
+                      { label: 'Большой (от 30 кг)', value: 'Большой', desc: '(от 30 кг)' },
+                      ]}
+                      value={selectedSize}
+                      onChange={setSelectedSize}
+                      disableSearch={true}
+                      overrideStrings={{
+                        "allItemsAreSelected": "Выбраны все размеры",
+                        "selectAll": "Выбрать все",
+                        "selectAllFiltered": "Выбрать все",
+                        "selectSomeItems": "Выберите размеры",
+                      }}
+                    />
+                  </div>
+                  <div className='col-span-2'>
                     <div className="form-check col-span-3">
                       <input className={classes.checkInput}
                         type="checkbox"
@@ -219,7 +231,7 @@ export default function SitterProfile() {
                       />
                     </div>
                   </div>
-                  <div className='col-span-3'>
+                  <div className='col-span-2'>
                     <div className="form-check col-span-3">
                       <input className={classes.checkInput}
                         type="checkbox"
@@ -244,20 +256,27 @@ export default function SitterProfile() {
                       />
                     </div>
                   </div>
-                  <DatePicker value={date}
-                    onChange={setDate}
-                    multiple={true}
-                    numberOfMonths={2}
-                    minDate={new Date()}
-                    maxDate={new Date().setDate(90)}
-                    render={<Icon />}
-                    plugins={[
-                      <DatePanel />
-                    ]} />
+                  <div className='col-span-4 flex items-center'>
+                    <DatePicker value={dates}
+                      id="schedule"
+                      onChange={setDates}
+                      multiple={true}
+                      numberOfMonths={2}
+                      minDate={new Date()}
+                      maxDate={new Date().setDate(90)}
+                      render={<Icon />}
+                      format={"YYYY-MM-DD"}
+                      plugins={[
+                        <DatePanel />
+                      ]} />
+                    <label className="form-check-label inline-block text-gray-800" htmlFor="schedule">
+                      Настройте свое расписание
+                    </label>
+                  </div>
                 </div>
               </div>
               <div className="px-4 py-3  text-right sm:px-6">
-                <button onClick={onSaveHandler} type="submit" className={classes.button}>Сохранить</button>
+                <button type="submit" className={classes.button}>Сохранить</button>
               </div>
             </div>
           </form >
