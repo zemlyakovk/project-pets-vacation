@@ -1,7 +1,10 @@
 import React from 'react'
+import MiniCardSitter from './MiniCardSitter'
 
 export default function Favorites() {
   return (
-    <div>Favorites</div>
+    <div>
+      <MiniCardSitter />
+    </div>
   )
 }
