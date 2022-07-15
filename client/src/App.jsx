@@ -10,9 +10,11 @@ import Registration from './pages/Registration';
 import SitterCard from './pages/SitterCard';
 import SitterProfile from './pages/SitterProfile/SitterProfile';
 import 'tw-elements';
-import SearchResult from './pages/SearchResult';
+import SearchResult from './pages/SearchResult/SearchResult';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/actions/auth.action';
+import { setSitter } from './store/actions/sitter.action';
+
 
 
 function App() {
@@ -21,8 +23,10 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUser())
-  }, [dispatch])
- 
+    dispatch(setSitter());
+  }, [dispatch, id])
+
+
   return (
     <>
       <Routes>

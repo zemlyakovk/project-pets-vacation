@@ -17,7 +17,7 @@ function* searchWorker(data) {
     yield put ({
       type: `${SEARCH}_START`
     })
-    console.log(data.params);
+    // console.log(data.params);
     const result = yield call(getDataFromServer, '/search', data.params)
 
     // yield put ({
