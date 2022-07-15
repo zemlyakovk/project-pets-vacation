@@ -11,7 +11,7 @@ export default function SitterProfile() {
   const [state, setState] = useState({});
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedSize, setSelectedSize] = useState([]);
-  const [dates, setDates] = useState();
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     if (Object.values(sitter.value).length) {
@@ -25,7 +25,9 @@ export default function SitterProfile() {
       console.log(sitter.value.Pet_ages);
       setSelectedSize(sitter.value.Pet_sizes.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
     }
-
+    if (sitter.value.Sitter_dates) {
+      setDates(sitter.value.Sitter_dates.map(date => date.aval_date));
+    }
   }, [sitter.value])
 
   function onChangeHendler(event) {
@@ -42,10 +44,10 @@ export default function SitterProfile() {
   useEffect(() => {
     setState((prev) => ({ ...prev, Pet_sizes: selectedSize.map(el => ({ title: el.value, desc: el.desc })) }))
   }, [selectedSize])
-
-  function onSaveHandler() {
-
-  }
+  //* Для отслеживания расписания
+  useEffect(() => {
+    setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
+  }, [dates])
 
   return (
     <>
@@ -263,6 +265,7 @@ export default function SitterProfile() {
                       minDate={new Date()}
                       maxDate={new Date().setDate(90)}
                       render={<Icon />}
+                      format={"YYYY-MM-DD"}
                       plugins={[
                         <DatePanel />
                       ]} />
@@ -273,7 +276,7 @@ export default function SitterProfile() {
                 </div>
               </div>
               <div className="px-4 py-3  text-right sm:px-6">
-                <button onClick={onSaveHandler} type="submit" className={classes.button}>Сохранить</button>
+                <button type="submit" className={classes.button}>Сохранить</button>
               </div>
             </div>
           </form >

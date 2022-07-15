@@ -10,12 +10,11 @@ export default function Layout() {
       <header>
         <Navbar />
       </header>
-
-      <main >
+      <main className="formCenter">
         <Outlet />
       </main>
 
-      <footer>    
+      <footer>
         <Footer />
       </footer>
     </div>

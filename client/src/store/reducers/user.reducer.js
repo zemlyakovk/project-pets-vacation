@@ -1,4 +1,7 @@
-import { SET_USER } from '../types';
+// import { SET_USER } from '../types';
+
+import { SET_USER } from "../types";
+
 
 const initState = {
   isLoading: false,
@@ -39,3 +42,4 @@ export default function userReducer(state = initState, action) {
       return state;
   }
 }
+
