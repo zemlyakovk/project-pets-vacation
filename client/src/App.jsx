@@ -12,6 +12,7 @@ import SitterProfile from './pages/SitterProfile/SitterProfile';
 import 'tw-elements';
 import { useDispatch } from 'react-redux';
 import { setSitter } from './store/actions/sitter.action';
+import SearchResult from './pages/SearchResult';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,10 +21,11 @@ function App() {
   }, [dispatch])
 
   return (
-    <div>
+    <>
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<MainPage />} />
+          <Route path='search' element={<SearchResult />} />
           <Route path='users'>
             <Route path='login' element={<Login />} />
             <Route path='registration' element={<Registration />} />
@@ -38,7 +40,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }
 

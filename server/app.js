@@ -7,6 +7,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const sessionConfig = require('./sessionConfig');
 const sittersRouter = require('./routes/sitters.route');
+const search = require('./routes/search.router');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/sitters', sittersRouter);
+app.use('/search', search);
 
 app.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}!`);
