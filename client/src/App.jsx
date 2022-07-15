@@ -12,7 +12,8 @@ import SitterProfile from './pages/SitterProfile/SitterProfile';
 import 'tw-elements';
 import { useDispatch } from 'react-redux';
 import { setSitter } from './store/actions/sitter.action';
-import SearchResult from './pages/SearchResult';
+import SearchResult from './pages/SearchResult/SearchResult';
+
 
 function App() {
   const dispatch = useDispatch();
