@@ -8,6 +8,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const sittersRouter = require('./routes/sitters.route');
+const usersRouter = require('./routes/users.route');
 const search = require('./routes/search.router');
 
 const { User } = require("./db/models");
@@ -87,7 +88,7 @@ app.post("/registration", async (req, res) => {
     req.session.userId = newUser.id; // добавляем в сессию айди
     req.session.email = newUser.first_name;
     console.log("req.session.userId", req.session.userId);
-    res.json({ id: req.session.userId, email: req.session.email, first_name: req.session.first_name });
+    res.json(newUser);
   } catch (error) {
     console.log(error);
   }
@@ -120,12 +121,11 @@ app.post("/login", async (req, res) => {
 
     console.log("user.name", user.name);
 
-    res.json({ id: req.session.userId, email: req.session.email, name: req.session.name });
+    res.json(user);
 
     // добавляем в сессию айди нового юзер
   } catch (error) {
     console.log(error);
-    res.redirect("/");
   }
 });
 
@@ -138,6 +138,7 @@ app.get("/logout", async (req, res) => {
 
 app.use('/sitters', sittersRouter);
 app.use('/search', search);
+app.use('/users', usersRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}!`);
