@@ -22,7 +22,7 @@ function App() {
   const { auth: { id } } = useSelector((state) => state);
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getUser())
+    dispatch(getUser());
     dispatch(setSitter());
   }, [dispatch, id])
 

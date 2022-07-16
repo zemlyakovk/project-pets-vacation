@@ -5,7 +5,7 @@ import { SET_SITTER } from '../types';
 
 async function getSitterFromServer(url) {
   const response = await axios.get(url);
-
+  console.log(response);
   if (response.data) {
     return response.data;
   } else {

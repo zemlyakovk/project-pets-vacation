@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import classes from './SitterProfile.module.css'
 import { MultiSelect } from "react-multi-select-component";
 import DatePicker from 'react-multi-date-picker';
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import Icon from "react-multi-date-picker/components/icon"
+import axios from '../../axios/axios';
+import { setSitter } from '../../store/actions/sitter.action';
 
 export default function SitterProfile() {
   const { sitter } = useSelector(state => state);
@@ -12,6 +14,7 @@ export default function SitterProfile() {
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedSize, setSelectedSize] = useState([]);
   const [dates, setDates] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (Object.values(sitter.value).length) {
@@ -48,12 +51,28 @@ export default function SitterProfile() {
   useEffect(() => {
     setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
   }, [dates])
+  //! Сделать обработчик ошибок
+  async function onSubmitHandler(event) {
+    event.preventDefault();
+    try {
+      if (state.id) {
+        await axios.patch(`/sitters/${state.id}`, state);
+      } else {
+        console.log('pfikb');
+        await axios.post('/sitters/new', state);
+        dispatch(setSitter());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  }
 
   return (
     <>
       {!sitter.isLoading &&
         <div className="mt-10 flex justify-center ">
-          <form method="POST" className='w-[70%] mt-10'>
+          <form onSubmit={onSubmitHandler} method="POST" className='w-[70%] mt-10'>
             <div className="shadow overflow-hidden">
               <div className="px-4 py-5 bg-white sm:p-6">
                 <div className="grid grid-cols-4 gap-4">
