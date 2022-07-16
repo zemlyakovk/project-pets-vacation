@@ -43,6 +43,15 @@ module.exports = (sequelize, DataTypes) => {
     profile_photo: {
       type: DataTypes.STRING,
     },
+    address: {
+      type: DataTypes.STRING(1000),
+    },
+    latitude: {
+      type: DataTypes.FLOAT,
+    },
+    longitude: {
+      type: DataTypes.FLOAT,
+    },
   }, {
     sequelize,
     modelName: 'User',
