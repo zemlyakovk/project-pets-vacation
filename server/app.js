@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const sittersRouter = require('./routes/sitters.route');
 const usersRouter = require('./routes/users.route');
 const search = require('./routes/search.router');
+const reviews = require('./routes/reviews.router');
 
 const { User } = require("./db/models");
 
@@ -138,6 +139,8 @@ app.get("/logout", async (req, res) => {
 
 app.use('/sitters', sittersRouter);
 app.use('/search', search);
+app.use('/reviews', reviews);
+
 app.use('/users', usersRouter)
 
 app.listen(PORT, () => {
