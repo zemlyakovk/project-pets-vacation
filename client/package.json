@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3100/",
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
@@ -16,6 +17,7 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
     "react": "^18.2.0",
+    "react-avatar-editor": "^13.0.0",
     "react-dadata": "^2.21.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
@@ -26,6 +28,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-select-search": "^3.0.10",
+    "react-yandex-maps": "^4.6.0",
     "redux": "^4.2.0",
     "redux-saga": "^1.1.3",
     "tw-elements": "^1.0.0-alpha12",
