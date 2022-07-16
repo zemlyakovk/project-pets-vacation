@@ -8,7 +8,7 @@ export default function Favorites() {
     
       <MiniCardSitter />
       <MiniCardSitter />
-      <StarRating />
+     
  
     </div>
   )
