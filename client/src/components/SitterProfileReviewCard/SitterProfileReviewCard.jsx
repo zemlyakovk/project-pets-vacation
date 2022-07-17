@@ -2,16 +2,16 @@ import React from 'react'
 
 export default function SitterProfileReviewCard() {
 
-        
+
 
 
 
 
 
   return (
-    <div class="flex justify-center mt-4">
+    <div className="flex justify-center mt-4">
 
-    <div class="rounded-lg shadow-lg bg-white w-[600px]">
+    <div className="rounded-lg shadow-lg bg-white w-[600px]">
       <div className='flex flex-row mt-2 ml-4'>
       <a href="#!" className='mt-5'>
         <img class="rounded-full w-60" src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp " alt=""/>

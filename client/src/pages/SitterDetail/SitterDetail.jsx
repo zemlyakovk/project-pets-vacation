@@ -1,16 +1,16 @@
 import React from 'react'
 import SitterProfileCard from '../../components/SitterProfileCard/SitterProfileCard'
-import SitterProfileReviewCard from '../../components/SitterProfileReviewCard/SitterProfileReviewCard'
+import SitterProfileList from '../../components/SitterProfileList/SitterProfileList'
 
 export default function SitterDetail() {
   return (
     <div className='flex flex-row'>
-      <div className='w-[290px]'>
       <SitterProfileCard />
-      </div>
-      <div>
-        <SitterProfileReviewCard />
-      </div>
+     
+      
+   
+      <SitterProfileList />
+      
     </div>
   )
 }
