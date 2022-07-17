@@ -1,16 +1,31 @@
 import { useRef } from 'react';
 import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps';
+import axios from 'axios';
 
-export default function ModalMap({ map, setMap }) {
-  const maState = {
-    center: [55.751574, 37.573856],
-    zoom: 10
-
-  }
+export default function ModalMap({ map, setMap, setAddress }) {
   const mapRef = useRef();
 
   function onCloseHendler() {
-    setMap({ ...map, show: false })
+    setMap((prev) => ({ ...prev, show: false }))
+  }
+  // ! Сделать обработчик ошибок
+  async function saveCoordHandler() {
+    const options = {
+      method: 'POST',
+      data: { lat: map.center[0], lon: map.center[1] },
+      url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Token 0e29acdc44dc991a2276e7b9055396891dfe379f"
+      },
+    };
+    const response = await axios(options);
+    if (response?.data) {
+      setAddress(response.data.suggestions[0]);
+      setMap((prev) => ({ ...prev, show: false }))
+    }
   }
 
   return (
@@ -24,19 +39,25 @@ export default function ModalMap({ map, setMap }) {
           </div>
           <div className='w-[500px] h-[500px]'>
             <YMaps query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
-              <Map defaultState={maState} width='500px' height='500px' instanceRef={mapRef}>
-                <Placemark geometry={[55.684758, 37.738521]} options={{ draggable: true }} />
+              <Map defaultState={{ center: map.center, zoom: map.zoom }} width='500px' height='500px' instanceRef={mapRef}>
                 <Placemark
-                  geometry={[55.661574, 37.573856]}
-                  options={{ draggable: true }}
+                  geometry={map.center}
+                  options={{
+                    draggable: true,
+                    iconLayout: 'default#image',
+                    iconImageHref: require('../../icons8-place-marker-100.png'),
+                    iconImageSize: [42, 42],
+                  }}
+                  // properties={{
+                  //   iconContent: '12'
+                  // }}
                   // Событие change связано с св-вом geometry инстанса метки, 
                   // поэтому onChange работать не будет, придется использовать instanceRef
                   instanceRef={ref => {
                     if (ref) {
                       // По аналогии добавляем обработчик
                       ref.events.add("dragend", function () {
-                        // Используя ссылку на инстанс Линии меняем ее геометрию
-                        console.log(ref.coordinates);
+                        setMap((prev) => ({ ...prev, center: ref.geometry._coordinates }));
                         // polyline.current.geometry.set(0, newCoords);
                       });
                     }
@@ -47,7 +68,7 @@ export default function ModalMap({ map, setMap }) {
             </YMaps>
           </div>
           <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-            <button type="button"
+            <button type="button" onClick={saveCoordHandler}
               className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
               Сохранить
             </button>
