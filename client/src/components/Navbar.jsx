@@ -11,7 +11,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
 
   function logoutHandler(evt) {
-    
+
     dispatch(setLogoutData());
   }
 
@@ -95,7 +95,7 @@ export default function Navbar() {
             }
             {id ? <>
               <li className="nav-item pr-2">
-                <Link  to="/" onClick={logoutHandler} className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" >Выйти</Link>
+                <Link to="/" onClick={logoutHandler} className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" >Выйти</Link>
               </li></>
               : <></>
             }

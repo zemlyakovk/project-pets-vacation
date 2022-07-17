@@ -8,6 +8,7 @@ import Icon from "react-multi-date-picker/components/icon"
 import axios from '../../axios/axios';
 import { setSitter } from '../../store/actions/sitter.action';
 import { AddressSuggestions } from 'react-dadata';
+import ModalMap from '../../components/ModalMap/ModalMap';
 
 export default function SitterProfile() {
   const { sitter } = useSelector(state => state);
@@ -17,6 +18,11 @@ export default function SitterProfile() {
   const [dates, setDates] = useState([]);
   const [address, setAddress] = useState();
   const dispatch = useDispatch();
+
+  const [map, setMap] = useState({
+    show: false
+  });
+
 
   useEffect(() => {
     setState((prev) => ({ ...prev, ...sitter.value }));
@@ -89,6 +95,11 @@ export default function SitterProfile() {
     }
   }, [address])
 
+  function showMapHandler() {
+    const center = address.value ? [address.data.geo_lat, address.data.geo_lon] : [55.75396, 37.620393];
+    setMap((prev) => ({ ...prev, show: true, center, zoom: 10 }))
+  }
+
   return (
     <>
       {!sitter.isLoading &&
@@ -122,7 +133,7 @@ export default function SitterProfile() {
                     </textarea>
                   </div>
                   <div className="col-span-4">
-                    <label htmlFor="street-address" className="block text-sm font-medium text-gray-700">Адрес</label>
+                    <label htmlFor="street-address" className="block text-sm font-medium text-gray-700">Адрес передержки</label>
                     {
                       state.Address &&
                       <AddressSuggestions
@@ -155,6 +166,9 @@ export default function SitterProfile() {
                         value={address}
                         onChange={setAddress} />
                     }
+                  </div>
+                  <div className="px-4 py-3  text-right sm:px-6 col-end-5 col-span-2">
+                    <button type='button' className={classes.button} onClick={showMapHandler}>Указать на карте</button>
                   </div>
                   <div className="col-span-4">
                     <label className="block text-sm font-medium text-gray-700">Параметры</label>
@@ -356,6 +370,9 @@ export default function SitterProfile() {
             </div>
           </form >
         </div >
+      }
+      {
+        map.show && <ModalMap map={map} setMap={setMap} setAddress={setAddress} />
       }
     </>
   )
