@@ -12,7 +12,7 @@ const usersRouter = require('./routes/users.route');
 const search = require('./routes/search.router');
 const reviews = require('./routes/reviews.router');
 
-const { User } = require("./db/models");
+const { User, Address } = require("./db/models");
 
 const app = express();
 
@@ -63,8 +63,21 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/login/user", async (req, res) => {
   try {
     if (req.session.userId) {
-      const user = await User.findByPk(req.session.userId);
+      const user = await User.findOne({
+        where: {
+          id: req.session.userId
+        },
+        include: {
+          model: Address,
+          attributes: [
+            'address', 'zip_code', 'region', 'district', 'city', 'settlement', 'street', 'latitude', 'longitude', 'area'
+          ]
+        }
+      });
       if (user) {
+        if (!user.Address) {
+          user.Address = {};
+        }
         return res.json(user);
       }
     }
@@ -104,6 +117,13 @@ app.post("/login", async (req, res) => {
       where: {
         email,
       },
+      include: {
+        model: Address,
+        attributes: [
+          'address', 'zip_code', 'region', 'district', 'city', 'settlement', 'street', 'latitude', 'longitude'
+        ]
+      }
+      ,
     });
 
     if (!user) {
