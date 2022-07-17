@@ -32,9 +32,10 @@ export default function SearchResult() {
     isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
   const { state } = useLocation()
-  const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 0, housingType: 'Квартира', pricePerDay: 0, petSyze: '', petAge: '' });
+  const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: true, hasChild: true, supervision: true, experience: 0, housingType: 'Квартира', pricePerDay: 0, petSyze: '', petAge: '' });
   const [users, setUsers] = useState(value);
-  console.log(value);
+  // console.log(value);
+  // console.log(users);
 
   const maState = {
     center: [55.751574, 37.573856],
@@ -59,11 +60,12 @@ export default function SearchResult() {
     // console.log(e.target.checked);
     // console.log(e.target.name);
     if (e.target.name === 'has_pet_flag') {
-      setValueInput({ ...valueInput, hasPetFlag: !e.target.checked });
+      setValueInput((prev) => ({ ...prev, hasPetFlag: !prev.hasPetFlag }));
+      console.log(valueInput.hasPetFlag);
     } else if (e.target.name === 'has_child') {
-      setValueInput({ ...valueInput, hasChild: e.target.checked });
+      setValueInput((prev) => ({ ...prev, hasChild: !prev.hasChild }));
     } else if (e.target.name === 'supervision_24') {
-      setValueInput({ ...valueInput, hasChild: e.target.checked });
+      setValueInput((prev) => ({ ...prev, supervision: !prev.supervision }));
     } else if (e.target.name === 'housing_type') {
       setValueInput({ ...valueInput, housingType: e.target.value });
     } else if (e.target.name === 'pet_size') {
@@ -82,7 +84,9 @@ export default function SearchResult() {
   useEffect(() => {
     // console.log(valueInput);
     dispatch(search(valueInput))
-    // setUsers(...value)
+    // setValueInput((prev) => ({ ...prev, ...value }));
+    // setUsers((prev) => ([...value]));
+
   }, [dispatch, state, valueInput])
 
   return (
@@ -143,19 +147,19 @@ export default function SearchResult() {
                 <div className="flex col-span-2">
                   <div>
                     <div className="form-check">
-                      <input className={classes.checkInput} type="checkbox" value='' onChange={hasPetEtcHandler} id="flexCheckHasPet" name="has_pet_flag" />
+                      <input className={classes.checkInput} checked={!valueInput.hasPetFlag} type="checkbox" value='' onChange={hasPetEtcHandler} id="flexCheckHasPet" name="has_pet_flag" />
                       <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheckHasPet">
                         Есть собственный питомец
                       </label>
                     </div>
                     <div className="form-check">
-                      <input className={classes.checkInput} type="checkbox" value="" onChange={hasPetEtcHandler} id="flexCheckHasChild" name="has_child" />
+                      <input className={classes.checkInput} checked={!valueInput.hasChild} type="checkbox" value="" onChange={hasPetEtcHandler} id="flexCheckHasChild" name="has_child" />
                       <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheckHasChild">
                         Есть дети
                       </label>
                     </div>
                     <div className="form-check">
-                      <input className={classes.checkInput} type="checkbox" value="" onChange={hasPetEtcHandler} id="flexCheck24" name="supervision_24" />
+                      <input className={classes.checkInput} checked={!valueInput.supervision} type="checkbox" value="" onChange={hasPetEtcHandler} id="flexCheck24" name="supervision_24" />
                       <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheck24">
                         Постоянный присмотр
                       </label>
@@ -239,7 +243,8 @@ export default function SearchResult() {
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-        ) : users?.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
+        ) : //MiniCardSitter()
+          users.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
         }
       </div >
       <YMaps>
