@@ -6,14 +6,8 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn('Users', 'address', {
-      type: Sequelize.STRING(1000),
-    });
-    await queryInterface.addColumn('Users', 'latitude', {
-      type: Sequelize.FLOAT,
-    });
-    await queryInterface.addColumn('Users', 'longitude', {
-      type: Sequelize.FLOAT,
+    await queryInterface.addColumn('Addresses', 'area', {
+      type: Sequelize.STRING,
     });
   },
 

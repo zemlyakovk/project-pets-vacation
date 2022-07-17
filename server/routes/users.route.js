@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../db/models');
+const { User, Address } = require('../db/models');
 
 router.patch('/:id', async (req, res) => {
   const {
@@ -11,9 +11,7 @@ router.patch('/:id', async (req, res) => {
     phone,
     age,
     id,
-    address,
-    latitude,
-    longitude } = req.body;
+    Address: Addresses } = req.body;
   try {
     await User.update(
       {
@@ -24,14 +22,36 @@ router.patch('/:id', async (req, res) => {
         desc,
         phone,
         age,
-        address,
-        latitude,
-        longitude,
       },
       {
         where: { id }
       }
     )
+    if (Addresses?.address) {
+      if (Addresses?.address) {
+        const { address, zip_code, region, district, city, settlement, street, latitude, longitude, area } = Addresses;
+        const [newAddress, created] = await Address.findOrCreate({
+          where: {
+            user_id: id
+          },
+          defaults: {
+            address, zip_code, region, district, city, settlement, street, latitude, longitude, area
+          }
+        })
+        if (!created) {
+          await Address.update(
+            {
+              address, zip_code, region, district, city, settlement, street, latitude, longitude, area
+            },
+            {
+              where: {
+                user_id: id
+              }
+            }
+          )
+        }
+      }
+    }
     return res.sendStatus(200);
   } catch (error) {
     console.log(error);

@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
 const {
-  Sitter, Pet_size, Pet_age, Sitter_date, Sitter_pet_age, Sitter_pet_size
+  Sitter, Pet_size, Pet_age, Sitter_date, Sitter_pet_age, Sitter_pet_size, Address, User
 } = require('../db/models');
 const sitter = require('../db/models/sitter');
+const user = require('../db/models/user');
 
 //* Получение данных ситтера
 router.get('/profile', async (req, res) => {
@@ -11,7 +12,7 @@ router.get('/profile', async (req, res) => {
     if (req.session.userId) {
       const sitter = await Sitter.findOne({
         where: {
-          user_id: 2,
+          user_id: req.session.userId,
         },
         attributes: {
           exclude: ['createdAt', 'updatedAt'],
@@ -29,8 +30,30 @@ router.get('/profile', async (req, res) => {
         {
           model: Sitter_date,
           attributes: ['aval_date'],
-        }],
+        },
+        {
+          model: Address,
+          attributes: [
+            'address', 'zip_code', 'region', 'district', 'city', 'settlement', 'street', 'latitude', 'longitude', 'area'
+          ]
+        }
+        ],
       });
+      if (!sitter?.Address && sitter) {
+        console.log('Ytn sitters');
+        const user = await User.findOne({
+          where: {
+            id: sitter.user_id
+          },
+          include: {
+            model: Address,
+            attributes: [
+              'address', 'zip_code', 'region', 'district', 'city', 'settlement', 'street', 'latitude', 'longitude', 'area'
+            ]
+          }
+        })
+        sitter.Address = user.Address ? user.Address : {};
+      }
       return res.status(200).json(sitter);
     }
     return res.json({});
@@ -56,7 +79,8 @@ router.post('/new', async (req, res) => {
     staying,
     Pet_ages,
     Pet_sizes,
-    Sitter_dates
+    Sitter_dates,
+    Address: Addresses
   } = req.body;
   try {
     const newSitter = await Sitter.create({
@@ -99,6 +123,12 @@ router.post('/new', async (req, res) => {
     if (Sitter_dates.length > 0) {
       await Sitter_date.bulkCreate(Sitter_dates.map((date) => ({ aval_date: new Date(date.aval_date), sitter_id: newSitter.id })));
     }
+    if (Addresses?.address) {
+      const { address, zip_code, region, district, city, settlement, street, latitude, longitude, area } = Addresses;
+      await Address.create({
+        address, zip_code, region, district, city, settlement, street, latitude, longitude, area, sitter_id: newSitter.id
+      })
+    }
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
@@ -123,7 +153,8 @@ router.patch('/:id', async (req, res) => {
     staying,
     Pet_ages,
     Pet_sizes,
-    Sitter_dates
+    Sitter_dates,
+    Addresses
   } = req.body;
   try {
     await Sitter.update({
@@ -183,6 +214,27 @@ router.patch('/:id', async (req, res) => {
         }
       })
       await Sitter_date.bulkCreate(Sitter_dates.map((date) => ({ aval_date: new Date(date.aval_date), sitter_id: sitter.id })));
+    }
+    if (Addresses?.address) {
+      const { address, zip_code, region, district, city, settlement, street, latitude, longitude } = Addresses;
+      const [newAddress, created] = await Address.findOrCreate({
+        where: {
+          sitter_id: sitter.id
+        },
+        defaults: {
+          address, zip_code, region, district, city, settlement, street, latitude, longitude, area
+        }
+      })
+      if (!created) {
+        await Address.update(
+          {
+            address, zip_code, region, district, city, settlement, street, latitude, longitude, area
+          },
+          {
+            sitter_id: sitter.id
+          }
+        )
+      }
     }
     res.sendStatus(200);
   } catch (error) {

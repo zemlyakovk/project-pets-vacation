@@ -38,6 +38,7 @@ export default function Profile() {
 
   async function onSubmitHandler(event) {
     event.preventDefault();
+    console.log(state.Address);
     try {
       await axios.patch(`/users/${state.id}`, state);
       dispatch({
@@ -69,7 +70,22 @@ export default function Profile() {
 
   useEffect(() => {
     if (address) {
-      setState((prev) => ({ ...prev, address: address.value, latitude: address.data.geo_lat, longitude: address.data.geo_lon }))
+      setState((prev) => ({
+        ...prev,
+        Address: {
+          address: address.value,
+          area: address.data.area_with_type,
+          region: address.data.region_with_type,
+          district: address.data.city_district_with_type,
+          city: address.data.city_with_type,
+          settlement: address.data.settlement_with_type,
+          street: address.data.street_with_type,
+          zip_code: address.data.postal_code,
+          latitude: address.data.geo_lat,
+          longitude: address.data.geo_lon
+
+        }
+      }))
     }
 
   }, [address])
@@ -124,7 +140,7 @@ export default function Profile() {
                 <div className="col-span-6">
                   <label htmlFor="street-address" className="block text-sm font-medium text-gray-700">Адрес</label>
                   {
-                    state.address &&
+                    state.Address &&
                     <AddressSuggestions
                       inputProps={{
                         placeholder: "Введите город, район или точный адрес",
@@ -135,7 +151,7 @@ export default function Profile() {
                       filterFromBound='city'
                       filterToBound='house'
                       token="0e29acdc44dc991a2276e7b9055396891dfe379f"
-                      defaultQuery={state.address}
+                      defaultQuery={state.Address.address}
                       value={address}
                       onChange={setAddress} />
                   }

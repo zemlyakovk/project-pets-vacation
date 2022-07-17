@@ -7,6 +7,7 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import Icon from "react-multi-date-picker/components/icon"
 import axios from '../../axios/axios';
 import { setSitter } from '../../store/actions/sitter.action';
+import { AddressSuggestions } from 'react-dadata';
 
 export default function SitterProfile() {
   const { sitter } = useSelector(state => state);
@@ -14,28 +15,26 @@ export default function SitterProfile() {
   const [selectedAge, setSelectedAge] = useState([]);
   const [selectedSize, setSelectedSize] = useState([]);
   const [dates, setDates] = useState([]);
+  const [address, setAddress] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (Object.values(sitter.value).length) {
-      setState((prev) => ({ ...prev, ...sitter.value }));
-    }
+    setState((prev) => ({ ...prev, ...sitter.value }));
     if (sitter.value.Pet_ages) {
-      console.log(sitter.value.Pet_ages);
       setSelectedAge(sitter.value.Pet_ages.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
     }
     if (sitter.value.Pet_sizes) {
-      console.log(sitter.value.Pet_ages);
       setSelectedSize(sitter.value.Pet_sizes.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
     }
     if (sitter.value.Sitter_dates) {
       setDates(sitter.value.Sitter_dates.map(date => date.aval_date));
     }
   }, [sitter.value])
-
+  //* Обработчик для инпутов
   function onChangeHendler(event) {
     setState((prev) => ({ ...prev, [event.target.name]: event.target.value }))
   }
+  //* Обработчик для чекбоксов
   function onChangeCheckHendler(event) {
     setState((prev) => ({ ...prev, [event.target.name]: !prev[event.target.name] }))
   }
@@ -51,6 +50,7 @@ export default function SitterProfile() {
   useEffect(() => {
     setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
   }, [dates])
+
   //! Сделать обработчик ошибок
   async function onSubmitHandler(event) {
     event.preventDefault();
@@ -67,6 +67,27 @@ export default function SitterProfile() {
     }
 
   }
+  //* Обновляем адрес в стейте
+  useEffect(() => {
+    if (address) {
+      setState((prev) => ({
+        ...prev,
+        Address: {
+          address: address.value,
+          area: address.data.area_with_type,
+          region: address.data.region_with_type,
+          district: address.data.city_district_with_type,
+          city: address.data.city_with_type,
+          settlement: address.data.settlement_with_type,
+          street: address.data.street_with_type,
+          zip_code: address.data.postal_code,
+          latitude: address.data.geo_lat,
+          longitude: address.data.geo_lon
+
+        }
+      }))
+    }
+  }, [address])
 
   return (
     <>
@@ -99,6 +120,41 @@ export default function SitterProfile() {
                       value={state.desc}
                       onChange={onChangeHendler}>
                     </textarea>
+                  </div>
+                  <div className="col-span-4">
+                    <label htmlFor="street-address" className="block text-sm font-medium text-gray-700">Адрес</label>
+                    {
+                      state.Address &&
+                      <AddressSuggestions
+                        inputProps={{
+                          placeholder: "Введите город, район или точный адрес",
+                          className: `${classes.formControl}`,
+                          id: 'street-address',
+                          name: 'address',
+                        }}
+                        filterFromBound='city'
+                        filterToBound='house'
+                        token="0e29acdc44dc991a2276e7b9055396891dfe379f"
+                        defaultQuery={state.Address.address}
+                        value={address}
+                        onChange={setAddress} />
+                    }
+                    {
+                      // ! Кастыль с адресом, что бы рисовался когда его нет
+                      !state.Address &&
+                      <AddressSuggestions
+                        inputProps={{
+                          placeholder: "Введите город, район или точный адрес",
+                          className: `${classes.formControl}`,
+                          id: 'street-address',
+                          name: 'address',
+                        }}
+                        filterFromBound='city'
+                        filterToBound='house'
+                        token="0e29acdc44dc991a2276e7b9055396891dfe379f"
+                        value={address}
+                        onChange={setAddress} />
+                    }
                   </div>
                   <div className="col-span-4">
                     <label className="block text-sm font-medium text-gray-700">Параметры</label>
