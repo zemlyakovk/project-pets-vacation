@@ -15,4 +15,4 @@ npx sequelize model:generate --name Address --attributes user_id:integer,address
         }
       })
 
-Проверка DEV
+Проверка DEV 111111
