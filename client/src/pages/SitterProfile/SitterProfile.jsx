@@ -167,7 +167,7 @@ export default function SitterProfile() {
                         onChange={setAddress} />
                     }
                   </div>
-                  <div className="px-4 py-3  text-right sm:px-6 col-end-5 col-span-1">
+                  <div className="px-4 py-3  text-right sm:px-6 col-end-5 col-span-2">
                     <button type='button' className={classes.button} onClick={showMapHandler}>Указать на карте</button>
                   </div>
                   <div className="col-span-4">
