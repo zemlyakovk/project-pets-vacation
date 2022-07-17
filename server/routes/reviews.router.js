@@ -10,5 +10,11 @@ router.post('/', async (req, res) => {
   })
 });
 
+router.get('/', async (req, res) => {
+  const data = await Reviews.findAll({where:{sitter_id: req.query.id},include: {
+    model: User,
+  },},{raw: true})
+  res.json(data)
+})
 
 module.exports = router;
