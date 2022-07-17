@@ -1,15 +1,15 @@
 import React from 'react'
 import SitterProfileCard from '../../components/SitterProfileCard/SitterProfileCard'
-import SitterProfileReview from '../../components/SitterProfileReview/SitterProfileReview'
+import SitterProfileReviewCard from '../../components/SitterProfileReviewCard/SitterProfileReviewCard'
 
 export default function SitterDetail() {
   return (
     <div className='flex flex-row'>
-      <div className='w-[310px]'>
+      <div className='w-[290px]'>
       <SitterProfileCard />
       </div>
       <div>
-        <SitterProfileReview />
+        <SitterProfileReviewCard />
       </div>
     </div>
   )
