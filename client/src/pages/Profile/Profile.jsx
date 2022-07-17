@@ -38,7 +38,6 @@ export default function Profile() {
 
   async function onSubmitHandler(event) {
     event.preventDefault();
-    console.log(state.Address);
     try {
       await axios.patch(`/users/${state.id}`, state);
       dispatch({
@@ -65,7 +64,8 @@ export default function Profile() {
   }
 
   function showMapHandler() {
-    setMap((prev) => ({ ...prev, show: true }))
+    const center = address.value ? [address.data.geo_lat, address.data.geo_lon] : [55.75396, 37.620393];
+    setMap((prev) => ({ ...prev, show: true, center, zoom: 10 }))
   }
 
   useEffect(() => {
@@ -157,7 +157,7 @@ export default function Profile() {
                   }
                 </div>
                 <div className="px-4 py-3  text-right sm:px-6 col-end-7 col-span-2">
-                  <button className={classes.button} onClick={showMapHandler}>Указать на карте</button>
+                  <button type='button' className={classes.button} onClick={showMapHandler}>Указать на карте</button>
                 </div>
                 <div className="col-span-6">
                   <label htmlFor="desc" className="block text-sm font-medium text-gray-700">Расскажите о себе</label>
@@ -191,7 +191,7 @@ export default function Profile() {
         pic.cropperOpen && <ModalAvatar pic={pic} setPic={setPic} />
       }
       {
-        map.show && <ModalMap map={map} setMap={setMap} />
+        map.show && <ModalMap map={map} setMap={setMap} setAddress={setAddress} />
       }
     </>
   )
