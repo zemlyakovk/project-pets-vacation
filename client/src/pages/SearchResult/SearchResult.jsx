@@ -240,8 +240,8 @@ export default function SearchResult() {
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>
-          ) : MiniCardSitter()
-            //users.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
+          ) : //MiniCardSitter()
+            users.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
           }
         </div >
         <YMaps>
