@@ -6,10 +6,13 @@ export default function MiniCardSitter
   return (
     
 
-<div class="flex justify-center p-2">
+<div class="flex justify-center p-2  w-[500px] min-h-min">
   <div class="flex  flex-row rounded-lg bg-white shadow-lg">
+    <div className=' flex items-center'>
     <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="" />
-    <div class="p-6 flex flex-col justify-start">
+
+    </div>
+    <div class="p-4 flex flex-col justify-start">
       <div className='flex flex-row justify-between'>
       <h5 class="text-gray-900 text-xl font-medium">Василий Петров</h5>
         <div className=''>❤️</div>
@@ -24,8 +27,8 @@ export default function MiniCardSitter
       <p class="text-gray-700 text-base mb-4">
         This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer
       </p>
-      <p class="text-gray-600 text-xs">Last updated 3 mins ago</p>
-      <button className=' bg-blue-500 text-white rounded-lg mt-10 py-4 '>
+    
+      <button className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>
           подробнее
          </button>
       <div><Review /></div>
