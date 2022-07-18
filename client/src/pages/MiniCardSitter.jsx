@@ -5,14 +5,11 @@ export default function MiniCardSitter
   () {
   return (
 
-<<<<<<< HEAD
 
 <div class=" flex justify-center p-2  w-[500px] min-h-min mt-11">
   <div class="flex  flex-row rounded-lg bg-white shadow-lg">
     <div className=' flex items-center'>
     <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="" />
-=======
->>>>>>> dev
 
     <div class="flex justify-center p-2  w-[500px] min-h-min">
       <div class="flex  flex-row rounded-lg bg-white shadow-lg">
