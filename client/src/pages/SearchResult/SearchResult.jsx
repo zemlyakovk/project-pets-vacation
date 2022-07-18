@@ -96,6 +96,11 @@ export default function SearchResult() {
 
   }, [value])
 
+  const maState = {
+    center: [55.751574, 37.573856],
+    zoom: 5,
+  }
+
   return (
     <div className='container mx-auto'>
       <div className="mt-10 flex justify-center flex-wrap">
@@ -288,9 +293,9 @@ export default function SearchResult() {
             </div>
             // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
           }
-          {/* <YMaps className="col-span-2">
+          <YMaps className="col-span-2">
             <Map defaultState={maState}></Map>
-          </YMaps> */}
+          </YMaps>
         </div >
 
       </div>
