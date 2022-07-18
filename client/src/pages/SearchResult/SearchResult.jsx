@@ -38,11 +38,6 @@ export default function SearchResult() {
   console.log(value);
   // console.log(users);
 
-  const maState = {
-    center: [55.751574, 37.573856],
-    zoom: 5,
-  }
-
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
     dispatch(search(valueInput))
@@ -293,9 +288,9 @@ export default function SearchResult() {
             </div>
             // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
           }
-          <YMaps className="col-span-2">
+          {/* <YMaps className="col-span-2">
             <Map defaultState={maState}></Map>
-          </YMaps>
+          </YMaps> */}
         </div >
 
       </div>
