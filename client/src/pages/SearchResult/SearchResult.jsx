@@ -9,7 +9,7 @@ import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
 import MiniCardSitter from '../MiniCardSitter';
-import { Map, YMaps } from 'react-yandex-maps'
+
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
   let from = value[0] || ""
@@ -35,11 +35,6 @@ export default function SearchResult() {
   const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 0, housingType: 'Квартира', pricePerDay: 0, petSyze: '', petAge: '' });
   const [users, setUsers] = useState(value);
   console.log(value);
-
-  const maState = {
-    center: [55.751574, 37.573856],
-    zoom: 5,
-  }
 
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
@@ -239,12 +234,9 @@ export default function SearchResult() {
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
-        ) : users?.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
+        ) : users.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
         }
       </div >
-      <YMaps>
-        <Map defaultState={maState}></Map>
-      </YMaps>
     </>
   )
 }

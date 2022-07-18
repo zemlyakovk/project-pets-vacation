@@ -14,7 +14,7 @@ import SearchResult from './pages/SearchResult/SearchResult';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/actions/auth.action';
 import { setSitter } from './store/actions/sitter.action';
-
+import ResultMap from './pages/ResultMap/ResultMap';
 
 
 function App() {
@@ -45,6 +45,7 @@ function App() {
             <Route path='profile/new' element={<SitterProfile />} />
             <Route path=':id' element={<SitterCard />} />
             <Route path='profile' element={<SitterProfile />} />
+            <Route path='map' element={<ResultMap />} />
           </Route>
         </Route>
       </Routes>
