@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/actions/auth.action';
 import { setSitter } from './store/actions/sitter.action';
 import ResultMap from './pages/ResultMap/ResultMap';
+import SitterDetail from './pages/SitterDetail/SitterDetail';
+
 
 
 function App() {
