@@ -135,6 +135,7 @@ router.post('/new', async (req, res) => {
     res.status(500).json(new Error('Ошибка обновления записи!'));
   }
 });
+//* Обновление ситтера
 router.patch('/:id', async (req, res) => {
   const {
     id,
@@ -154,7 +155,7 @@ router.patch('/:id', async (req, res) => {
     Pet_ages,
     Pet_sizes,
     Sitter_dates,
-    Addresses
+    Address: Addresses
   } = req.body;
   try {
     await Sitter.update({
@@ -216,7 +217,7 @@ router.patch('/:id', async (req, res) => {
       await Sitter_date.bulkCreate(Sitter_dates.map((date) => ({ aval_date: new Date(date.aval_date), sitter_id: sitter.id })));
     }
     if (Addresses?.address) {
-      const { address, zip_code, region, district, city, settlement, street, latitude, longitude } = Addresses;
+      const { address, zip_code, region, district, city, settlement, street, latitude, longitude, area } = Addresses;
       const [newAddress, created] = await Address.findOrCreate({
         where: {
           sitter_id: sitter.id
@@ -231,7 +232,9 @@ router.patch('/:id', async (req, res) => {
             address, zip_code, region, district, city, settlement, street, latitude, longitude, area
           },
           {
-            sitter_id: sitter.id
+            where: {
+              sitter_id: sitter.id
+            }
           }
         )
       }
@@ -241,5 +244,18 @@ router.patch('/:id', async (req, res) => {
     console.log(error);
     res.status(500).json(new Error('Ошибка обновления записи!'));
   }
+})
+router.get('/all', async (req, res) => {
+  const sitters = await Sitter.findAll({
+    include: [
+      {
+        model: Address,
+      },
+      {
+        model: User,
+      }]
+  });
+
+  return res.status(200).json(sitters);
 })
 module.exports = router;
