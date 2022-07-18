@@ -1,5 +1,5 @@
 import React from 'react'
-import Review from './Review'
+
 
 export default function MiniCardSitter
   () {
@@ -31,7 +31,7 @@ export default function MiniCardSitter
           <button className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>
             подробнее
           </button>
-          <div><Review /></div>
+         
         </div>
       </div>
 
