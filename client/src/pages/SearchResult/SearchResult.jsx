@@ -9,7 +9,7 @@ import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
 import MiniCardSitter from '../MiniCardSitter';
-import { Map, YMaps } from 'react-yandex-maps'
+
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
   let from = value[0] || ""
@@ -36,11 +36,6 @@ export default function SearchResult() {
   const [users, setUsers] = useState([]);
   console.log(value);
   // console.log(users);
-
-  const maState = {
-    center: [55.751574, 37.573856],
-    zoom: 5,
-  }
 
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
@@ -248,6 +243,7 @@ export default function SearchResult() {
           <Map defaultState={maState}></Map>
         </YMaps>
       </div>
+
 
     </>
   )

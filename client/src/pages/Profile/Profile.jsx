@@ -19,7 +19,7 @@ export default function Profile() {
     cropperOpen: false,
     img: null,
     zoom: 2,
-    croppedImg: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Man_Silhouette.png'
+    croppedImg: process.env.REACT_APP_STATIC_URL + '123.jpeg'
   });
 
   const [map, setMap] = useState({
