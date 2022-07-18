@@ -64,7 +64,6 @@ export default function SitterProfile() {
       if (state.id) {
         await axios.patch(`/sitters/${state.id}`, state);
       } else {
-        console.log('pfikb');
         await axios.post('/sitters/new', state);
         dispatch(setSitter());
       }
