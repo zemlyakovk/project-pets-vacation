@@ -162,6 +162,21 @@ export default function Profile() {
                       value={address}
                       onChange={setAddress} />
                   }
+                  {
+                    !state.Address &&
+                    <AddressSuggestions
+                      inputProps={{
+                        placeholder: "Введите город, район или точный адрес",
+                        className: `${classes.formControl}`,
+                        id: 'street-address',
+                        name: 'address',
+                      }}
+                      filterFromBound='city'
+                      filterToBound='house'
+                      token="0e29acdc44dc991a2276e7b9055396891dfe379f"
+                      value={address}
+                      onChange={setAddress} />
+                  }
                 </div>
                 <div className="px-4 py-3  text-right sm:px-6 col-end-7 col-span-3">
                   <button type='button' className={classes.button} onClick={showMapHandler}>Указать на карте</button>
