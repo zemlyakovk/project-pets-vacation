@@ -18,7 +18,7 @@ export default function ModalMap({ map, setMap, setAddress }) {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": "Token 0e29acdc44dc991a2276e7b9055396891dfe379f"
+        "Authorization": "Token 7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
       },
     };
     const response = await axios(options);

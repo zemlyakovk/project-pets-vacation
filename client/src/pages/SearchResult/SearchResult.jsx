@@ -239,7 +239,7 @@ export default function SearchResult() {
             </div>
           </div>
         ) : //MiniCardSitter()
-          users.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
+          users?.map((el) => MiniCardSitter(el)) // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
         }
       </div >
     </>
