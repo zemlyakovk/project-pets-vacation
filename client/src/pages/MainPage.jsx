@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import "react-datepicker/dist/react-datepicker.css";
 // import DatePicker from 'react-datepicker';
 import { AddressSuggestions } from 'react-dadata';
@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-multi-date-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../store/actions/search.actions';
+import { setSitters } from '../store/actions/people.action';
+import MiniCardSitterMainPage from './MiniCardSitterMainPage';
 
 
 //{radioValue: 'Собака',
@@ -57,6 +59,14 @@ export default function MainPage() {
   };
 
   const { auth: { id } } = useSelector((state) => state);
+
+  const { sitters } = useSelector((state) => state);
+
+  console.log('sitters', sitters);
+
+  useEffect(() => {
+    dispatch(setSitters())
+  }, [dispatch])
 
   return (
     <>{id ? <>    <div className='container mx-auto'>
@@ -111,7 +121,20 @@ export default function MainPage() {
       </form>
     </div></>
       : <></>
-    }</>
+    }
+     <div className=' cardsFlex '>
+
+      <ul className="collection">
+      {sitters && sitters.map((sitter) =>
+        <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
+      )}
+
+    </ul>
+
+
+    </div>
+
+    </>
   )
 }
 

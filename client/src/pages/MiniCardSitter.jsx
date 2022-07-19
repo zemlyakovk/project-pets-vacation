@@ -6,10 +6,12 @@ export default function MiniCardSitter
   return (
 
 
-    <div class="flex justify-center p-2  w-[500px] min-h-min">
+    <div class=" flex justify-center p-2  w-[500px] min-h-min mt-11">
       <div class="flex  flex-row rounded-lg bg-white shadow-lg">
         <div className=' flex items-center'>
           <img class=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="" />
+
+
 
         </div>
         <div class="p-4 flex flex-col justify-start">
@@ -31,13 +33,12 @@ export default function MiniCardSitter
           <button className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>
             подробнее
           </button>
-         
+
         </div>
       </div>
 
+        </div>
 
-
-    </div>
 
 
   )
