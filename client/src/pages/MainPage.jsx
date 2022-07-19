@@ -125,9 +125,9 @@ export default function MainPage() {
      <div className=' cardsFlex '>
 
       <ul className="collection">
-      {sitters && sitters.map((sitter) =>
+      {/* {sitters && sitters.map((sitter) =>
         <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
-      )}
+      )} */}
 
     </ul>
 
