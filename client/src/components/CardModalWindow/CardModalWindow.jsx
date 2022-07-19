@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 
@@ -19,6 +19,7 @@ export default function CardModalWindow() {
   const [sitter, setSitter] = useState({ loading: true });
   const { id } = useParams();
 
+  const navigate = useNavigate();
 
 
   // const { sitters } = useSelector((state) => state);
@@ -102,13 +103,9 @@ export default function CardModalWindow() {
           <div
             className="flex mt-10 justify-center py-4 px-4 border-t border-gray-300 false"
           >
-            <div
-              className="mx-4 w-full inline-block rounded-sm font-medium border border-solid cursor-pointer text-center text-base py-3 px-6 text-white bg-blue-400 border-blue-400 hover:bg-blue-600 hover:border-blue-600"
-              type=""
-            >
-              <a href="/">Перейти в окно юзера</a>
-
-            </div>
+            <button onClick={() => navigate(-1)} className="waves-effect waves-light btn" href="#">
+                  Back
+                </button>
           </div>
         </div>
       </div>
