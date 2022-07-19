@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Review from './Review'
 
 export default function MiniCardSitterMainPage
-  ({ id, "User.first_name": first_name, "User.last_name": last_name, desc}) {
+  ({ id, "User.first_name": first_name, "User.last_name": last_name, desc }) {
   // const { sitters: {users} } = useSelector((state) => state);
   return (
 
@@ -12,7 +12,7 @@ export default function MiniCardSitterMainPage
     <div className=" flex justify-center p-2  w-[500px] min-h-min mt-11">
       <div className="flex  flex-row rounded-lg bg-white shadow-lg">
         <div className=' flex items-center'>
-          <img className=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://random.dog/46be3661-2d29-4119-8841-baa86c4a73ba.jpg" alt="" />
+          <img className=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src={`${process.env.REACT_APP_STATIC_URL}1658215752423-avatar.png`} alt="" />
 
         </div>
         <div className="p-4 flex flex-col justify-start">
@@ -33,7 +33,7 @@ export default function MiniCardSitterMainPage
 
           {/* <button to={`/allSitters/${id}`} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'></button> */}
           <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link>
-            подробнее
+          подробнее
 
           <div><Review /></div>
         </div>

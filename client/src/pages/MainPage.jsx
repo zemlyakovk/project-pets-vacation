@@ -69,70 +69,70 @@ export default function MainPage() {
   }, [dispatch])
 
   return (
-    <>{id ? <>    <div className='container mx-auto'>
-      <form onSubmit={submitHandler}>
+    <>
+      <div className='container mx-auto'>
+        <form onSubmit={submitHandler}>
 
-        <div className='flex justify-center'>
-          <div className='m-3'>
-            <input className='m-1' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} onChange={changeHandler} />
-            <label htmlFor="dog">Собака</label>
-          </div>
-          <div className='m-3'>
-            <input className='m-1' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} onChange={changeHandler} />
-            <label htmlFor="cat">Кошка</label>
-          </div>
-        </div>
-
-        <div className='flex items-center justify-evenly'>
-          <div className="flex">
-            <div className="mb-3 xl:w-96">
-              <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
-              <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
+          <div className='flex justify-center'>
+            <div className='m-3'>
+              <input className='m-1' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} onChange={changeHandler} />
+              <label htmlFor="dog">Собака</label>
+            </div>
+            <div className='m-3'>
+              <input className='m-1' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} onChange={changeHandler} />
+              <label htmlFor="cat">Кошка</label>
             </div>
           </div>
 
-          <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
-            <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
-            <DatePicker id="date" value={valueInput.dateFrom}
-              onChange={(date) => setValueInput({
-                ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
-                dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
-              })}
-              multiple={true}
-              numberOfMonths={2}
-              minDate={new Date()}
-              maxDate={new Date().setDate(90)}
-              render={<CustomRangeInput />}
-              range />
+          <div className='flex items-center justify-evenly'>
+            <div className="flex">
+              <div className="mb-3 xl:w-96">
+                <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
+                <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
+              </div>
+            </div>
+
+            <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
+              <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
+              <DatePicker id="date" value={valueInput.dateFrom}
+                onChange={(date) => setValueInput({
+                  ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
+                  dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
+                })}
+                multiple={true}
+                numberOfMonths={2}
+                minDate={new Date()}
+                maxDate={new Date().setDate(90)}
+                render={<CustomRangeInput />}
+                range />
+            </div>
+
+
+            <div>
+              <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Тип услуги</label>
+              <select id="countries" value={valueInput.serviceType} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="Передержка">Передержка</option>
+                <option value="Выгул">Выгул</option>
+              </select>
+            </div>
           </div>
 
-
-          <div>
-            <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Тип услуги</label>
-            <select id="countries" value={valueInput.serviceType} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="Передержка">Передержка</option>
-              <option value="Выгул">Выгул</option>
-            </select>
+          <div className='flex justify-center'>
+            <button type='submit' className='bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded'>Найти догситтера</button>
           </div>
-        </div>
-        <div className='flex justify-center'>
-          <button type='submit' className='bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded'>Найти догситтера</button>
-        </div>
-      </form>
-    </div></>
-      : <></>
-    }
-     <div className=' cardsFlex '>
+        </form>
+      </div >
+      <div className=' cardsFlex '>
 
-      <ul className="collection">
-      {/* {sitters && sitters.map((sitter) =>
+        <ul className="collection">
+          {/* {sitters && sitters.map((sitter) =>
         <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
       )} */}
 
-    </ul>
+        </ul>
 
 
-    </div>
+      </div>
 
     </>
   )

@@ -12,7 +12,6 @@ import MiniCardSitter from '../MiniCardSitter';
 import { Map, YMaps } from 'react-yandex-maps'
 import { MultiSelect } from 'react-multi-select-component';
 import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
-
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
   let from = value[0] || ""

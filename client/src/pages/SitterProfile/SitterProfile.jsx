@@ -264,10 +264,12 @@ export default function SitterProfile() {
                     </div>
                   </div>
                   <div className="text-left col-span-1">
-                    <label className="form-label inline-block mb-2 text-gray-700">Тип жилья</label>
+                    <label className="form-label inline-block mb-2 text-gray-700">Тип жилья для передержки</label>
                     <select className={classes.formControl} name="housing_type" value={state.housing_type} onChange={onChangeHendler}>
+                      <option value="" disabled={true} selected={true} hidden={true}>Укажите тип жилья</option>
                       <option value="Квартира">Квартира</option>
                       <option value="Частный дом">Частный дом</option>
+                      <option value="Отель для питомцев">Отель для питомцев</option>
                     </select>
                   </div>
                   <div className="text-left col-span-2">
