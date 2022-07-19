@@ -22,13 +22,15 @@ function CustomRangeInput({ openCalendar, value }) {
   let from = value[0] || ""
   let to = value[1] || ""
 
-  value = from && to ? "from " + from + ", to " + to : from
+  value = from && to ? "От " + from + ", до " + to : from
 
   return (
     <input
       onFocus={openCalendar}
       value={value}
       readOnly
+      className='border border-solid border-gray-300 w-60'
+      id='date'
     />
   )
 }
@@ -93,7 +95,7 @@ export default function MainPage() {
 
           <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
             <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
-            <DatePicker id="date" value={valueInput.dateFrom}
+            <DatePicker value={valueInput.dateFrom}
               onChange={(date) => setValueInput({
                 ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
                 dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
@@ -122,17 +124,17 @@ export default function MainPage() {
     </div></>
       : <></>
     }
-     <div className=' cardsFlex '>
+      <div className=' cardsFlex '>
 
-      <ul className="collection">
-      {sitters && sitters.map((sitter) =>
-        <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
-      )}
+        <ul className="collection">
+          {sitters && sitters.map((sitter) =>
+            <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
+          )}
 
-    </ul>
+        </ul>
 
 
-    </div>
+      </div>
 
     </>
   )
