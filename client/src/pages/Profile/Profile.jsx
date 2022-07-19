@@ -19,7 +19,8 @@ export default function Profile() {
     cropperOpen: false,
     img: null,
     zoom: 2,
-    croppedImg: process.env.REACT_APP_STATIC_URL + '123.jpeg'
+    croppedImg: null,
+    new: false
   });
 
   const [map, setMap] = useState({
@@ -29,6 +30,12 @@ export default function Profile() {
   useEffect(() => {
     if (auth.id) {
       setState(() => ({ ...auth }))
+      setPic((prev) => ({
+        ...prev,
+        croppedImg: auth.profile_photo
+          ? process.env.REACT_APP_STATIC_URL + auth.profile_photo
+          : process.env.REACT_APP_STATIC_URL + '123.jpeg'
+      }))
     }
   }, [auth])
 
@@ -39,7 +46,7 @@ export default function Profile() {
   async function onSubmitHandler(event) {
     event.preventDefault();
     try {
-      await axios.patch(`/users/${state.id}`, state);
+      await axios.patch(`/users/${state.id}`, { ...state, newAvatar: pic.new ? pic.croppedImg : null });
       dispatch({
         type: SET_USER_DATA,
         paylod: state
