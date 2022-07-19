@@ -11,6 +11,8 @@ import DatePicker from 'react-multi-date-picker';
 import MiniCardSitter from '../MiniCardSitter';
 import { Map, YMaps } from 'react-yandex-maps'
 import { MultiSelect } from 'react-multi-select-component';
+import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
+
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
   let from = value[0] || ""
@@ -29,7 +31,7 @@ function CustomRangeInput({ openCalendar, value }) {
 
 export default function SearchResult() {
   const { value,
-    // error, 
+    // error,
     isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
   const { state } = useLocation()
@@ -100,6 +102,11 @@ export default function SearchResult() {
     center: [55.751574, 37.573856],
     zoom: 5,
   }
+
+
+  const { auth: { id } } = useSelector((state) => state);
+
+  const { sitters } = useSelector((state) => state);
 
   return (
     <div className='container mx-auto'>
@@ -289,7 +296,9 @@ export default function SearchResult() {
             </div>
           ) : //MiniCardSitter()
             <div className='flex col-span-1 flex-wrap'>
-              {users.map((el) => MiniCardSitter(el))}
+              {sitters && sitters.map((sitter) =>
+                <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
+              )}
             </div>
             // вот тут ломается. чтобы работало оставаясь на странице поставь ? после users и сохрани
           }
