@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
 const {
-  Sitter, Pet_size, Pet_age, Sitter_date, Sitter_pet_age, Sitter_pet_size, Address, User
+  Sitter, Pet_size, Pet_age, Sitter_date, Sitter_pet_age, Sitter_pet_size, Address, User, sequelize, Sitter_images
 } = require('../db/models');
 const sitter = require('../db/models/sitter');
 const user = require('../db/models/user');
@@ -30,6 +30,14 @@ router.get('/profile', async (req, res) => {
         {
           model: Sitter_date,
           attributes: ['aval_date'],
+        },
+        {
+          model: Sitter_date,
+          attributes: ['aval_date'],
+        },
+        {
+          model: Sitter_images,
+          attributes: ['id', 'url'],
         },
         {
           model: Address,
@@ -246,10 +254,30 @@ router.patch('/:id', async (req, res) => {
   }
 })
 router.get('/all', async (req, res) => {
+  const { latitude, longitude, distance } = req.query;
+  const haversine = `(6371 * acos(cos(radians(${latitude}))* cos(radians(latitude))* cos(radians(longitude) - radians(${longitude}))+ sin(radians(${latitude})) * sin(radians(latitude))))`;
+
   const sitters = await Sitter.findAll({
     include: [
       {
         model: Address,
+        attributes: ['id',
+          'address',
+          'zip_code',
+          'region',
+          'district',
+          'city',
+          'settlement',
+          'street',
+          'latitude',
+          'longitude',
+          'area',
+          [sequelize.literal(haversine), 'distance']],
+        where: {
+          [Op.and]: [
+            sequelize.where(sequelize.literal(haversine), '<=', +distance),
+          ]
+        },
       },
       {
         model: User,
