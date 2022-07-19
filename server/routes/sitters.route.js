@@ -89,7 +89,8 @@ router.post('/new', async (req, res) => {
     Pet_sizes,
     Sitter_dates,
     Address: Addresses
-  } = req.body;
+  } = req.body.state;
+  const { addFiles, removedFilesId } = req.body;
   try {
     const newSitter = await Sitter.create({
       user_id: req.session.userId,
@@ -137,6 +138,9 @@ router.post('/new', async (req, res) => {
         address, zip_code, region, district, city, settlement, street, latitude, longitude, area, sitter_id: newSitter.id
       })
     }
+    if (addFiles?.length) {
+      await Sitter_images.bulkCreate(addFiles.map((file) => ({ sitter_id: newSitter.id, url: file })));
+    }
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
@@ -145,6 +149,7 @@ router.post('/new', async (req, res) => {
 });
 //* Обновление ситтера
 router.patch('/:id', async (req, res) => {
+  console.log('BODY====>', req.body);
   const {
     id,
     title,
@@ -164,7 +169,9 @@ router.patch('/:id', async (req, res) => {
     Pet_sizes,
     Sitter_dates,
     Address: Addresses
-  } = req.body;
+  } = req.body.state;
+  const { addFiles, removedFilesId } = req.body;
+  console.log(JSON.stringify(req.body));
   try {
     await Sitter.update({
       title,
@@ -246,6 +253,17 @@ router.patch('/:id', async (req, res) => {
           }
         )
       }
+    }
+    if (addFiles?.length) {
+      await Sitter_images.bulkCreate(addFiles.map((file) => ({ sitter_id: sitter.id, url: file })));
+    }
+    if (removedFilesId?.length) {
+      await Sitter_images.destroy({
+        where: {
+          id: {
+            [Op.in]: removedFilesId
+          }
+        } })
     }
     res.sendStatus(200);
   } catch (error) {

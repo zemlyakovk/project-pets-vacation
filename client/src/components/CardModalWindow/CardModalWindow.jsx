@@ -29,7 +29,7 @@ export default function CardModalWindow() {
       .then(data => setSitter({ loading: false, data }));
   }, [id]);
 
-  console.log("sitter", sitter);
+  // console.log("sitter", sitter);
   // useEffect(() => {
   //   dispatch(setSitters())
   // }, [dispatch],[id])
@@ -38,7 +38,7 @@ export default function CardModalWindow() {
 
 
   return (<>
-    {!sitter.loading ? (
+    {sitter.loading ?
       <div className="preloader-wrapper big active">
         <div className="spinner-layer spinner-blue-only">
           <div className="circle-clipper left">
@@ -52,7 +52,7 @@ export default function CardModalWindow() {
           </div>
         </div>
       </div>
-    ) : (
+      :
       <div
         className="fixed top-0 left-0 w-screen h-screen z-50 bg-blue-800 bg-opacity-75 origin-center flex justify-center items-center appear-done enter-done"
       >
@@ -112,7 +112,7 @@ export default function CardModalWindow() {
           </div>
         </div>
       </div>
-    )}
+    }
   </>
   )
 }

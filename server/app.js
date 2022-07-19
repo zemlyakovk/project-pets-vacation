@@ -11,6 +11,7 @@ const sittersRouter = require("./routes/sitters.route");
 const usersRouter = require("./routes/users.route");
 const search = require("./routes/search.router");
 const reviews = require("./routes/reviews.router");
+const uploader = require('./middleware/uploader');
 
 const { User, Address, Sitter } = require("./db/models");
 
@@ -204,6 +205,11 @@ app.get("/allSitters/:id", async (req, res) => {
 });
 
 ///
+app.post('/uploads', uploader.array('images', 30), (req, res) => {
+  if (req.files) {
+    return res.status(200).json(req.files.map((file) => file.filename));
+  }
+})
 
 app.use("/sitters", sittersRouter);
 app.use("/search", search);
