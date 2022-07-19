@@ -12,7 +12,7 @@ export default function MiniCardSitterMainPage
     <div className=" flex justify-center p-2  w-[500px] min-h-min mt-11">
       <div className="flex  flex-row rounded-lg bg-white shadow-lg">
         <div className=' flex items-center'>
-          <img className=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="" />
+          <img className=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="https://random.dog/46be3661-2d29-4119-8841-baa86c4a73ba.jpg" alt="" />
 
         </div>
         <div className="p-4 flex flex-col justify-start">

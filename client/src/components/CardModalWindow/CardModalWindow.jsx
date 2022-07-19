@@ -60,22 +60,38 @@ export default function CardModalWindow() {
           className="bg-white w-11/12 max-w-md text-center pt-10 rounded-sm shadow-lg appear-done enter-done"
         >
           <div className="px-4 mb-4">
-            <h2 className="text-3xl font-medium">Подробнее про {sitter.data.User.first_name} {sitter.data.User.last_name} </h2>
-            <p
-              className="mt-2 w-10/12 max-w-6xl max-w-full mx-auto text-gray-800 text-base"
-            >
-              {sitter.data.desc}
-            </p>
-          </div>
-
-          <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+            <h2 className="text-3xl font-medium">{sitter.data.User.first_name} {sitter.data.User.last_name} </h2>
+            <p>Ситтер</p>
+            <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
             <SwiperSlide><img src="https://random.dog/7733c91a-ec61-4c50-b423-443ef6fedf6e.jpg" alt="" /></SwiperSlide>
             <SwiperSlide><img src="https://random.dog/0afd649d-ec06-403f-aeb5-0262d1750182.jpg" alt="" /></SwiperSlide>
             <SwiperSlide><img src="https://media.nature.com/lw800/magazine-assets/d41586-022-01193-1/d41586-022-01193-1_20344900.jpg" alt="" /></SwiperSlide>
           </Swiper>
+            <div
+              className="textContainerSitter max-w-full text-gray-800 "
+            >
+              { sitter.data.cat_flag ? <p>Принимает кошек</p> : <p>Не принимает кошек</p> }
+              { sitter.data.dog_flag ? <p>Принимает собак</p> : <p>Не принимает собак</p> }
+              <p>Опыт в профессии {sitter.data.experience} года/лет</p>
+              { sitter.data.has_pet_flag ? <p>Есть домашнее животное</p> : <p>Нет домашних животных</p> }
+              { sitter.data.has_child ? <p>Есть ребенок</p> : <p>Нет детей</p> }
+              { sitter.data.supervision_24 ? <p>Готов присматривать весь день</p> : <p>Готов присматривать в опеределенные часы</p> }
+              <p>Условия содержания:  {sitter.data.housing_type}</p>
+              { sitter.data.walking ? <p>Готов выгуливать питомца</p> : <p>Не может выгуливать</p> }
+              { sitter.data.staying ? <p>Готов оставаться на ночь</p> : <p>Не может готов оставаться на ночь</p> }
+              <br />
+              <p>Цена за день: {sitter.data.price_per_day} рублей</p>
+              <p>Цена за час: {sitter.data.price_per_hour} рублей</p>
+              <br />
+              { sitter.data.active ? <p>Доступен</p> : <p>Не доступен</p> }
+              <p>Дополнительная информация:  {sitter.data.desc}</p>
+            </div>
+          </div>
+
+
 
           <div>
-            <label className="text-sm text-gray-600" htmlFor="bio">{sitter.data.User.desc}</label>
+            <label className="text-sm text-gray-600" htmlFor="bio"></label>
             {/* <textarea
               name="bio"
               className="w-full px-4 py-3 h-32 outline-none transition-colors duration-150 ease-in-out"
