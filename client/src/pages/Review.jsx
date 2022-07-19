@@ -6,7 +6,7 @@ import axios from '../axios/axios';
 export default function Review() {
   const [input, setInput] = useState('')
   const [rating, setRating] = useState(0)
-  
+
 
   const sendReviewHandler = () => {
     axios.post('/reviews', {input, rating}).then(()=>console.log('okkkkkkkkkkkkk'))
@@ -19,9 +19,9 @@ export default function Review() {
       <>
       <div>
       <div className="">
-  <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalCenteredScrollable">
+  {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalCenteredScrollable">
     Оставить отзыв
-  </button>
+  </button> */}
 </div>
 
 
@@ -52,8 +52,8 @@ export default function Review() {
   ease-in-out
   m-0
   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'></textarea>
-   
-    
+
+
       </div>
       <div
         className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
@@ -64,7 +64,7 @@ export default function Review() {
         </button>
         <button onClick={()=>{
           sendReviewHandler()
-        }} type="button" 
+        }} type="button"
           className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
           data-bs-dismiss="modal">
           Потвердить

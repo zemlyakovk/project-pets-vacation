@@ -33,9 +33,7 @@ export default function MiniCardSitterMainPage
 
           {/* <button to={`/allSitters/${id}`} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'></button> */}
           <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link>
-          подробнее
 
-          <div><Review /></div>
         </div>
       </div>
 
