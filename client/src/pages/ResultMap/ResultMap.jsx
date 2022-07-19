@@ -14,29 +14,27 @@ export default function ResultMap() {
   const [state, setState] = useState([]);
   const [address, setAddress] = useState();
   const [search, setSearch] = useState(false);
+  const [ymap, setYmap] = useState();
 
-  // useEffect(() => {
-  //   placeRef.current.events.add('dragged', (e) => {
-  //     // const coords = this.geometry.getCoordinates();
-  //     console.log('coords');
-  //   })
-  // }, [])
-  async function getSitters() {
-    const response = await axios.get('/sitters/all');
-    console.log(response);
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.events.add('boundschange', (e) => {
+        const newBounds = e.originalEvent.newBounds;
+        const distance = ymap.coordSystem.geo.getDistance(newBounds[0], newBounds[1]) / 2000;
+        getSitters(e.originalEvent.newCenter, distance)
+      });
+    }
+  }, [ymap])
+
+  async function getSitters(geoLock, distance) {
+    const response = await axios.get(`/sitters/all?latitude=${geoLock[0]}&longitude=${geoLock[1]}&distance=${distance}`);
     setState(() => response.data)
   }
 
-  useEffect(() => {
-    getSitters()
-  }, [])
-
-
-  function onClickHend() {
-    // console.log('====>', mapRef.current.geoObjects);
-    // console.log(placeRef.current);
-    console.log(address);
-    setSearch(() => true)
+  function onClickHend(geoLock) {
+    const distance = address.data.street || address.data.settlement ? 5 : 20
+    getSitters(geoLock, distance);
+    setSearch(() => true);
   }
 
   return (
@@ -49,15 +47,24 @@ export default function ResultMap() {
         }}
         filterFromBound='city'
         filterToBound='house'
-        token="0e29acdc44dc991a2276e7b9055396891dfe379f"
+        token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
         value={address}
         onChange={setAddress} />
       {search > 0 &&
         <YMaps query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
-          <Map defaultState={{
-            center: [address.data.geo_lat, address.data.geo_lon],
-            zoom: address.data.street || address.data.settlement ? 13 : 10
-          }} width='500px' height='500px' instanceRef={mapRef}>
+          <Map
+            modules={["geocode", "coordSystem.geo"]}
+            onLoad={(ymaps) => {
+              setYmap(ymaps);
+            }}
+            defaultState={{
+              center: [address.data.geo_lat, address.data.geo_lon],
+              zoom: address.data.street || address.data.settlement ? 13 : 10
+            }} width='500px' height='500px' instanceRef={ref => {
+              if (ref) {
+                mapRef.current = ref
+              }
+            }}>
             {state.map((sitter, i) => (
               <Placemark
                 key={'placemark#' + i}
@@ -80,7 +87,7 @@ export default function ResultMap() {
             <ZoomControl />
           </Map>
         </YMaps>}
-      <button onClick={onClickHend}>check</button>
+      <button onClick={() => { onClickHend([address.data.geo_lat, address.data.geo_lon]) }}>check</button>
     </>
   )
 }

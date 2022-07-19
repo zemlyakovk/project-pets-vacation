@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import classes from './SitterProfile.module.css'
 import { MultiSelect } from "react-multi-select-component";
@@ -9,6 +9,8 @@ import axios from '../../axios/axios';
 import { setSitter } from '../../store/actions/sitter.action';
 import { AddressSuggestions } from 'react-dadata';
 import ModalMap from '../../components/ModalMap/ModalMap';
+import ImagesUpload from '../../components/ImagesUpload/ImagesUpload';
+
 
 export default function SitterProfile() {
   const { sitter } = useSelector(state => state);
@@ -18,6 +20,9 @@ export default function SitterProfile() {
   const [dates, setDates] = useState([]);
   const [address, setAddress] = useState();
   const dispatch = useDispatch();
+  const [images, setImages] = useState([]);
+  const removedFilesId = useRef([]);
+  const [files, setFiles] = useState([]);
 
   const [map, setMap] = useState({
     show: false
@@ -26,6 +31,7 @@ export default function SitterProfile() {
 
   useEffect(() => {
     setState((prev) => ({ ...prev, ...sitter.value }));
+    console.log(sitter.value);
     if (sitter.value.Pet_ages) {
       setSelectedAge(sitter.value.Pet_ages.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
     }
@@ -34,6 +40,13 @@ export default function SitterProfile() {
     }
     if (sitter.value.Sitter_dates) {
       setDates(sitter.value.Sitter_dates.map(date => date.aval_date));
+    }
+    if (sitter.value.Sitter_images) {
+      setImages(sitter.value.Sitter_images.map(file =>
+      ({
+        id: file.id,
+        url: `${process.env.REACT_APP_STATIC_URL}${file.url}`,
+      })))
     }
   }, [sitter.value])
   //* Обработчик для инпутов
@@ -251,10 +264,12 @@ export default function SitterProfile() {
                     </div>
                   </div>
                   <div className="text-left col-span-1">
-                    <label className="form-label inline-block mb-2 text-gray-700">Тип жилья</label>
+                    <label className="form-label inline-block mb-2 text-gray-700">Тип жилья для передержки</label>
                     <select className={classes.formControl} name="housing_type" value={state.housing_type} onChange={onChangeHendler}>
+                      <option value="" disabled={true} selected={true} hidden={true}>Укажите тип жилья</option>
                       <option value="Квартира">Квартира</option>
                       <option value="Частный дом">Частный дом</option>
+                      <option value="Отель для питомцев">Отель для питомцев</option>
                     </select>
                   </div>
                   <div className="text-left col-span-2">
@@ -361,6 +376,7 @@ export default function SitterProfile() {
                       Настройте свое расписание
                     </label>
                   </div>
+                  <ImagesUpload images={images} setImages={setImages} removedFilesId={removedFilesId} setFiles={setFiles} />
                 </div>
               </div>
               <div className="px-4 py-3  text-right sm:px-6">

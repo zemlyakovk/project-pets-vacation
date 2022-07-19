@@ -29,8 +29,15 @@ footer {
   justify-content: center;
 }
 
+.cardsFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .formPosition {
   margin-top: 80px;
+  margin: auto;
 }
 
 .scrollbar-w-2::-webkit-scrollbar {

@@ -19,7 +19,8 @@ export default function Profile() {
     cropperOpen: false,
     img: null,
     zoom: 2,
-    croppedImg: process.env.REACT_APP_STATIC_URL + '123.jpeg'
+    croppedImg: null,
+    new: false
   });
 
   const [map, setMap] = useState({
@@ -29,6 +30,12 @@ export default function Profile() {
   useEffect(() => {
     if (auth.id) {
       setState(() => ({ ...auth }))
+      setPic((prev) => ({
+        ...prev,
+        croppedImg: auth.profile_photo
+          ? process.env.REACT_APP_STATIC_URL + auth.profile_photo
+          : process.env.REACT_APP_STATIC_URL + '123.jpeg'
+      }))
     }
   }, [auth])
 
@@ -39,7 +46,7 @@ export default function Profile() {
   async function onSubmitHandler(event) {
     event.preventDefault();
     try {
-      await axios.patch(`/users/${state.id}`, state);
+      await axios.patch(`/users/${state.id}`, { ...state, newAvatar: pic.new ? pic.croppedImg : null });
       dispatch({
         type: SET_USER_DATA,
         paylod: state
@@ -152,6 +159,21 @@ export default function Profile() {
                       filterToBound='house'
                       token="0e29acdc44dc991a2276e7b9055396891dfe379f"
                       defaultQuery={state.Address.address}
+                      value={address}
+                      onChange={setAddress} />
+                  }
+                  {
+                    !state.Address &&
+                    <AddressSuggestions
+                      inputProps={{
+                        placeholder: "Введите город, район или точный адрес",
+                        className: `${classes.formControl}`,
+                        id: 'street-address',
+                        name: 'address',
+                      }}
+                      filterFromBound='city'
+                      filterToBound='house'
+                      token="0e29acdc44dc991a2276e7b9055396891dfe379f"
                       value={address}
                       onChange={setAddress} />
                   }

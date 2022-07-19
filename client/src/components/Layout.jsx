@@ -10,7 +10,7 @@ export default function Layout() {
       <header>
         <Navbar />
       </header>
-      <main className="formCenter">
+      <main>
         <Outlet />
       </main>
 
