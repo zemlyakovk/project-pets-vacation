@@ -84,9 +84,6 @@ export default function Navbar() {
                 <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/profile">ЛК ситтер</Link>
               </li>
 
-              <li className="nav-item pr-2">
-                <Link className="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0" to="sitters/card-modal">Модальное окно юзера</Link>
-              </li>
 
               </> : <></>
             }
