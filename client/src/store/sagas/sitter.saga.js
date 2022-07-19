@@ -1,5 +1,5 @@
 //* Импортируем эффекты из saga
-import { put, call, takeEvery } from 'redux-saga/effects';
+import { put, call, takeEvery, delay } from 'redux-saga/effects';
 import axios from '../../axios/axios';
 import { SET_SITTER } from '../types';
 
@@ -20,7 +20,7 @@ function* setSitterWorker() {
     })
 
     const sitter = yield call(getSitterFromServer, `/sitters/profile`);
-
+    yield delay(300)
     yield put({
       type: `${SET_SITTER}_SUCCESS`,
       payload: sitter
