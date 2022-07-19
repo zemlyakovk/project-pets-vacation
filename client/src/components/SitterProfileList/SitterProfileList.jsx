@@ -15,17 +15,36 @@ useEffect(()=> {
 },[])
 console.log(reviewsList);
 
-
+  const spec = {
+    'Опыт присмотра (лет)':  'лет', 
+    'Присмотрю за собакой' : true ? 'да' : 'нет',  
+    'Присмотрю за кошкой' : false ? 'да' : 'нет',
+    'Тип жилья' : 'да', 
+    'Цена за сутки' : 'да',  
+    'Размер питомца' : 'да',  
+    'Возраст питомца' : 'да',  
+    'Выгул' : 'да',  
+    'Передержка' : 'да',  
+    'Цена за час' : 'да',  
+    'Возраст собак7' : 'да',  
+  }
 
 
 
   return (
-    <div className=''>
-      <div className=' h-52 bg-slate-400'>Блок с фотками</div>
-      <div className=' h-32 bg-slate-600'>Описание</div>
-      <div className=' h-32 bg-slate-500'>Детали
+    <div className=' w-[760px]'>
+      <div className=' h-52 bg-slate-200'>Блок с фотками</div>
+      <div className=' h-32 bg-slate-400'>Описание</div>
+      <span className='font-bold text-lg ml-8'>Детали</span>
+      <div className=' h-40 bg-slate-100 flex flex-wrap justify-start pl-8'>
+      {Object.keys(spec).map((el, index)=>{
+        return <div className='mr-4 mt-2 w-[150px]' key={index}> 
+                    <div className=' text-gray-500'>{el} </div> 
+                    <div>{spec[el]} </div>
+               </div>
+      })}
       </div>
-      <div className=' h-32 bg-slate-800'>Местоположение</div>
+      <div className=' h-32 bg-slate-200'>Местоположение</div>
       <div className='mt-2 ml-4 '>
        <span className='font-bold text-lg'>Отзывы о ситтере</span> 
       {reviewsList?.map((el)=>{

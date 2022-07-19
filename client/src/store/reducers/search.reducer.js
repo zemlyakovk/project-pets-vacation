@@ -2,7 +2,7 @@ import { SEARCH } from '../types';
 
 const initState = {
   isLoading: false,
-  value: {},
+  value: [],
   err: ''
 }
 
