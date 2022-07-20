@@ -2,14 +2,16 @@ import React from 'react'
 import { useState } from 'react';
 import StarRating from './StarRating'
 import axios from '../axios/axios';
+import { useParams } from 'react-router-dom';
 
 export default function Review() {
+  const params = useParams()
   const [input, setInput] = useState('')
   const [rating, setRating] = useState(0)
 
 
   const sendReviewHandler = () => {
-    axios.post('/reviews', {input, rating}).then(()=>console.log('okkkkkkkkkkkkk'))
+    axios.post('/reviews', {input, rating, id: params.id,}).then(()=>console.log('okkkkkkkkkkkkk'))
   }
 
 
