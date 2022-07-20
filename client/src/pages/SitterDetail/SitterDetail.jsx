@@ -4,7 +4,7 @@ import SitterProfileList from '../../components/SitterProfileList/SitterProfileL
 
 export default function SitterDetail() {
   return (
-    <div className='flex flex-row'>
+    <div className='flex flex-row justify-center'>
       <SitterProfileCard />
      
       

@@ -106,6 +106,9 @@ export default function CardModalWindow() {
             <button onClick={() => navigate(-1)} className="waves-effect waves-light btn" href="#">
                   Back
                 </button>
+            <button onClick={() => navigate(-1)} className="waves-effect waves-light btn" href="#">
+                  Перейти в карточку ситтера
+                </button>
           </div>
         </div>
       </div>

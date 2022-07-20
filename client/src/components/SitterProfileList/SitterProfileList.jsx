@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import axios from '../../axios/axios'
 import SitterProfileReviewCard from '../SitterProfileReviewCard/SitterProfileReviewCard'
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function SitterProfileList() {
   const [reviewsList, setReviewsList] = useState([])
+  const [sitter, setSitter] = useState({ loading: true });
+  const { id } = useParams();
+  console.log('=============================',id);
 
 const getAllReviews =  async () => {
   const fetchReviews = await axios.get(`/reviews?id=${1}`)
   setReviewsList(fetchReviews.data)
 }
+
+
+// useEffect(() => {
+//   fetch(`http://localhost:3100/allSitters/${id}`)
+//     .then(data => data.json())
+//     .then(data => setSitter({ loading: false, data }));
+// }, [id]);
+
 
 useEffect(()=> {
   getAllReviews()

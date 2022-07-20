@@ -188,6 +188,9 @@ export default function SearchResult() {
                   render={<CustomRangeInput />}
                   range />
               </div>
+              <div className='flex col-span-1 flex-wrap'>
+  
+            </div>
 
               <div>
                 <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Тип услуги</label>

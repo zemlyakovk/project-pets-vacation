@@ -3,7 +3,7 @@ import Review from '../../pages/Review'
 
 export default function SitterProfileCard() {
   return (
-    <div class="flex justify-center mt-4">
+    <div class="flex justify-center mt-4 h-[500px]">
 
       <div class="rounded-lg shadow-lg bg-white w-[290px]">
         <div className='flex flex-row mt-2 ml-5 items-center'>

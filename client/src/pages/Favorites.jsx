@@ -15,16 +15,12 @@ export default function Favorites() {
    
     
     <div className='grid max-w-4xl'>
-      
-      <MiniCardSitter />
-      <MiniCardSitter />
-      <MiniCardSitter />
-     
+
  
     </div>
   
     </div>
-    <MiniCardSitter /><MiniCardSitter /><MiniCardSitter />
+   
     </div>
   )
 }

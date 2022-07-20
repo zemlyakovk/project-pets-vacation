@@ -8,6 +8,7 @@ export default function MiniCardSitterMainPage
   // const { sitters: {users} } = useSelector((state) => state);
   return (
 
+    
 
     <div className=" flex justify-center p-2  w-[500px] min-h-min mt-11">
       <div className="flex  flex-row rounded-lg bg-white shadow-lg">
@@ -34,7 +35,7 @@ export default function MiniCardSitterMainPage
           {/* <button to={`/allSitters/${id}`} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'></button> */}
           <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link>
           подробнее
-
+          <Link to={`/sitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Перейти в карточку ситтера</Link>
           <div><Review /></div>
         </div>
       </div>
