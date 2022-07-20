@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../../store/actions/search.actions';
@@ -6,7 +6,7 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
-import { Map, YMaps } from 'react-yandex-maps'
+import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps'
 import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
 import "./styles.css";
 import CardModalWindow from '../../components/CardModalWindow/CardModalWindow';
@@ -30,21 +30,23 @@ function CustomRangeInput({ openCalendar, value }) {
 }
 
 export default function SearchResult() {
-  const { value,
+  const { value: sitters,
     // error,
     isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
-  const { state } = useLocation()
+  const { state } = useLocation();
   const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 1, housingType: 'Квартира', pricePerDay: 0, pricePerHour: 0, petSyze: '', petAge: '' });
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
+  const mapRef = useRef();
+  const [ymap, setYmap] = useState();
 
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
     dispatch(search(valueInput))
   };
 
-  const changeTextHandler = (event) => {
-    setValueInput({ ...valueInput, textValue: event });
+  const changeTextHandler = (address) => {
+    setValueInput({ ...valueInput, address: address });
   };
 
   const handleChange = (event) => {
@@ -103,53 +105,60 @@ export default function SearchResult() {
     }
   };
 
-  useEffect(() => {
-    setUsers(() => value.filter((el) => el.Sitter.has_child === valueInput.hasChild))
-  }, [value, valueInput.hasChild])
-
-  useEffect(() => {
-    setUsers(() => value.filter((el) => el.Sitter.supervision_24 === valueInput.supervision))
-  }, [value, valueInput.supervision])
-
-  useEffect(() => {
-    setUsers(() => value.filter((el) => el.Sitter.housing_type === valueInput.housingType))
-  }, [value, valueInput.housingType])
-
-  useEffect(() => {
-    setUsers(() => value.filter((el) => el.Sitter.has_pet_flag === valueInput.hasPetFlag))
-  }, [value, valueInput.hasPetFlag])
-
-  useEffect(() => {
-    if (valueInput.pricePerDay === 1500) {
-      setUsers(() => value.filter((el) => el.Sitter.price_per_day >= 0))
-    } else {
-      setUsers(() => value.filter((el) => el.Sitter.price_per_day >= valueInput.pricePerDay))
-    }
-  }, [value, valueInput.pricePerDay])
-
-  useEffect(() => {
-    if (valueInput.experience === 6) {
-      setUsers(() => value.filter((el) => el.Sitter.experience >= 0))
-    } else {
-      setUsers(() => value.filter((el) => el.Sitter.experience >= valueInput.experience))
-    }
-  }, [value, valueInput.experience])
-
-  useEffect(() => {
-    if (value.length) {
-      setUsers([...value]);
-    }
-  }, [value])
-
-  const maState = {
-    center: [55.751574, 37.573856],
-    zoom: 5,
+  function updateSearch(distance, center) {
+    dispatch(search({ ...valueInput, distance, latitude: center[0], longitude: center[1] }))
   }
 
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.events.add('boundschange', (e) => {
+        const newBounds = e.originalEvent.newBounds;
+        const distance = ymap.coordSystem.geo.getDistance(newBounds[0], newBounds[1]) / 2500;
+        updateSearch(distance, e.originalEvent.newCenter);
+      });
+    }
+  }, [ymap])
 
-  const { auth: { id } } = useSelector((state) => state);
+  // useEffect(() => {
+  //   setUsers(() => value.filter((el) => el.Sitter.has_child === valueInput.hasChild))
+  // }, [value, valueInput.hasChild])
 
-  const { sitters } = useSelector((state) => state);
+  // useEffect(() => {
+  //   setUsers(() => value.filter((el) => el.Sitter.supervision_24 === valueInput.supervision))
+  // }, [value, valueInput.supervision])
+
+  // useEffect(() => {
+  //   setUsers(() => value.filter((el) => el.Sitter.housing_type === valueInput.housingType))
+  // }, [value, valueInput.housingType])
+
+  // useEffect(() => {
+  //   setUsers(() => value.filter((el) => el.Sitter.has_pet_flag === valueInput.hasPetFlag))
+  // }, [value, valueInput.hasPetFlag])
+
+  // useEffect(() => {
+  //   if (valueInput.pricePerDay === 1500) {
+  //     setUsers(() => value.filter((el) => el.Sitter.price_per_day >= 0))
+  //   } else {
+  //     setUsers(() => value.filter((el) => el.Sitter.price_per_day >= valueInput.pricePerDay))
+  //   }
+  // }, [value, valueInput.pricePerDay])
+
+  // useEffect(() => {
+  //   if (valueInput.experience === 6) {
+  //     setUsers(() => value.filter((el) => el.Sitter.experience >= 0))
+  //   } else {
+  //     setUsers(() => value.filter((el) => el.Sitter.experience >= valueInput.experience))
+  //   }
+  // }, [value, valueInput.experience])
+
+  // useEffect(() => {
+  //   if (value.length) {
+  //     setUsers([...value]);
+  //   }
+  // }, [value])
+
+
+  // const { sitters } = useSelector((state) => state);
 
   const [modalActive, setModalActive] = useState(true)
 
@@ -175,7 +184,7 @@ export default function SearchResult() {
                   <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
                   <AddressSuggestions
                     token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
-                    value={valueInput.textValue}
+                    value={valueInput.address}
                     onChange={changeTextHandler} />
                 </div>
               </div>
@@ -362,16 +371,50 @@ export default function SearchResult() {
                 )}
               </div>
             }
-          </div >
-          <div className="map">
-            <YMaps >
-              <Map defaultState={maState}></Map>
-            </YMaps>
-          </div>
-        </div>
+            <YMaps className='col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
+              <Map
+                modules={["geocode", "coordSystem.geo"]}
+                onLoad={(ymaps) => {
+                  setYmap(ymaps);
+                }}
+                defaultState={{
+                  center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
+                  zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
+                }} width='500px' height='500px' instanceRef={ref => {
+                  if (ref) {
+                    mapRef.current = ref
+                  }
+                }}>
+                {sitters.map((sitter, i) => (
+                  <Placemark
+                    key={'placemark#' + i}
+                    geometry={[sitter.Address.latitude, sitter.Address.longitude]}
+                    properties={{
+                      balloonContentHeader: `${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
+                      balloonContentBody: sitter.title,
 
+                    }}
+                    modules={
+                      ['geoObject.addon.balloon', 'geoObject.addon.hint']
+                    }
+                    options={{
+                      draggable: true,
+                      iconLayout: 'default#image',
+                      iconImageHref: `${process.env.REACT_APP_STATIC_URL}icons8-place-marker-100.png`,
+                      iconImageSize: [42, 42],
+                    }} />
+                ))}
+                <ZoomControl />
+              </Map>
+            </YMaps>
+          </div >
+
+        </div>
       </div>
-      <CardModalWindow active={modalActive} setActive={setModalActive}/>
     </div>
+
+
   )
 }
+
+  // {/* <CardModalWindow active={modalActive} setActive={setModalActive}/> */ }

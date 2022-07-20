@@ -117,6 +117,7 @@ router.get('/', async (req, res) => {
       //     res.json(sitters)
       //   }
       // }
+      res.json(sitters)
     } catch (err) {
       console.log(err);
       res.json([])

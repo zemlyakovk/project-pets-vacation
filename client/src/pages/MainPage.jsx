@@ -5,16 +5,10 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-multi-date-picker';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { search } from '../store/actions/search.actions';
 import { setSitters } from '../store/actions/people.action';
 
-
-//{radioValue: 'Собака',
-// textValue: '123',
-// dateFrom: Wed Jul 06 2022 00:00:00 GMT+0300 (Москва, стандартное время),
-// dateTo: Wed Jul 13 2022 00:00:00 GMT+0300 (Москва, стандартное время),
-// serviceType: 'Передержка'}
 
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
@@ -37,7 +31,7 @@ function CustomRangeInput({ openCalendar, value }) {
 export default function MainPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [valueInput, setValueInput] = useState({ radioValue: '', textValue: '', dateFrom: null, dateTo: null, serviceType: 'Передержка' });
+  const [valueInput, setValueInput] = useState({ radioValue: '', address: {}, dateFrom: null, dateTo: null, serviceType: 'Передержка' });
 
   const changeHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
@@ -46,7 +40,7 @@ export default function MainPage() {
   const changeTextHandler = (address) => {
     setValueInput({
       ...valueInput,
-      textValue: address,
+      address: address,
       latitude: address.data.geo_lat,
       longitude: address.data.geo_lon,
       zoom: address.data.street || address.data.settlement ? 13 : 10,
@@ -65,11 +59,10 @@ export default function MainPage() {
     setValueInput({ ...valueInput, serviceType: event.target.value });
   };
 
-  const { sitters } = useSelector((state) => state);
 
-  useEffect(() => {
-    dispatch(setSitters())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(setSitters())
+  // }, [dispatch])
 
   return (
     <>
@@ -93,7 +86,7 @@ export default function MainPage() {
                 <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
                 <AddressSuggestions
                   token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
-                  value={valueInput.textValue}
+                  value={valueInput.address}
                   inputProps={{
                     placeholder: "Введите город, район или точный адрес",
                     // className: `${classes.formControl}`,
@@ -140,15 +133,6 @@ export default function MainPage() {
         </form>
       </div >
       <div className=' cardsFlex '>
-
-        <ul className="collection">
-          {/* {sitters && sitters.map((sitter) =>
-        <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
-      )} */}
-
-        </ul>
-
-
       </div>
 
     </>

@@ -80,7 +80,7 @@ export default function ResultMap() {
                 options={{
                   draggable: true,
                   iconLayout: 'default#image',
-                  iconImageHref: require('../../icons8-place-marker-100.png'),
+                  iconImageHref: `${process.env.REACT_APP_STATIC_URL}icons8-place-marker-100.png`,
                   iconImageSize: [42, 42],
                 }} />
             ))}
