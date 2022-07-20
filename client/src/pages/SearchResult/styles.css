@@ -1,0 +1,27 @@
+.cardsListGrid {
+  margin-top: 40px;
+  padding: 20px 20px;
+  display: flex;
+  width: 80%;
+  min-height: max-content;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+
+.flexCol {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  flex-wrap: wrap;
+  min-height: max-content;
+  box-sizing: border-box;
+}
+
+.map {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  /* box-sizing: border-box; */
+}

@@ -9,6 +9,8 @@ import DatePicker from 'react-multi-date-picker';
 import MiniCardSitter from '../MiniCardSitter';
 import { Map, YMaps } from 'react-yandex-maps'
 import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
+import "./styles.css";
+import CardModalWindow from '../../components/CardModalWindow/CardModalWindow';
 
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
@@ -149,6 +151,8 @@ export default function SearchResult() {
   const { auth: { id } } = useSelector((state) => state);
 
   const { sitters } = useSelector((state) => state);
+
+  const [modalActive, setModalActive] = useState(true)
 
   return (
     <div className='container mx-auto'>
@@ -340,27 +344,32 @@ export default function SearchResult() {
             </div>
           </div>
         </form >
-        <div className="grid grid-cols-2 gap-2">
-          {isLoading ? (
-            <div className="flex items-center justify-center space-x-2 col-span-1">
-              <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
-                <span className="visually-hidden">Loading...</span>
+        <div className='cardsListGrid'>
+          <div className="flexCol">
+            {isLoading ? (
+              <div className="flex items-center justify-center space-x-2 col-span-1">
+                <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
               </div>
-            </div>
 
-          ) : //MiniCardSitter()
-            <div className='flex col-span-1 flex-wrap'>
-              {sitters && sitters.map((sitter) =>
-                <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
-              )}
-            </div>
-          }
-          <YMaps className="col-span-2">
-            <Map defaultState={maState}></Map>
-          </YMaps>
-        </div >
+            ) : //MiniCardSitter()
+              <div className='flex col-span-1 flex-wrap'>
+                {sitters && sitters.map((sitter) =>
+                  <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
+                )}
+              </div>
+            }
+          </div >
+          <div className="map">
+            <YMaps >
+              <Map defaultState={maState}></Map>
+            </YMaps>
+          </div>
+        </div>
 
       </div>
+      <CardModalWindow active={modalActive} setActive={setModalActive}/>
     </div>
   )
 }
