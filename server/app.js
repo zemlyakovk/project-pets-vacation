@@ -68,10 +68,14 @@ app.get("/login/user", async (req, res) => {
         where: {
           id: req.session.userId,
         },
-        include: {
+        include: [{
           model: Address,
           attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
         },
+        {
+          model: Sitter,
+          attributes: ['id']
+        }],
       });
       if (user) {
         if (!user.Address) {
@@ -86,7 +90,6 @@ app.get("/login/user", async (req, res) => {
 });
 
 app.post("/registration", async (req, res) => {
-  console.log("req.body.login", req.body.login);
   const { login, email, password } = req.body;
 
   try {
@@ -100,7 +103,6 @@ app.post("/registration", async (req, res) => {
 
     req.session.userId = newUser.id; // добавляем в сессию айди
     req.session.email = newUser.first_name;
-    console.log("req.session.userId", req.session.userId);
     res.json(newUser);
   } catch (error) {
     console.log(error);
@@ -109,17 +111,19 @@ app.post("/registration", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("НЕ ВЫХОДИТ", email);
-  console.log("email", email);
   try {
     const user = await User.findOne({
       where: {
         email,
       },
-      include: {
+      include: [{
         model: Address,
-        attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude"],
+        attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
       },
+      {
+        model: Sitter,
+        attributes: ['id']
+      }],
     });
 
     if (!user) {
@@ -135,8 +139,6 @@ app.post("/login", async (req, res) => {
     req.session.userId = user.id; // добавляем в сессию айди
     req.session.email = user.email;
     req.session.name = user.name;
-
-    console.log("user.name", user.name);
 
     res.json(user);
 

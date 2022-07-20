@@ -49,7 +49,6 @@ router.get('/profile', async (req, res) => {
         ],
       });
       if (!sitter?.Address && sitter) {
-        console.log('Ytn sitters');
         const user = await User.findOne({
           where: {
             id: sitter.user_id
@@ -150,7 +149,6 @@ router.post('/new', async (req, res) => {
 });
 //* Обновление ситтера
 router.patch('/:id', async (req, res) => {
-  console.log('BODY====>', req.body);
   const {
     id,
     title,

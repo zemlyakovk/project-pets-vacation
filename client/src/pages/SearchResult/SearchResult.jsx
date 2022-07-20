@@ -6,7 +6,6 @@ import { AddressSuggestions } from 'react-dadata';
 import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
-import MiniCardSitter from '../MiniCardSitter';
 import { Map, YMaps } from 'react-yandex-maps'
 import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
 
