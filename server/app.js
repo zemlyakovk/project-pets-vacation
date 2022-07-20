@@ -13,7 +13,7 @@ const search = require("./routes/search.router");
 const reviews = require("./routes/reviews.router");
 const uploader = require("./middleware/uploader");
 
-const { User, Address, Sitter } = require("./db/models");
+const { User, Address, Sitter, Sitter_images } = require("./db/models");
 
 const app = express();
 
@@ -198,23 +198,39 @@ app.get("/allSitters", async (req, res) => {
 });
 
 app.get("/allSitters/:id", async (req, res) => {
-  const { id } = req.params;
-  const onePost = await Sitter.findOne({
-    where: { id },
-    include: {
-      model: User,
-      attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
-    },
-  });
-
-  res.json(onePost);
+  try {
+    const { id } = req.params;
+    // const onePost = await Sitter.findOne({
+    //   where: { id },
+    //   include: {
+    //     model: User,
+    //     attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
+    //   },
+    // });
+    const onePost = await Sitter.findOne({
+      where: { id },
+      include: [
+        {
+          model: User,
+          attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
+        },
+        {
+          model: Sitter_images,
+          attributes: ["url"],
+        },
+      ],
+    });
+    res.json(onePost);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 ///
 app.post("/uploads", uploader.array("images", 30), (req, res) => {
   try {
     if (req.files) {
-      return res.status(200).json(req.files.map((file) => file.filename));
+      return res.status(200).json(req.files.map(file => file.filename));
     }
   } catch (error) {
     console.log(error);

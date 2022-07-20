@@ -15,7 +15,7 @@ import { Navigation } from "swiper";
 
 // { active, setActive }
 // onClick={() => setActive(false)}
-export default function CardModalWindow({setModal, id}) {
+export default function CardModalWindow({ setModal, id }) {
   const modalRef = useRef();
 
   function onCloseHendler() {
@@ -60,13 +60,13 @@ export default function CardModalWindow({setModal, id}) {
 
 
 
-      <div id="defaultModal" tabIndex="-1" className="modal-content overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
+      <div id="defaultModal"  tabIndex="-1" className="modal-content overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
         <div instanceRef={modalRef} className="relative p-4 w-full max-w-2xl h-full md:h-auto">
 
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
-            <div className="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-              <img class="mr-4 w-12 h-12 rounded-full shadow-lg" src="https://previews.123rf.com/images/studiostoks/studiostoks1708/studiostoks170800063/84219839-round-avatar-icon-symbol-character-image-pop-art-retro-vector-illustration.jpg" alt="" />
+            <div className="flex justify-between items-start p-2 rounded-t border-b dark:border-gray-600">
+              <img class="mr-4 w-10 h-10 rounded-full shadow-lg" src={`${process.env.REACT_APP_STATIC_URL}${sitter.data.User.profile_photo}`} alt="" />
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {sitter.data.User.first_name} {sitter.data.User.last_name}
               </h3>
@@ -81,65 +81,64 @@ export default function CardModalWindow({setModal, id}) {
               <div class="flex flex-col items-center">
 
                 <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-                  <SwiperSlide><img src="https://random.dog/7733c91a-ec61-4c50-b423-443ef6fedf6e.jpg" alt="" /></SwiperSlide>
-                  <SwiperSlide><img src="https://random.dog/0afd649d-ec06-403f-aeb5-0262d1750182.jpg" alt="" /></SwiperSlide>
-                  <SwiperSlide><img src="https://media.nature.com/lw800/magazine-assets/d41586-022-01193-1/d41586-022-01193-1_20344900.jpg" alt="" /></SwiperSlide>
+                  {sitter.data.Sitter_images.map((sitter) => (
+                    <SwiperSlide><img className='' src={`${process.env.REACT_APP_STATIC_URL}${sitter.url}`} alt="" /></SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
-              <div className="sitterInfo">
+              <div className="sitterInfo infoColor">
                 <div class="flex flex-col items-left pb-2 mr-8">
 
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Принимает кошек</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Принимает кошек</h5>
                   {sitter.data.cat_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Принимает собак</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Принимает собак</h5>
                   {sitter.data.dog_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Опыт в профессии </h5>
+                  <h5 class="mb-1 text-gray-900 dark:text-white font-normal text-sm">Опыт в профессии </h5>
                   <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.experience} года/лет</span>
 
-                  {/* <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Доступность</h5>
+                  {/* <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Доступность</h5>
                   {sitter.data.active ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>} */}
 
                 </div>
                 <div class="flex flex-col items-left pb-2 mr-8">
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Домашние животные</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Домашние животные</h5>
                   {sitter.data.has_pet_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Есть дети?</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Есть дети?</h5>
                   {sitter.data.has_child ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Готов смотреть:</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Готов смотреть:</h5>
                   {sitter.data.has_pet_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Весь день</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Определенное время</span>}
 
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Условия содержания:</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Условия содержания:</h5>
                   <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.housing_type}</span>
 
 
                 </div>
 
                 <div class="flex flex-col items-left pb-2 mr-8">
-                  <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Готов выгуливать:</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Готов выгуливать:</h5>
                   {sitter.data.walking ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
                   <div class="flex flex-col items-left pb-2 mr-8">
-                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">День передержки:</h5>
+                    <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">День передержки:</h5>
                     <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.price_per_day} рублей</span>
 
-                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Час прогулки:</h5>
+                    <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Час прогулки:</h5>
                     <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.price_per_hour} рублей</span>
 
-                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Постоянный присмотр</h5>
+                    <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Постоянный присмотр</h5>
                     {sitter.data.cat_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
                   </div>
                 </div>
 
               </div>
-
-                {/* <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.desc}</span> */}
-
-
+              <div className="sitterInfo">
+                <span class="box-border pb-6 text-sm text-gray-900 dark:text-gray-400">{sitter.data.desc}</span>
+              </div>
 
 
               <div className="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
