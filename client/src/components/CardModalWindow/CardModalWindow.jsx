@@ -37,7 +37,7 @@ export default function CardModalWindow({setModal, id}) {
       .then(data => setSitter({ loading: false, data }));
   }, [id]);
 
-  console.log("sitter", sitter);
+  // console.log("sitter", sitter);
 
 
 
