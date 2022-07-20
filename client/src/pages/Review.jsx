@@ -11,7 +11,7 @@ export default function Review() {
 
 
   const sendReviewHandler = () => {
-    axios.post('/reviews', {input, rating, id: params.id,}).then(()=>console.log('okkkkkkkkkkkkk'))
+    axios.post('/reviews', {input, rating, id: params.id,}).then(()=>console.log('ok'))
   }
 
 
