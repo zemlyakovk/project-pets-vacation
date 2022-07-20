@@ -206,6 +206,12 @@ router.patch('/:id', async (req, res) => {
         }
       })
       sitter.addPet_age(petAge, { through: Sitter_pet_age })
+    } else {
+      await Sitter_pet_age.destroy({
+        where: {
+          sitter_id: id
+        }
+      })
     }
     if (Pet_sizes.length > 0) {
       await Sitter_pet_size.destroy({
@@ -221,6 +227,12 @@ router.patch('/:id', async (req, res) => {
         }
       })
       sitter.addPet_size(petSize, { through: Sitter_pet_age })
+    } else {
+      await Sitter_pet_size.destroy({
+        where: {
+          sitter_id: id
+        }
+      })
     }
     if (Sitter_dates.length > 0) {
       await Sitter_date.destroy({
