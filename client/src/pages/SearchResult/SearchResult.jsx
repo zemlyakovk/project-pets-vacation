@@ -42,7 +42,7 @@ export default function SearchResult() {
   };
 
   const changeTextHandler = (event) => {
-    setValueInput({ ...valueInput, textValue: event.value });
+    setValueInput({ ...valueInput, textValue: event });
   };
 
   const handleChange = (event) => {
@@ -169,13 +169,16 @@ export default function SearchResult() {
               <div className="flex">
                 <div className="mb-3 xl:w-96">
                   <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
-                  <AddressSuggestions defaultQuery={valueInput.textValue} token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
+                  <AddressSuggestions
+                    token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
+                    value={valueInput.textValue}
+                    onChange={changeTextHandler} />
                 </div>
               </div>
 
               <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
                 <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
-                <DatePicker className='border border-solid border-gray-300' value={valueInput.dateFrom}
+                <DatePicker className='border border-solid border-gray-300' value={[valueInput.dateFrom, valueInput.dateTo]}
                   onChange={(date) => setValueInput({
                     ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
                     dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`

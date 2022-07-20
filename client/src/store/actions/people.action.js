@@ -8,7 +8,6 @@ export const setSitters = () => async (dispatch) => {
       type: SET_SITTERS,
       payload: result.data.allSitters
     })
-    console.log("user",result.data.allSitters);
   } catch (error) {
     console.log(error);
   }
