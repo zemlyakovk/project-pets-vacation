@@ -8,7 +8,6 @@ import DatePicker from 'react-multi-date-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../store/actions/search.actions';
 import { setSitters } from '../store/actions/people.action';
-import MiniCardSitterMainPage from './MiniCardSitterMainPage';
 
 
 //{radioValue: 'Собака',
@@ -60,8 +59,6 @@ export default function MainPage() {
     setValueInput({ ...valueInput, serviceType: event.target.value });
   };
 
-  const { auth: { id } } = useSelector((state) => state);
-
   const { sitters } = useSelector((state) => state);
 
   console.log('sitters', sitters);
@@ -95,20 +92,20 @@ export default function MainPage() {
             </div>
 
 
-          <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
-            <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
-            <DatePicker value={valueInput.dateFrom}
-              onChange={(date) => setValueInput({
-                ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
-                dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
-              })}
-              multiple={true}
-              numberOfMonths={2}
-              minDate={new Date()}
-              maxDate={new Date().setDate(90)}
-              render={<CustomRangeInput />}
-              range />
-          </div>
+            <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
+              <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
+              <DatePicker value={valueInput.dateFrom}
+                onChange={(date) => setValueInput({
+                  ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
+                  dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
+                })}
+                multiple={true}
+                numberOfMonths={2}
+                minDate={new Date()}
+                maxDate={new Date().setDate(90)}
+                render={<CustomRangeInput />}
+                range />
+            </div>
 
 
 

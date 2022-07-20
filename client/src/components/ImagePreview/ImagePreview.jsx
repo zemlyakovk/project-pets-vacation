@@ -1,11 +1,11 @@
 import React from 'react';
 import classes from './ImagePreview.module.css';
 
-export default function ImagePreview({ image, removedFilesId, setImages, setFiles }) {
+export default function ImagePreview({ image, removedFilesNames, setImages, setFiles }) {
   function onRemoveHandler() {
     // * Если файлы уже есть на беке то просто собираем массив удаленных, иначе удаляем из массива выбранных
     if (image.id) {
-      removedFilesId.current.push(image.id);
+      removedFilesNames.current.push(image.filename);
     } else {
       // * Удаляем файлы из массива для загрузки если пользователь нажал на крестик
       setFiles((prev) => prev.filter((el) => `${el.name}-${el.lastModified}-${el.size}` !== image.originalParams))
