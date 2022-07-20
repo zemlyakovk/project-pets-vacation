@@ -19,6 +19,8 @@ module.exports = {
       password: '123',
       age: '24',
       profile_photo: 'ldouOtWRDk-OfCBME4QOwsF5OO1UgelY.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Юлия',
       last_name: 'Федотова',
@@ -29,6 +31,8 @@ module.exports = {
       password: '123',
       age: '25',
       profile_photo: 'gpnsTVWTEE4bvFL-PiaYAaw-ZciSD9oj.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Анна',
       last_name: 'Ефимова',
@@ -39,6 +43,8 @@ module.exports = {
       password: '123',
       age: '30',
       profile_photo: '6kyNIPr0meXGIls6izi94hrkpBvlllqF.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Оксана',
       last_name: 'Липова',
@@ -49,6 +55,8 @@ module.exports = {
       password: '123',
       age: '26',
       profile_photo: '6JTVk1lK9OWd-NhxFqW_H10Y5lSuVSpZ.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Лев',
       last_name: 'Фидин',
@@ -59,6 +67,8 @@ module.exports = {
       password: '123',
       age: '29',
       profile_photo: 'uAA2_v9l_463W1wi2KzshW_Fl4daI75h.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Виталий',
       last_name: 'Капустин',
@@ -69,6 +79,8 @@ module.exports = {
       password: '123',
       age: '29',
       profile_photo: 'JDsgZiK1XrpA-8GrodhI8TJlgquc-fM4.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Людмила',
       last_name: 'Сергеевна',
@@ -79,6 +91,8 @@ module.exports = {
       password: '123',
       age: '40',
       profile_photo: '1IMd5yo_jVnXF0qsDi3im7wzwJ6zRzkZ.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Иван',
       last_name: 'Сипин',
@@ -89,6 +103,8 @@ module.exports = {
       password: '123',
       age: '29',
       profile_photo: 'mIimrAUmPJL825KcOlrIT7vOvTUJiMux.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Александра',
       last_name: 'Чикина',
@@ -99,6 +115,8 @@ module.exports = {
       password: '123',
       age: '33',
       profile_photo: 'fyCANBhSVxOFb_jrxTOtsgtoqTjWS3qt.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Мария',
       last_name: 'Сокина',
@@ -109,6 +127,8 @@ module.exports = {
       password: '123',
       age: '36',
       profile_photo: 'aNOjBV7pcP9IJRtBC5JzrXblkk5Wcpzg.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Лидия',
       last_name: 'Мохова',
@@ -119,6 +139,8 @@ module.exports = {
       password: '123',
       age: '33',
       profile_photo: 'BmlEnNanwJEoC2JFuovM8yz_Eu1R0DEy.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       first_name: 'Елена',
       last_name: 'Фокина',
@@ -129,6 +151,8 @@ module.exports = {
       password: '123',
       age: '52',
       profile_photo: 'JrmQYzaLTpSQJ3PTnVN5V2nStn972BFh.jpeg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 

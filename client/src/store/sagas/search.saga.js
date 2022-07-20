@@ -3,7 +3,7 @@ import axios from '../../axios/axios';
 import { SEARCH, SEARCH_LIST } from '../types';
 
 async function getDataFromServer(url, text) {
-  const { data } = await axios.post(url, text)
+  const { data } = await axios.get(url, text)
 
   if (data) {
     return data
@@ -17,8 +17,10 @@ function* searchWorker(data) {
     yield put ({
       type: `${SEARCH}_START`
     })
-    // console.log(data.params);
-    const result = yield call(getDataFromServer, '/search', data.params)
+    
+    const { radioValue, latitude, longitude, dateFrom, dateTo, serviceType, distance } = data.params;
+    const url = `/search?latitude=${latitude}&longitude=${longitude}&distance=${distance}&radioValue=${radioValue}&dateFrom=${dateFrom}&dateTo=${dateTo}&serviceType=${serviceType}`
+    const result = yield call(getDataFromServer, url)
     console.log(result);
     yield put ({
       type: `${SEARCH}_SUCCESS`,
