@@ -51,7 +51,7 @@ export default function ModalMap({ map, setMap, setAddress }) {
                   // properties={{
                   //   iconContent: '12'
                   // }}
-                  // Событие change связано с св-вом geometry инстанса метки, 
+                  // Событие change связано с св-вом geometry инстанса метки,
                   // поэтому onChange работать не будет, придется использовать instanceRef
                   instanceRef={ref => {
                     if (ref) {
