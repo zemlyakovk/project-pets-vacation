@@ -23,6 +23,9 @@ footer {
   flex-direction: row;
 }
 
+.flexSitterCard{
+  width: 536px;
+}
 
 .formCenter {
   display: flex;
