@@ -10,18 +10,18 @@ module.exports = {
      * }], {});
     */
     await queryInterface.bulkInsert('Pet_ages', [{
-      title: 'Маленький',
-      desc: '(от 1 до 10 кг)',
+      title: 'Щенок',
+      desc: '(до 1 года)',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      title: 'Средний',
-      desc: '(от 10 до 30 кг)',
+      title: 'Взрослый',
+      desc: '(от 1 года до 7 лет)',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      title: 'Большой',
-      desc: '(от 30 кг)',
+      title: 'Старый',
+      desc: '(от 7 лет)',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
