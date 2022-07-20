@@ -186,7 +186,7 @@ app.get("/allSitters", async (req, res) => {
       raw: true,
       include: {
         model: User,
-        attributes: ["desc", "id", "first_name", "last_name"],
+        attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
       },
     });
     console.log(allSitters);
@@ -203,7 +203,7 @@ app.get("/allSitters/:id", async (req, res) => {
     where: { id },
     include: {
       model: User,
-      attributes: ["desc", "id", "first_name", "last_name"],
+      attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
     },
   });
 
