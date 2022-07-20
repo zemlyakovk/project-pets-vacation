@@ -158,9 +158,10 @@ export default function SearchResult() {
   // }, [value])
 
 
-  // const { sitters } = useSelector((state) => state);
 
-  const [modalActive, setModalActive] = useState(true)
+
+
+
 
   return (
     <div className='container mx-auto'>
@@ -212,7 +213,7 @@ export default function SearchResult() {
                 </select>
               </div>
             </div>
-            <div className="px-4 py-5 bg-white sm:p-6">
+            <div className="px-6 py-5 bg-white sm:p-6">
               <div className="grid grid-cols-6 gap-6">
                 <div className="flex col-span-2">
                   <div>
@@ -367,11 +368,13 @@ export default function SearchResult() {
             ) : //MiniCardSitter()
               <div className='flex col-span-1 flex-wrap'>
                 {sitters && sitters.map((sitter) =>
-                  <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
+                  <MiniCardSitterMainPage  key={sitter.id}  {...sitter} />
                 )}
               </div>
             }
-            <YMaps className='col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
+          </div>
+          <div className='map '>
+            <YMaps className='mapBox col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
               <Map
                 modules={["geocode", "coordSystem.geo"]}
                 onLoad={(ymaps) => {
@@ -380,7 +383,7 @@ export default function SearchResult() {
                 defaultState={{
                   center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
                   zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
-                }} width='500px' height='500px' instanceRef={ref => {
+                }} width='400px' height='400px' instanceRef={ref => {
                   if (ref) {
                     mapRef.current = ref
                   }
@@ -407,11 +410,13 @@ export default function SearchResult() {
                 <ZoomControl />
               </Map>
             </YMaps>
-          </div >
+          </div>
+        </div >
 
-        </div>
       </div>
+
     </div>
+
 
 
   )
