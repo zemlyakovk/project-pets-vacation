@@ -8,31 +8,23 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-     */
-    await queryInterface.bulkInsert(
-      "Pet_ages",
-      [
-        {
-          title: "Щенок",
-          desc: "(до 1 года)",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          title: "Взрослый",
-          desc: "(от 1 года до 7 лет)",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          title: "Старый",
-          desc: "(от 7 лет)",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {}
-    );
+    */
+    await queryInterface.bulkInsert('Pet_ages', [{
+      title: 'Щенок',
+      desc: '(до 1 года)',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      title: 'Взрослый',
+      desc: '(от 1 года до 7 лет)',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      title: 'Старый',
+      desc: '(от 7 лет)',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
   },
 
   async down(queryInterface, Sequelize) {
