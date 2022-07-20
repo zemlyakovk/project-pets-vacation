@@ -17,7 +17,9 @@ function customeWhere(query) {
     noPet,
     supervision_24,
     housing_type,
-    price_per_day
+    price_per_day,
+    price_per_hour,
+    experience
 
   } = query;
   const where = {};
@@ -49,14 +51,22 @@ function customeWhere(query) {
     where.housing_type = housing_type;
   }
   if (price_per_day > 0) {
-    where.price_per_day = price_per_day
+    where.price_per_day = {
+      [Op.lte]: price_per_day
+    }
   }
   if (price_per_hour > 0) {
-    where.price_per_hour = price_per_hour
+    where.price_per_hour = {
+      [Op.lte]: price_per_hour
+    }
   }
   if (experience > 0) {
-    where.experience = experience
+    where.experience = {
+      [Op.gte]: experience
+    }
   }
+  console.log(where);
+  return where;
 }
 
 module.exports = { deleteFile, customeWhere };
