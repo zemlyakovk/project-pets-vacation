@@ -65,7 +65,6 @@ function customeWhere(query) {
       [Op.gte]: experience
     }
   }
-  console.log(where);
   return where;
 }
 

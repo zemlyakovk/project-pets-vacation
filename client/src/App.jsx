@@ -4,7 +4,7 @@ import Layout from './components/Layout';
 import Chat from './components/Chat';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainPage/MainPage';
 import Profile from './pages/Profile/Profile';
 import Registration from './pages/Registration';
 import SitterCard from './pages/SitterCard';
@@ -17,7 +17,6 @@ import { setSitter } from './store/actions/sitter.action';
 import ResultMap from './pages/ResultMap/ResultMap';
 import SitterDetail from './pages/SitterDetail/SitterDetail';
 import CardModalWindow from './components/CardModalWindow/CardModalWindow';
-
 
 
 
