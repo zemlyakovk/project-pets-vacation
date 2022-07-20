@@ -9,25 +9,6 @@ import { useDispatch } from 'react-redux';
 import { search } from '../../store/actions/search.actions';
 import classes from './MainPage.module.css'
 
-
-// функция для иконки календаря
-function CustomRangeInput({ openCalendar, value }) {
-  let from = value[0] || ""
-  let to = value[1] || ""
-
-  value = from && to ? "От " + from + ", до " + to : from
-
-  return (
-    <input
-      onFocus={openCalendar}
-      value={value}
-      readOnly
-      className='border border-solid border-gray-300 w-60'
-      id='date'
-    />
-  )
-}
-
 export default function MainPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
