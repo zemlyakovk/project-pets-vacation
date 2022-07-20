@@ -299,7 +299,7 @@ export default function SitterProfile() {
                     onChange={setSelectedAge}
                     disableSearch={true}
                     overrideStrings={{
-                      "allItemsAreSelected": "Выбраны все размеры",
+                      "allItemsAreSelected": "Выбраны все возрасты",
                       "selectAll": "Выбрать все",
                       "selectAllFiltered": "Выбрать все",
                       "selectSomeItems": "Выберите возраст",

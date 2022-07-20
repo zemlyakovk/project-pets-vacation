@@ -6,11 +6,11 @@ import Navbar from './Navbar/Navbar'
 
 export default function Layout() {
   return (
-    <div className='page'>
+    <div className='min-h-screen flex flex-col'>
       <header>
         <Navbar />
       </header>
-      <main>
+      <main className='grow flex flex-col justify-center'>
         <Outlet />
       </main>
 
