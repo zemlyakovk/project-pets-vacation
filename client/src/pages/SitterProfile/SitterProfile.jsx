@@ -21,7 +21,7 @@ export default function SitterProfile() {
   const [address, setAddress] = useState();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
-  const removedFilesId = useRef([]);
+  const removedFilesNames = useRef([]);
   const [files, setFiles] = useState([]);
 
   const [map, setMap] = useState({
@@ -46,6 +46,7 @@ export default function SitterProfile() {
       ({
         id: file.id,
         url: `${process.env.REACT_APP_STATIC_URL}${file.url}`,
+        filename: file.url,
       })))
     }
   }, [sitter.value])
@@ -75,24 +76,27 @@ export default function SitterProfile() {
     event.preventDefault();
     try {
       let body;
+      let response;
+      const data = new FormData();
+      for (const single_file of files) {
+        data.append('images', single_file)
+      }
+      if (files) {
+        response = await axios.post(`/uploads`, data);
+      }
+      if (response.data) {
+        body = { addFiles: response.data, removedFilesNames: removedFilesNames.current }
+      }
+      body = { ...body, state }
       if (state.id) {
-        const data = new FormData();
-        for (const single_file of files) {
-          data.append('images', single_file)
-        }
-        const response = await axios.post(`/uploads`, data);
-        if (response.data) {
-          body = { addFiles: response.data, removedFilesId: removedFilesId.current }
-        }
-        body = { ...body, state }
         await axios.patch(`/sitters/${state.id}`, body);
-        removedFilesId.current = [];
-        setFiles([]);
         dispatch(setSitter());
       } else {
-        await axios.post('/sitters/new', state);
+        await axios.post('/sitters/new', body);
         dispatch(setSitter());
       }
+      removedFilesNames.current = [];
+      setFiles([]);
     } catch (error) {
       console.log(error.message);
     }
@@ -388,7 +392,7 @@ export default function SitterProfile() {
                     Настройте свое расписание
                   </label>
                 </div>
-                <ImagesUpload images={images} setImages={setImages} removedFilesId={removedFilesId} setFiles={setFiles} />
+                <ImagesUpload images={images} setImages={setImages} removedFilesNames={removedFilesNames} setFiles={setFiles} />
               </div>
             </div>
             <div className="px-4 py-3  text-right sm:px-6">

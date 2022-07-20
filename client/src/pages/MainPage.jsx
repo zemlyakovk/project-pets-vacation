@@ -8,7 +8,6 @@ import DatePicker from 'react-multi-date-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { search } from '../store/actions/search.actions';
 import { setSitters } from '../store/actions/people.action';
-import MiniCardSitterMainPage from './MiniCardSitterMainPage';
 
 
 //{radioValue: 'Собака',
@@ -44,9 +43,15 @@ export default function MainPage() {
     setValueInput({ ...valueInput, radioValue: event.target.value });
   };
 
-  const changeTextHandler = (event) => {
-    console.log(event);
-    setValueInput({ ...valueInput, textValue: event.value });
+  const changeTextHandler = (address) => {
+    setValueInput({
+      ...valueInput,
+      textValue: address,
+      latitude: address.data.geo_lat,
+      longitude: address.data.geo_lon,
+      zoom: address.data.street || address.data.settlement ? 13 : 10,
+      distance: address.data.street || address.data.settlement ? 5 : 30
+    });
   };
 
   function submitHandler(e) {
@@ -60,11 +65,7 @@ export default function MainPage() {
     setValueInput({ ...valueInput, serviceType: event.target.value });
   };
 
-  const { auth: { id } } = useSelector((state) => state);
-
   const { sitters } = useSelector((state) => state);
-
-  console.log('sitters', sitters);
 
   useEffect(() => {
     dispatch(setSitters())
@@ -90,25 +91,36 @@ export default function MainPage() {
             <div className="flex">
               <div className="mb-3 xl:w-96">
                 <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
-                <AddressSuggestions token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4" value={valueInput.textValue} onChange={changeTextHandler} />
+                <AddressSuggestions
+                  token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
+                  value={valueInput.textValue}
+                  inputProps={{
+                    placeholder: "Введите город, район или точный адрес",
+                    // className: `${classes.formControl}`,
+                    id: 'street-address',
+                    name: 'address',
+                  }}
+                  filterFromBound='city'
+                  filterToBound='house'
+                  onChange={changeTextHandler} />
               </div>
             </div>
 
 
-          <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
-            <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
-            <DatePicker value={valueInput.dateFrom}
-              onChange={(date) => setValueInput({
-                ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
-                dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
-              })}
-              multiple={true}
-              numberOfMonths={2}
-              minDate={new Date()}
-              maxDate={new Date().setDate(90)}
-              render={<CustomRangeInput />}
-              range />
-          </div>
+            <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
+              <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
+              <DatePicker value={[valueInput.dateFrom, valueInput.dateTo]}
+                onChange={(date) => setValueInput({
+                  ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
+                  dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
+                })}
+                multiple={true}
+                numberOfMonths={2}
+                minDate={new Date()}
+                maxDate={new Date().setDate(90)}
+                render={<CustomRangeInput />}
+                range />
+            </div>
 
 
 

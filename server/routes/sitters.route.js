@@ -5,6 +5,7 @@ const {
 } = require('../db/models');
 const sitter = require('../db/models/sitter');
 const user = require('../db/models/user');
+const { deleteFile } = require('../controller/controller');
 
 //* Получение данных ситтера
 router.get('/profile', async (req, res) => {
@@ -48,7 +49,6 @@ router.get('/profile', async (req, res) => {
         ],
       });
       if (!sitter?.Address && sitter) {
-        console.log('Ytn sitters');
         const user = await User.findOne({
           where: {
             id: sitter.user_id
@@ -90,7 +90,7 @@ router.post('/new', async (req, res) => {
     Sitter_dates,
     Address: Addresses
   } = req.body.state;
-  const { addFiles, removedFilesId } = req.body;
+  const { addFiles } = req.body;
   try {
     const newSitter = await Sitter.create({
       user_id: req.session.userId,
@@ -149,7 +149,6 @@ router.post('/new', async (req, res) => {
 });
 //* Обновление ситтера
 router.patch('/:id', async (req, res) => {
-  console.log('BODY====>', req.body);
   const {
     id,
     title,
@@ -170,7 +169,7 @@ router.patch('/:id', async (req, res) => {
     Sitter_dates,
     Address: Addresses
   } = req.body.state;
-  const { addFiles, removedFilesId } = req.body;
+  const { addFiles, removedFilesNames } = req.body;
   console.log(JSON.stringify(req.body));
   try {
     await Sitter.update({
@@ -257,11 +256,15 @@ router.patch('/:id', async (req, res) => {
     if (addFiles?.length) {
       await Sitter_images.bulkCreate(addFiles.map((file) => ({ sitter_id: sitter.id, url: file })));
     }
-    if (removedFilesId?.length) {
+    if (removedFilesNames?.length) {
+      removedFilesNames.forEach((file) => {
+        deleteFile(file);
+      })
+
       await Sitter_images.destroy({
         where: {
-          id: {
-            [Op.in]: removedFilesId
+          url: {
+            [Op.in]: removedFilesNames
           }
         } })
     }
