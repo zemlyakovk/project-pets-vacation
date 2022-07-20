@@ -66,7 +66,7 @@ useEffect(()=> {
       })}
       </div>
       {/* <div className=' h-32 bg-slate-200'>Местоположение</div> */}
-      <div className='mt-2 ml-4 '>
+      <div className='mt-2 ml-8 '>
        <span className='font-bold text-lg'>Отзывы о ситтере</span> 
       {reviewsList?.map((el)=>{
         return    <SitterProfileReviewCard desc={el.desc} rating={el.rating} name={el.User.first_name}
