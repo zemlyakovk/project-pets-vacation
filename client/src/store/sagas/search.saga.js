@@ -27,7 +27,6 @@ function* searchWorker(data) {
       dateTo,
       serviceType, 
       distance,
-      experience: 10
     }
     yield delay(300)
     const result = yield call(getDataFromServer, '/search', params)
