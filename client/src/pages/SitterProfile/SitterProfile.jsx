@@ -76,24 +76,27 @@ export default function SitterProfile() {
     event.preventDefault();
     try {
       let body;
+      let response;
+      const data = new FormData();
+      for (const single_file of files) {
+        data.append('images', single_file)
+      }
+      if (files) {
+        response = await axios.post(`/uploads`, data);
+      }
+      if (response.data) {
+        body = { addFiles: response.data, removedFilesNames: removedFilesNames.current }
+      }
+      body = { ...body, state }
       if (state.id) {
-        const data = new FormData();
-        for (const single_file of files) {
-          data.append('images', single_file)
-        }
-        const response = await axios.post(`/uploads`, data);
-        if (response.data) {
-          body = { addFiles: response.data, removedFilesNames: removedFilesNames.current }
-        }
-        body = { ...body, state }
         await axios.patch(`/sitters/${state.id}`, body);
-        removedFilesNames.current = [];
-        setFiles([]);
         dispatch(setSitter());
       } else {
-        await axios.post('/sitters/new', state);
+        await axios.post('/sitters/new', body);
         dispatch(setSitter());
       }
+      removedFilesNames.current = [];
+      setFiles([]);
     } catch (error) {
       console.log(error.message);
     }
