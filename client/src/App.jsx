@@ -14,6 +14,10 @@ import SearchResult from './pages/SearchResult/SearchResult';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './store/actions/auth.action';
 import { setSitter } from './store/actions/sitter.action';
+import ResultMap from './pages/ResultMap/ResultMap';
+import SitterDetail from './pages/SitterDetail/SitterDetail';
+import CardModalWindow from './components/CardModalWindow/CardModalWindow';
+
 
 
 
@@ -44,7 +48,12 @@ function App() {
           <Route path='sitters'>
             <Route path='profile/new' element={<SitterProfile />} />
             <Route path=':id' element={<SitterCard />} />
-            <Route path='profile' element={<SitterProfile />} />
+            <Route path='profile' element={<SitterDetail />} />
+            <Route path='card-modal' element={<CardModalWindow />} />
+          </Route>
+          <Route path='Allsitters'>
+            <Route path=':id' element={<CardModalWindow />} />
+            <Route path='map' element={<ResultMap />} />
           </Route>
         </Route>
       </Routes>

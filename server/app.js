@@ -7,12 +7,13 @@ const path = require("path");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
-const sittersRouter = require('./routes/sitters.route');
-const usersRouter = require('./routes/users.route');
-const search = require('./routes/search.router');
-const reviews = require('./routes/reviews.router');
+const sittersRouter = require("./routes/sitters.route");
+const usersRouter = require("./routes/users.route");
+const search = require("./routes/search.router");
+const reviews = require("./routes/reviews.router");
+const uploader = require('./middleware/uploader');
 
-const { User, Address } = require("./db/models");
+const { User, Address, Sitter } = require("./db/models");
 
 const app = express();
 
@@ -54,8 +55,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sessionConfig));
 app.use(cookieParser());
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb', extended: true }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // * регистрация и авторизация
 
@@ -65,14 +66,16 @@ app.get("/login/user", async (req, res) => {
     if (req.session.userId) {
       const user = await User.findOne({
         where: {
-          id: req.session.userId
+          id: req.session.userId,
         },
-        include: {
+        include: [{
           model: Address,
-          attributes: [
-            'address', 'zip_code', 'region', 'district', 'city', 'settlement', 'street', 'latitude', 'longitude', 'area'
-          ]
-        }
+          attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
+        },
+        {
+          model: Sitter,
+          attributes: ['id']
+        }],
       });
       if (user) {
         if (!user.Address) {
@@ -87,21 +90,19 @@ app.get("/login/user", async (req, res) => {
 });
 
 app.post("/registration", async (req, res) => {
-  console.log("req.body.login", req.body.login);
   const { login, email, password } = req.body;
 
   try {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const newUser = await User.create({
       first_name: login,
-      last_name: '',
+      last_name: "",
       email,
       password: hashedPassword,
     });
 
     req.session.userId = newUser.id; // добавляем в сессию айди
     req.session.email = newUser.first_name;
-    console.log("req.session.userId", req.session.userId);
     res.json(newUser);
   } catch (error) {
     console.log(error);
@@ -110,20 +111,19 @@ app.post("/registration", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("НЕ ВЫХОДИТ", email);
-  console.log("email", email);
   try {
     const user = await User.findOne({
       where: {
         email,
       },
-      include: {
+      include: [{
         model: Address,
-        attributes: [
-          'address', 'zip_code', 'region', 'district', 'city', 'settlement', 'street', 'latitude', 'longitude'
-        ]
-      }
-      ,
+        attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
+      },
+      {
+        model: Sitter,
+        attributes: ['id']
+      }],
     });
 
     if (!user) {
@@ -140,8 +140,6 @@ app.post("/login", async (req, res) => {
     req.session.email = user.email;
     req.session.name = user.name;
 
-    console.log("user.name", user.name);
-
     res.json(user);
 
     // добавляем в сессию айди нового юзер
@@ -157,11 +155,69 @@ app.get("/logout", async (req, res) => {
   res.sendStatus(200); // делает редирект
 });
 
-app.use('/sitters', sittersRouter);
-app.use('/search', search);
-app.use('/reviews', reviews);
+/// все ситтеры
 
-app.use('/users', usersRouter)
+// app.get("/allSitters", async (req, res) => {
+//   try {
+//     const allSitters = await User.findAll({
+//       order: [["createdAt", "DESC"]],
+//       raw: true,
+//       include: {
+//         model: Sitter,
+//         attributes: ["desc", "id"],
+//       },
+//     });
+//     console.log(allSitters);
+//     console.log(allSitters[0]["Sitter.desc"]);
+//     res.json({ allSitters });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+app.get("/allSitters", async (req, res) => {
+  try {
+    const allSitters = await Sitter.findAll({
+      order: [["createdAt", "DESC"]],
+      raw: true,
+      include: {
+        model: User,
+        attributes: ["desc", "id", "first_name", "last_name"],
+      },
+    });
+    console.log(allSitters);
+    console.log(allSitters[0]["User.desc"]);
+    res.json({ allSitters });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/allSitters/:id", async (req, res) => {
+  const { id } = req.params;
+  const onePost = await Sitter.findOne({
+    where: { id },
+    include: {
+      model: User,
+      attributes: ["desc", "id", "first_name", "last_name"],
+    },
+  });
+
+  res.json(onePost);
+});
+
+///
+app.post('/uploads', uploader.array('images', 30), (req, res) => {
+  if (req.files) {
+    return res.status(200).json(req.files.map((file) => file.filename));
+  }
+})
+
+app.use("/sitters", sittersRouter);
+app.use("/search", search);
+app.use("/reviews", reviews);
+
+app.use("/users", usersRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}!`);

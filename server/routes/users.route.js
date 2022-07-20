@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const { User, Address } = require('../db/models');
+const { saveAvatar } = require('../middleware/middleware')
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', saveAvatar, async (req, res) => {
   const {
     first_name,
     last_name,
@@ -11,6 +12,7 @@ router.patch('/:id', async (req, res) => {
     phone,
     age,
     id,
+    profile_photo,
     Address: Addresses } = req.body;
   try {
     await User.update(
@@ -22,6 +24,7 @@ router.patch('/:id', async (req, res) => {
         desc,
         phone,
         age,
+        profile_photo
       },
       {
         where: { id }

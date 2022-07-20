@@ -8,7 +8,7 @@ export default function ModalAvatar({ pic, setPic }) {
     if (picRef.current) {
       const canvasScaled = picRef.current.getImageScaledToCanvas();
       const croppedImg = canvasScaled.toDataURL();
-      setPic({ ...pic, img: null, croppedImg: croppedImg, cropperOpen: false })
+      setPic({ ...pic, img: null, croppedImg: croppedImg, cropperOpen: false, new: true })
     }
   }
 
