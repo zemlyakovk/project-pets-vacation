@@ -8,6 +8,8 @@ import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
 import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps'
 import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
+import "./styles.css";
+import CardModalWindow from '../../components/CardModalWindow/CardModalWindow';
 
 // функция для иконки календаря
 function CustomRangeInput({ openCalendar, value }) {
@@ -156,7 +158,10 @@ export default function SearchResult() {
   // }, [value])
 
 
-  // const { sitters } = useSelector((state) => state);
+
+
+
+
 
   return (
     <div className='container mx-auto'>
@@ -208,7 +213,7 @@ export default function SearchResult() {
                 </select>
               </div>
             </div>
-            <div className="px-4 py-5 bg-white sm:p-6">
+            <div className="px-6 py-5 bg-white sm:p-6">
               <div className="grid grid-cols-6 gap-6">
                 <div className="flex col-span-2">
                   <div>
@@ -351,60 +356,70 @@ export default function SearchResult() {
             </div>
           </div>
         </form >
-        <div className="grid grid-cols-2 gap-2">
-          {isLoading ? (
-            <div className="flex items-center justify-center space-x-2 col-span-1">
-              <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
-                <span className="visually-hidden">Loading...</span>
+        <div className='cardsListGrid'>
+          <div className="flexCol">
+            {isLoading ? (
+              <div className="flex items-center justify-center space-x-2 col-span-1">
+                <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
               </div>
-            </div>
 
-          ) : //MiniCardSitter()
-            <div className='flex col-span-1 flex-wrap'>
-              {sitters && sitters.map((sitter) =>
-                <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
-              )}
-            </div>
-          }
-          <YMaps className='col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
-            <Map
-              modules={["geocode", "coordSystem.geo"]}
-              onLoad={(ymaps) => {
-                setYmap(ymaps);
-              }}
-              defaultState={{
-                center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
-                zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
-              }} width='500px' height='500px' instanceRef={ref => {
-                if (ref) {
-                  mapRef.current = ref
-                }
-              }}>
-              {sitters.map((sitter, i) => (
-                <Placemark
-                  key={'placemark#' + i}
-                  geometry={[sitter.Address.latitude, sitter.Address.longitude]}
-                  properties={{
-                    balloonContentHeader: `${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
-                    balloonContentBody: sitter.title,
-
-                  }}
-                  modules={
-                    ['geoObject.addon.balloon', 'geoObject.addon.hint']
+            ) : //MiniCardSitter()
+              <div className='flex col-span-1 flex-wrap'>
+                {sitters && sitters.map((sitter) =>
+                  <MiniCardSitterMainPage  key={sitter.id}  {...sitter} />
+                )}
+              </div>
+            }
+          </div>
+          <div className='map '>
+            <YMaps className='mapBox col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
+              <Map
+                modules={["geocode", "coordSystem.geo"]}
+                onLoad={(ymaps) => {
+                  setYmap(ymaps);
+                }}
+                defaultState={{
+                  center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
+                  zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
+                }} width='400px' height='400px' instanceRef={ref => {
+                  if (ref) {
+                    mapRef.current = ref
                   }
-                  options={{
-                    draggable: true,
-                    iconLayout: 'default#image',
-                    iconImageHref: `${process.env.REACT_APP_STATIC_URL}icons8-place-marker-100.png`,
-                    iconImageSize: [42, 42],
-                  }} />
-              ))}
-              <ZoomControl />
-            </Map>
-          </YMaps>
+                }}>
+                {sitters.map((sitter, i) => (
+                  <Placemark
+                    key={'placemark#' + i}
+                    geometry={[sitter.Address.latitude, sitter.Address.longitude]}
+                    properties={{
+                      balloonContentHeader: `${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
+                      balloonContentBody: sitter.title,
+
+                    }}
+                    modules={
+                      ['geoObject.addon.balloon', 'geoObject.addon.hint']
+                    }
+                    options={{
+                      draggable: true,
+                      iconLayout: 'default#image',
+                      iconImageHref: `${process.env.REACT_APP_STATIC_URL}icons8-place-marker-100.png`,
+                      iconImageSize: [42, 42],
+                    }} />
+                ))}
+                <ZoomControl />
+              </Map>
+            </YMaps>
+          </div>
         </div >
 
       </div>
+
     </div>
+
+
+
   )
 }
+
+  // {/* <CardModalWindow active={modalActive} setActive={setModalActive}/> */ }

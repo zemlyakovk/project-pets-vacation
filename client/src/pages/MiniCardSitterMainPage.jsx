@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
 import Review from './Review'
 
 export default function MiniCardSitterMainPage
-  ({ id, "User.first_name": first_name, "User.last_name": last_name, desc }) {
-  // const { sitters: {users} } = useSelector((state) => state);
+  ({ id, User: {first_name}, User: {last_name}, desc }) {
+
+    const [modal, setModal] = useState({
+      show: false
+    });
+
+    console.log("modal.show",modal.show);
+
+  function showModalHandler() {
+    setModal((prev) => ({ ...prev, show: true, id}))
+  }
+
   return (
 
 
-    <div className=" flex justify-center p-2  w-[500px] min-h-min mt-11">
+    <div className="flex mb-5">
       <div className="flex  flex-row rounded-lg bg-white shadow-lg">
         <div className=' flex items-center'>
           <img className=" w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src={`${process.env.REACT_APP_STATIC_URL}1658215752423-avatar.png`} alt="" />
@@ -31,13 +42,15 @@ export default function MiniCardSitterMainPage
             {desc}
           </p>
 
-          {/* <button to={`/allSitters/${id}`} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'></button> */}
-          <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link>
+          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>Подробнее</button>
+          {/* <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link> */}
 
         </div>
       </div>
 
-
+      {
+        modal.show && <CardModalWindow setModal={setModal} id={id}/>
+      }
 
     </div>
 
