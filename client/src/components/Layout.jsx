@@ -2,15 +2,15 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Footer from './Footer'
-import Navbar from './Navbar'
+import Navbar from './Navbar/Navbar'
 
 export default function Layout() {
   return (
-    <div className='page'>
+    <div className='min-h-screen flex flex-col'>
       <header>
         <Navbar />
       </header>
-      <main className="formCenter">
+      <main className='grow flex flex-col justify-center'>
         <Outlet />
       </main>
 

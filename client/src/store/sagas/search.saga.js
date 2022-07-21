@@ -1,9 +1,10 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, delay, put, takeEvery } from 'redux-saga/effects'
 import axios from '../../axios/axios';
 import { SEARCH, SEARCH_LIST } from '../types';
 
-async function getDataFromServer(url, text) {
-  const { data } = await axios.post(url, text)
+async function getDataFromServer(url, params) {
+  const { data } = await axios.get(url, {params})
+
 
   if (data) {
     return data
@@ -17,8 +18,19 @@ function* searchWorker(data) {
     yield put ({
       type: `${SEARCH}_START`
     })
-    // console.log(data.params);
-    const result = yield call(getDataFromServer, '/search', data.params)
+    
+    const { radioValue, latitude, longitude, dateFrom, dateTo, serviceType, distance } = data.params;
+    const params = {
+      radioValue, 
+      latitude, 
+      longitude, 
+      dateFrom, 
+      dateTo,
+      serviceType, 
+      distance,
+    }
+    yield delay(300)
+    const result = yield call(getDataFromServer, '/search', params)
     console.log(result);
     yield put ({
       type: `${SEARCH}_SUCCESS`,

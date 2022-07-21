@@ -1,0 +1,43 @@
+.formControl{
+  @apply
+  form-control
+  block
+  w-full
+  px-3
+  py-1.5
+  text-base
+  font-normal
+  text-gray-700
+  bg-white bg-clip-padding
+  border border-solid border-gray-300
+  rounded
+  transition
+  ease-in-out
+  m-0
+  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+}
+
+.button{
+  @apply inline-flex
+  justify-center
+  py-2
+  px-4
+  border
+  border-transparent
+  shadow-sm
+  rounded-md
+  text-white
+  bg-teal-400 opacity-70 hover:bg-teal-600 focus:bg-teal-600 active:bg-teal-700
+  focus:outline-none
+  focus:ring-2
+  focus:ring-offset-2
+}
+.radioChecked{
+  @apply flex flex-col
+  items-center
+  opacity-30
+  border-solid
+  rounded
+  cursor-pointer
+  border-2
+}

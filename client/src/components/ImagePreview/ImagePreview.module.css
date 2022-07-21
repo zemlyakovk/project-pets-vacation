@@ -1,0 +1,17 @@
+.closeBtn{
+  @apply btn-close
+  box-content
+  w-4
+  h-4
+  p-1
+  text-white
+  border-none
+  rounded-none
+  opacity-50
+  focus:shadow-none
+  focus:outline-none
+  focus:opacity-100
+  hover:text-white
+  hover:opacity-75
+  hover:no-underline
+}
