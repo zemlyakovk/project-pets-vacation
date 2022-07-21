@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
 import Review from './Review'
+
 
 export default function MiniCardSitterMainPage
   ({ id, User: { first_name }, User: { last_name }, desc, User: {profile_photo} }) {
@@ -49,7 +50,14 @@ export default function MiniCardSitterMainPage
             {descUpd}
           </p>
 
-          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2 '>Подробнее</button>
+          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>Подробнее</button>
+
+          <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
+          Профиль ситтера
+          </Link>
+          
+
+          
           {/* <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link> */}
 
         </div>
@@ -58,6 +66,8 @@ export default function MiniCardSitterMainPage
       {
         modal.show && <CardModalWindow setModal={setModal} id={id} />
       }
+
+     
 
     </div>
 
