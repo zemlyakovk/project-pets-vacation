@@ -15,8 +15,11 @@ export default function MiniCardSitterMainPage
   const dispatch = useDispatch();
   const location = useLocation()
   console.log(location);
-  // if (location.pathname === '/users/favorites') {
-  //   dispatch(deleteFavorit(id))
+
+  // function clickHand() {
+  //   if (location.pathname === '/users/favorites') {
+  //     dispatch(deleteFavorit(id))
+  //   }
   // }
 
   // console.log("modal.show", modal.show);
@@ -26,7 +29,12 @@ export default function MiniCardSitterMainPage
   }
 
   function clickHand() {
-    dispatch(favorit(id))
+    if (location.pathname !== '/users/favorites') {
+      dispatch(favorit(id))
+    } else {
+      dispatch(deleteFavorit(id))
+      console.log('asdasd');
+    }
     // console.log(id); // ИД ситтера по которому кликнули
   }
   let descUpd = desc
@@ -47,7 +55,7 @@ export default function MiniCardSitterMainPage
         <div className="p-4 flex flex-col justify-start">
           <div className='flex flex-row justify-between'>
             <h5 className="text-gray-900 text-xl font-medium">{first_name} {last_name}</h5>
-            <div onClick={clickHand} className=''>❤️</div>
+            <button onClick={clickHand}><img src="/icons8-bookmark-30.png" alt="favorit" /></button>
           </div>
 
           <div className='text-gray-700 text-base' >г. Москва</div>

@@ -25,4 +25,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/delete', async (req, res) => {
+  try {
+    const sitterId = req.body.params; // кого надо удалить из избранного
+    const { userId } = res.locals // у кого надо удалить из избранное
+    await Favorit_sitters.destroy({ where: { sitter_id: sitterId, user_id: userId } });
+    const favorits = await Favorit_sitters.findAll({ where: { user_id: userId }, include: { model: Sitter, include: { model: User } } });
+    res.json(favorits)
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(new Error('Ошибка удаления из избранного!'));
+  }
+});
+
 module.exports = router;
