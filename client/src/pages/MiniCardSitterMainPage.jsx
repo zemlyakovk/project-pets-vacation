@@ -6,7 +6,7 @@ import Review from './Review'
 
 
 export default function MiniCardSitterMainPage
-  ({ id, User: { first_name }, User: { last_name }, desc, User: {profile_photo} }) {
+  ({ id, User: { first_name }, User: { last_name }, desc, User: { profile_photo } }) {
 
   const [modal, setModal] = useState({
     show: false
@@ -21,7 +21,7 @@ export default function MiniCardSitterMainPage
   var descUpd = desc
 
   if (descUpd.length > 50) {
-    descUpd = descUpd.slice(0,50) + "..."
+    descUpd = descUpd.slice(0, 50) + "..."
   }
 
   return (
@@ -50,14 +50,7 @@ export default function MiniCardSitterMainPage
             {descUpd}
           </p>
 
-          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>Подробнее</button>
-
-          <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
-          Профиль ситтера
-          </Link>
-          
-
-          
+          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2 '>Подробнее</button>
           {/* <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link> */}
 
         </div>
@@ -67,7 +60,7 @@ export default function MiniCardSitterMainPage
         modal.show && <CardModalWindow setModal={setModal} id={id} />
       }
 
-     
+
 
     </div>
 

@@ -24,7 +24,11 @@ footer {
 }
 
 .flexSitterCard{
+<<<<<<< HEAD
   width: 536px;
+=======
+  min-width: 536px;
+>>>>>>> 5b7e5fa (profile_photos)
 }
 
 .formCenter {
