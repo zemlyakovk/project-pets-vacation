@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   const arrAge = sitter_pet_ages?.length ? sitter_pet_ages : ['Щенок', 'Взрослый', 'Старый'];
   const arrSize = sitter_pet_sizes?.length ? sitter_pet_sizes : ['Маленький', 'Большой', 'Средний'];
 
-  console.log(radioValue, dateFrom, dateTo, serviceType, latitude, longitude, distance);
+  console.log('CheckkQuery===>', req.query);
   const haversine = `(6371 * acos(cos(radians(${latitude}))* cos(radians(latitude))* cos(radians(longitude) - radians(${longitude}))+ sin(radians(${latitude})) * sin(radians(latitude))))`;
 
   if (dateTo) {

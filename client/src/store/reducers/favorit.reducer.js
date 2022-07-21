@@ -48,6 +48,13 @@ export default function favoritReducer(state = initState, action) {
         isLoading: false,
         err: payload
       };
+      // case `DELETE_FAVORIT`:
+      //   return {
+      //     ...state,
+      //     value: payload,
+      //     err: '',
+      //     isLoading: false
+      //   };
 
     default:
       return state;

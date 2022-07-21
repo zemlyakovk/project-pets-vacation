@@ -66,9 +66,35 @@ function* getFavoritListWorker() {
   }
 }
 
+function* deleteAndGetFavoritListWorker(data) {
+  try {
+    yield put ({
+      type: `${SET_FAVORIT}_START`
+    })
+    console.log(data.params);
+
+    yield delay(300)
+    const result = yield call(getDataFromServer, '/favorit/delete', data.params)
+    console.log(result);
+
+    yield put ({
+      type: `${SET_FAVORIT}_SUCCESS`,
+      payload: result
+    })
+    
+
+  } catch (err) {
+    yield put({
+      type: `${SET_FAVORIT}_ERR`,
+      error: err.message
+    })
+  }
+}
+
 function* favoritSaga() {
   yield takeEvery('FAVORIT', favoritWorker)
   yield takeEvery('FAVORIT_LIST', getFavoritListWorker)
+  yield takeEvery('DELETE_FAVORIT', deleteAndGetFavoritListWorker)
 }
 
 export default favoritSaga

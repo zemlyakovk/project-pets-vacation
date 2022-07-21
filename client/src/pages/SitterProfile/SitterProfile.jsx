@@ -31,7 +31,6 @@ export default function SitterProfile() {
 
   useEffect(() => {
     setState((prev) => ({ ...prev, ...sitter.value }));
-    console.log(sitter.value);
     if (sitter.value.Pet_ages) {
       setSelectedAge(sitter.value.Pet_ages.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
     }
@@ -68,6 +67,7 @@ export default function SitterProfile() {
   }, [selectedSize])
   //* Для отслеживания расписания
   useEffect(() => {
+    console.log('Dates====>', dates);
     setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
   }, [dates])
 
@@ -88,6 +88,7 @@ export default function SitterProfile() {
         body = { addFiles: response.data, removedFilesNames: removedFilesNames.current }
       }
       body = { ...body, state }
+      console.log(body);
       if (state.id) {
         await axios.patch(`/sitters/${state.id}`, body);
         dispatch(setSitter());
