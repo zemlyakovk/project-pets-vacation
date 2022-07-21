@@ -427,9 +427,7 @@ export default function SearchResult() {
             </YMaps>
           </div>
         </div >
-
       </div >
-
     </div >
 
 
