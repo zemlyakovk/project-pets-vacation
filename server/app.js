@@ -198,6 +198,10 @@ app.get("/allSitters", async (req, res) => {
 });
 
 app.get("/allSitters/:id", async (req, res) => {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bb21fca (courusel)
   try {
     const { id } = req.params;
     // const onePost = await Sitter.findOne({
@@ -224,6 +228,21 @@ app.get("/allSitters/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+<<<<<<< HEAD
+=======
+  const { id } = req.params;
+  const onePost = await Sitter.findOne({
+    where: { id },
+    include: {
+      model: User,
+      attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
+    },
+  });
+
+  res.json(onePost);
+>>>>>>> 5b7e5fa (profile_photos)
+=======
+>>>>>>> bb21fca (courusel)
 });
 
 ///
