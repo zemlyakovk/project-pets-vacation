@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
-import Review from './Review'
 
 
 export default function MiniCardSitterMainPage
@@ -21,7 +19,7 @@ export default function MiniCardSitterMainPage
     setModal((prev) => ({ ...prev, show: true, id }))
   }
 
-  var descUpd = desc
+  let descUpd = desc
 
   if (descUpd.length > 50) {
     descUpd = descUpd.slice(0, 50) + "..."
