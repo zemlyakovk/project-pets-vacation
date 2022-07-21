@@ -8,6 +8,7 @@ import authReducer from './reducers/auth.reducer'
 
 import rootSaga from './sagas/root.saga';
 import { peopleReducer } from './reducers/people.reducer';
+import favoritReducer from './reducers/favorit.reducer';
 
 const sagaMidleWare = createSagaMiddleware();
 
@@ -18,6 +19,7 @@ const sagaMidleWare = createSagaMiddleware();
     auth: authReducer,
     sitter: sitterReducer,
     sitters: peopleReducer,
+    favorit: favoritReducer,
   },
   middleware: (mid) => [...mid(), sagaMidleWare]
 })
