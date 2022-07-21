@@ -61,8 +61,11 @@ export default function MiniCardSitterMainPage
             {descUpd}
           </p>
 
-          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>Подробнее</button>
+          <button onClick={showModalHandler} type="button" className=" bg-blue-500 text-white rounded-lg mt-2 py-2 text-center">Подробнее</button>
 
+          {/* <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
+            Профиль ситтера
+          </Link> */}
           <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
             Профиль ситтера
           </Link>
@@ -72,6 +75,10 @@ export default function MiniCardSitterMainPage
       {
         modal.show && <CardModalWindow setModal={setModal} id={id} />
       }
+
+
+
+
     </div>
 
 
