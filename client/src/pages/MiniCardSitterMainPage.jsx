@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
 import { deleteFavorit, favorit } from '../store/actions/favorit.actions';
-import Review from './Review'
 
 
 export default function MiniCardSitterMainPage
