@@ -12,9 +12,9 @@ const usersRouter = require("./routes/users.route");
 const search = require("./routes/search.router");
 const favorit = require("./routes/favorit.router");
 const reviews = require("./routes/reviews.router");
-const uploader = require('./middleware/uploader');
+const uploader = require("./middleware/uploader");
 
-const { User, Address, Sitter } = require("./db/models");
+const { User, Address, Sitter, Sitter_images } = require("./db/models");
 
 const app = express();
 
@@ -56,8 +56,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sessionConfig));
 app.use(cookieParser());
 
-app.use(express.json({ limit: '50mb', extended: true }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: "50mb", extended: true }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // * регистрация и авторизация
 
@@ -69,14 +69,16 @@ app.get("/login/user", async (req, res) => {
         where: {
           id: req.session.userId,
         },
-        include: [{
-          model: Address,
-          attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
-        },
-        {
-          model: Sitter,
-          attributes: ['id']
-        }],
+        include: [
+          {
+            model: Address,
+            attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
+          },
+          {
+            model: Sitter,
+            attributes: ["id"],
+          },
+        ],
       });
       if (user) {
         if (!user.Address) {
@@ -117,14 +119,16 @@ app.post("/login", async (req, res) => {
       where: {
         email,
       },
-      include: [{
-        model: Address,
-        attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
-      },
-      {
-        model: Sitter,
-        attributes: ['id']
-      }],
+      include: [
+        {
+          model: Address,
+          attributes: ["address", "zip_code", "region", "district", "city", "settlement", "street", "latitude", "longitude", "area"],
+        },
+        {
+          model: Sitter,
+          attributes: ["id"],
+        },
+      ],
     });
 
     if (!user) {
@@ -183,7 +187,7 @@ app.get("/allSitters", async (req, res) => {
       raw: true,
       include: {
         model: User,
-        attributes: ["desc", "id", "first_name", "last_name"],
+        attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
       },
     });
     console.log(allSitters);
@@ -195,24 +199,36 @@ app.get("/allSitters", async (req, res) => {
 });
 
 app.get("/allSitters/:id", async (req, res) => {
-  const { id } = req.params;
-  const onePost = await Sitter.findOne({
-    where: { id },
-    include: {
-      model: User,
-      attributes: ["desc", "id", "first_name", "last_name"],
-    },
-  });
-
-  res.json(onePost);
-});
-
-///
-app.post('/uploads', uploader.array('images', 30), (req, res) => {
-  if (req.files) {
-    return res.status(200).json(req.files.map((file) => file.filename));
+  try {
+    const { id } = req.params;
+    const onePost = await Sitter.findOne({
+      where: { id },
+      include: [
+        {
+          model: User,
+          attributes: ["desc", "id", "first_name", "last_name", "profile_photo"],
+        },
+        {
+          model: Sitter_images,
+          attributes: ["url"],
+        },
+      ],
+    });
+    res.json(onePost);
+  } catch (error) {
+    console.log(error);
   }
-})
+});
+///
+app.post("/uploads", uploader.array("images", 30), (req, res) => {
+  try {
+    if (req.files) {
+      return res.status(200).json(req.files.map((file) => file.filename));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.use("/sitters", sittersRouter);
 app.use("/search", search);

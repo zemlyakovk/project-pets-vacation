@@ -176,6 +176,7 @@ export default function SitterProfile() {
                       token="0e29acdc44dc991a2276e7b9055396891dfe379f"
                       defaultQuery={state.Address.address}
                       value={address}
+                      count='5'
                       onChange={setAddress} />
                   }
                   {

@@ -50,7 +50,7 @@ export default function Navbar() {
             <li className="nav-item pr-2">
               <Link to="sitters/profile/new"
                 type="button"
-                class={classes.becomeSitterBtn}>
+                className={classes.becomeSitterBtn}>
                 {Sitter?.id ? 'Мой профиль ситтера' : 'Стать ситтером'}
               </Link>
             </li>
@@ -71,7 +71,7 @@ export default function Navbar() {
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src={profile_photo
                   ? process.env.REACT_APP_STATIC_URL + profile_photo
-                  : process.env.REACT_APP_STATIC_URL + '123.jpeg'} className="rounded-full w-10" alt="" loading="lazy" />
+                  : process.env.REACT_APP_STATIC_URL + '123.jpeg'} className="rounded-full w-10" alt="Личный кабинет" loading="lazy" />
               </Link>
               <ul className={`dropdown-menu ${classes.dropdowMenu}`} aria-labelledby="dropdownMenuButton2">
                 <li>

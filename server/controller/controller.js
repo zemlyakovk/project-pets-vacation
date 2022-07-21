@@ -41,9 +41,6 @@ function customeWhere(query) {
   if (noPet) {
     where.has_pet_flag = false;
   }
-  if (noPet) {
-    where.has_pet_flag = false;
-  }
   if (supervision_24) {
     where.supervision_24 = true;
   }
@@ -68,4 +65,10 @@ function customeWhere(query) {
   return where;
 }
 
-module.exports = { deleteFile, customeWhere };
+function formatDate(date) {
+  const tempD = date.split('-');
+  const newD = `${tempD[2]}-${tempD[1].length === 1 ? `0${tempD[1]}` : tempD[1]}-${tempD[0].length === 1 ? `0${tempD[0]}` : tempD[0]}`;
+  return new Date(newD);
+}
+
+module.exports = { deleteFile, customeWhere, formatDate };

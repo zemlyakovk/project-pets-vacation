@@ -319,4 +319,23 @@ router.get('/all', async (req, res) => {
 
   return res.status(200).json(sitters);
 })
+
+router.get('/profile/:id', async (req, res) => {
+  const { id } = req.params;
+  const onePost = await Sitter.findOne({
+    where: { id },
+    include: [{
+      model: User
+
+    },
+    {
+      model: Sitter_images
+    },
+    ],
+
+  });
+
+  res.json(onePost);
+});
+
 module.exports = router;

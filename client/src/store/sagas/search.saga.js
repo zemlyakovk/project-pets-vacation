@@ -5,6 +5,7 @@ import { SEARCH, SEARCH_LIST } from '../types';
 async function getDataFromServer(url, params) {
   const { data } = await axios.get(url, {params})
 
+
   if (data) {
     return data
   } else {

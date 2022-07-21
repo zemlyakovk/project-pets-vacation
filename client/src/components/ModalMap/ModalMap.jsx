@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps';
 import axios from 'axios';
+import classes from './ModalMap.module.css'
 
 export default function ModalMap({ map, setMap, setAddress }) {
   const mapRef = useRef();
@@ -67,9 +68,9 @@ export default function ModalMap({ map, setMap, setAddress }) {
               </Map>
             </YMaps>
           </div>
-          <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+          <div className={classes.footer}>
             <button type="button" onClick={saveCoordHandler}
-              className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+              className={classes.button}>
               Сохранить
             </button>
           </div>

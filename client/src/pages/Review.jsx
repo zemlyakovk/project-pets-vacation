@@ -2,14 +2,16 @@ import React from 'react'
 import { useState } from 'react';
 import StarRating from './StarRating'
 import axios from '../axios/axios';
+import { useParams } from 'react-router-dom';
 
 export default function Review() {
+  const params = useParams()
   const [input, setInput] = useState('')
   const [rating, setRating] = useState(0)
 
 
   const sendReviewHandler = () => {
-    axios.post('/reviews', {input, rating}).then(()=>console.log('okkkkkkkkkkkkk'))
+    axios.post('/reviews', {input, rating, id: params.id,}).then(()=>console.log('ok'))
   }
 
 
@@ -19,9 +21,9 @@ export default function Review() {
       <>
       <div>
       <div className="">
-  {/* <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalCenteredScrollable">
+  { <button type="button" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalCenteredScrollable">
     Оставить отзыв
-  </button> */}
+  </button> }
 </div>
 
 
