@@ -3,10 +3,12 @@ const { Sitter, User,Reviews } = require('../db/models');
 
 router.post('/', async (req, res) => {
 
-  const { input, rating} = req.body;
+  const { input, rating, id} = req.body;
   const otziv = await Reviews.create({
     desc: input,
-    rating
+    rating,
+    sitter_id: id,
+    user_id: req.session.userId,
   })
 });
 

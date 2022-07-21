@@ -1,26 +1,38 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
+import { deleteFavorit, favorit } from '../store/actions/favorit.actions';
 import Review from './Review'
 
+
 export default function MiniCardSitterMainPage
-  ({ id, User: { first_name }, User: { last_name }, desc, User: {profile_photo} }) {
+  ({ id, User: { first_name }, User: { last_name }, desc, User: { profile_photo } }) {
 
   const [modal, setModal] = useState({
     show: false
   });
+  const dispatch = useDispatch();
+  const location = useLocation()
+  console.log(location);
+  // if (location.pathname === '/users/favorites') {
+  //   dispatch(deleteFavorit(id))
+  // }
 
-  console.log("modal.show", modal.show);
+  // console.log("modal.show", modal.show);
 
   function showModalHandler() {
     setModal((prev) => ({ ...prev, show: true, id }))
   }
 
-  var descUpd = desc
+  function clickHand() {
+    dispatch(favorit(id))
+    // console.log(id); // ИД ситтера по которому кликнули
+  }
+  let descUpd = desc
 
   if (descUpd.length > 50) {
-    descUpd = descUpd.slice(0,50) + "..."
+    descUpd = descUpd.slice(0, 50) + "..."
   }
 
   return (
@@ -35,7 +47,7 @@ export default function MiniCardSitterMainPage
         <div className="p-4 flex flex-col justify-start">
           <div className='flex flex-row justify-between'>
             <h5 className="text-gray-900 text-xl font-medium">{first_name} {last_name}</h5>
-            <div className=''>❤️</div>
+            <div onClick={clickHand} className=''>❤️</div>
           </div>
 
           <div className='text-gray-700 text-base' >г. Москва</div>
@@ -49,20 +61,19 @@ export default function MiniCardSitterMainPage
             {descUpd}
           </p>
 
-          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2 '>Подробнее</button>
-          {/* <Link to={`/allSitters/${id}`} className=" bg-blue-500 text-white rounded-lg mt-2 py-2">Подробнее</Link> */}
+          <button onClick={showModalHandler} className=' bg-blue-500 text-white rounded-lg mt-2 py-2'>Подробнее</button>
 
+          <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
+            Профиль ситтера
+          </Link>
         </div>
       </div>
 
       {
         modal.show && <CardModalWindow setModal={setModal} id={id} />
       }
-
     </div>
 
 
   )
 }
-
-
