@@ -11,7 +11,7 @@ export default function SitterProfileCard({sitter}) {
       <div class="rounded-lg shadow-lg bg-white w-[290px]">
         <div className='flex flex-row mt-2 ml-5 items-center'>
           <a href="#!">
-            <img class="rounded-full w-[96px]" src={`${process.env.REACT_APP_STATIC_URL}1658215752423-avatar.png`} alt="" />
+            <img class="rounded-full w-[96px] h-[96px] object-cover" src={`${process.env.REACT_APP_STATIC_URL}${sitter?.User?.profile_photo}`} alt="" />
           </a>
           <div className='ml-5 '>
             <p className='mb-2 '>{sitter?.User?.first_name} {sitter?.User?.last_name}</p>

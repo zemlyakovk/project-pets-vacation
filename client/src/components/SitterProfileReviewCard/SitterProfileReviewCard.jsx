@@ -14,12 +14,12 @@ export default function SitterProfileReviewCard({desc,rating, name, profile_phot
     <div className="rounded-lg shadow-lg bg-white w-[600px]">
       <div className='flex flex-row mt-2 ml-4'>
       
-        <img class="rounded-full w-[128px] h-[128px]"  src={`${process.env.REACT_APP_STATIC_URL}${profile_photo}`} alt=""/>
+        <img class="rounded-full w-[100px] h-[100px] object-contain"  src={`${process.env.REACT_APP_STATIC_URL}${profile_photo}`} alt=""/>
      
       <div className='ml-2 '>
       
         <div className="p-4 w-full">
-          <p className=' ml-[182px]'>{time.slice(0,10)}</p>
+          <p className=' ml-[220px]'>{time.slice(0,10)}</p>
         <p className='mb-2 font-bold'>{name}</p>
       <div className='flex flex-row mt-2'>
         <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" className="w-4 text-yellow-500 mr-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
