@@ -67,7 +67,7 @@ export default function CardModalWindow({ setModal, id }) {
 
             <div className="flex justify-between items-start p-2 rounded-t border-b dark:border-gray-600">
               <img class="mr-4 w-10 h-10 rounded-full shadow-lg" src={`${process.env.REACT_APP_STATIC_URL}${sitter.data.User.profile_photo}`} alt="" />
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold text-gray-900  ">
                 {sitter.data.User.first_name} {sitter.data.User.last_name}
               </h3>
 
@@ -89,47 +89,47 @@ export default function CardModalWindow({ setModal, id }) {
               <div className="sitterInfo infoColor">
                 <div class="flex flex-col items-left pb-2 mr-8">
 
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Принимает кошек</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Принимает кошек</h5>
                   {sitter.data.cat_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Принимает собак</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Принимает собак</h5>
                   {sitter.data.dog_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-gray-900 dark:text-white font-normal text-sm">Опыт в профессии </h5>
+                  <h5 class="mb-1 text-gray-900   font-normal text-sm">Опыт в профессии </h5>
                   <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.experience} года/лет</span>
 
-                  {/* <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Доступность</h5>
+                  {/* <h5 class="mb-1 text-sm font-medium text-gray-900  ">Доступность</h5>
                   {sitter.data.active ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>} */}
 
                 </div>
                 <div class="flex flex-col items-left pb-2 mr-8">
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Домашние животные</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Домашние животные</h5>
                   {sitter.data.has_pet_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Есть дети?</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Есть дети?</h5>
                   {sitter.data.has_child ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Готов смотреть:</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Готов смотреть:</h5>
                   {sitter.data.has_pet_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Весь день</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Определенное время</span>}
 
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Условия содержания:</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Условия содержания:</h5>
                   <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.housing_type}</span>
 
 
                 </div>
 
                 <div class="flex flex-col items-left pb-2 mr-8">
-                  <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Готов выгуливать:</h5>
+                  <h5 class="mb-1 text-sm font-medium text-gray-900  ">Готов выгуливать:</h5>
                   {sitter.data.walking ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
                   <div class="flex flex-col items-left pb-2 mr-8">
-                    <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">День передержки:</h5>
+                    <h5 class="mb-1 text-sm font-medium text-gray-900  ">День передержки:</h5>
                     <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.price_per_day} рублей</span>
 
-                    <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Час прогулки:</h5>
+                    <h5 class="mb-1 text-sm font-medium text-gray-900  ">Час прогулки:</h5>
                     <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">{sitter.data.price_per_hour} рублей</span>
 
-                    <h5 class="mb-1 text-sm font-medium text-gray-900 dark:text-white">Постоянный присмотр</h5>
+                    <h5 class="mb-1 text-sm font-medium text-gray-900  ">Постоянный присмотр</h5>
                     {sitter.data.cat_flag ? <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Да</span> : <span class="mb-2 text-sm text-gray-500 dark:text-gray-400">Нет</span>}
 
                   </div>
