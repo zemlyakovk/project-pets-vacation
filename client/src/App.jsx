@@ -37,6 +37,7 @@ function App() {
           <Route path="registration" element={id ? <Navigate to="/" replace={true} /> : <Registration />} />
           <Route path="login" element={id ? <Navigate to="/" replace={true} /> : <Login />} />
           <Route path='search' element={<SearchResult />} />
+          <Route path='sitters/:id' element={<SitterDetail />} />
           <Route path='users'>
             <Route path='chat' element={<Chat />} />
             <Route path='chat/:id' element={<Chat />} />
@@ -45,8 +46,8 @@ function App() {
           </Route>
           <Route path='sitters'>
             <Route path='profile/new' element={<SitterProfile />} />
-            <Route path=':id' element={<SitterCard />} />
-            <Route path='profile' element={<SitterDetail />} />
+            <Route path=':id' element={<SitterDetail />} />
+            {/* <Route path='profile/:id' element={<SitterDetail />} /> */}
             <Route path='card-modal' element={<CardModalWindow />} />
           </Route>
           <Route path='Allsitters'>

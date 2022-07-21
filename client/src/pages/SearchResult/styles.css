@@ -2,7 +2,7 @@
   margin-top: 40px;
   padding: 20px 20px;
   display: flex;
-  width: 70%;
+  width: 80%;
   min-height: max-content;
   flex-direction: row;
   /* justify-content: space-between; */
@@ -12,7 +12,7 @@
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  width: 50%;
+  width: 60%;
   flex-wrap: wrap;
   min-height: max-content;
   box-sizing: border-box;

@@ -50,7 +50,7 @@ export default function Navbar() {
             <li className="nav-item pr-2">
               <Link to="sitters/profile/new"
                 type="button"
-                class={classes.becomeSitterBtn}>
+                className={classes.becomeSitterBtn}>
                 {Sitter?.id ? 'Мой профиль ситтера' : 'Стать ситтером'}
               </Link>
             </li>

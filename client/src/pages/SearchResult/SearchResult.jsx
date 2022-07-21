@@ -272,7 +272,7 @@ export default function SearchResult() {
                   <ul className="grid gap-6 w-full md:grid-cols-3">
                     <li>
                       <input type="checkbox" id="small" name='small' checked={valueInput.petSyze === 'small'} onChange={hasPetEtcHandler} className="hidden peer" required="" />
-                      <label for="small" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                      <label htmlFor="small" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div className="block">
                           <div className="w-full text-lg font-semibold">Маленький</div>
                           <div className="w-full text-sm">от 1 до 10 кг</div>
@@ -281,7 +281,7 @@ export default function SearchResult() {
                     </li>
                     <li>
                       <input type="checkbox" id="medium" name='medium' checked={valueInput.petSyze === 'medium'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label for="medium" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                      <label htmlFor="medium" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div className="block">
                           <div className="w-full text-lg font-semibold">Средний</div>
                           <div className="w-full text-sm">от 10 до 30 кг</div>
@@ -290,7 +290,7 @@ export default function SearchResult() {
                     </li>
                     <li>
                       <input type="checkbox" id="large" name='large' checked={valueInput.petSyze === 'large'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label for="large" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                      <label htmlFor="large" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div className="block">
                           <div className="w-full text-lg font-semibold">Большой</div>
                           <div className="w-full text-sm">от 30 кг</div>
@@ -305,7 +305,7 @@ export default function SearchResult() {
                   <ul className="grid gap-6 w-full md:grid-cols-3">
                     <li>
                       <input type="checkbox" id="puppy" name='puppy' checked={valueInput.petAge === 'puppy'} onChange={hasPetEtcHandler} className="hidden peer" required="" />
-                      <label for="puppy" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                      <label htmlFor="puppy" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div className="block">
                           <div className="w-full text-lg font-semibold">Щенок</div>
                           <div className="w-full text-sm">до 1 года</div>
@@ -314,7 +314,7 @@ export default function SearchResult() {
                     </li>
                     <li>
                       <input type="checkbox" id="adult" name='adult' checked={valueInput.petAge === 'adult'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label for="adult" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                      <label htmlFor="adult" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div className="block">
                           <div className="w-full text-lg font-semibold">Взрослый</div>
                           <div className="w-full text-sm">от 1 до 7 лет</div>
@@ -323,7 +323,7 @@ export default function SearchResult() {
                     </li>
                     <li>
                       <input type="checkbox" id="old" name='old' checked={valueInput.petAge === 'old'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label for="old" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                      <label htmlFor="old" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div className="block">
                           <div className="w-full text-lg font-semibold">Старый</div>
                           <div className="w-full text-sm">от 7 лет</div>
@@ -335,7 +335,7 @@ export default function SearchResult() {
 
                 {/* <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
                   <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Опыт присмотра (лет)</label>
-                  <input type="range" name='experience' className="w-full" min="1" max="6" step="1" oninput={valueInput.experience} onChange={hasPetEtcHandler} />
+                  <input type="range" name='experience' className="w-full" min="1" max="6" step="1" onInput={valueInput.experience} onChange={hasPetEtcHandler} />
                   <ul className="flex justify-between w-full px-[10px]">
                     <li className="flex justify-center relative"><span className="absolute">1</span></li>
                     <li className="flex justify-center relative"><span className="absolute">2</span></li>
@@ -348,7 +348,7 @@ export default function SearchResult() {
 
                 <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
                   <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Цена за сутки</label>
-                  <input type="range" name='pricePerDay' className="w-full" min="1" max="6" step="1" oninput={valueInput.pricePerDay} onChange={hasPetEtcHandler} />
+                  <input type="range" name='pricePerDay' className="w-full" min="1" max="6" step="1" onInput={valueInput.pricePerDay} onChange={hasPetEtcHandler} />
                   <ul className="flex justify-between w-full px-[10px]">
                     <li className="flex justify-center relative"><span className="absolute">Менее 500</span></li>
                     <li className="flex justify-center relative"><span className="absolute">700</span></li>
