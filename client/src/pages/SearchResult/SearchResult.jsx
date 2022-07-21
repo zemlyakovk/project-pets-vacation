@@ -9,7 +9,6 @@ import DatePicker from 'react-multi-date-picker';
 import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps'
 import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
 import "./styles.css";
-import CardModalWindow from '../../components/CardModalWindow/CardModalWindow';
 
 export default function SearchResult() {
   const { value: sitters,
@@ -17,7 +16,7 @@ export default function SearchResult() {
     isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const [valueInput, setValueInput] = useState({ ...state, noPet: false, noChild: false, supervision_24: false, experience: 0, housing_type: 'Любой', price_per_day: 2100, price_per_hour: 1100, sitter_pet_sizes: [], sitter_pet_ages: [] });
+  const [valueInput, setValueInput] = useState({ ...state, noPet: false, noChild: false, supervision_24: false, experience: '0', housing_type: 'Любой', price_per_day: '2100', price_per_hour: '1100', sitter_pet_sizes: [], sitter_pet_ages: [] });
   // const [users, setUsers] = useState([]);
   const mapRef = useRef();
   const [ymap, setYmap] = useState();
@@ -42,29 +41,31 @@ export default function SearchResult() {
   };
 
   function petSizeHandler(event) {
+    console.log(event.target.name);
     setValueInput((prev) => {
       switch (event.target.name) {
-        case 'child':
-          if (prev.sitter_pet_ages.includes('Маленький')) {
-            return { ...prev, sitter_pet_ages: prev.sitter_pet_ages.filter(el => el !== 'Маленький') }
+        case 'small':
+          if (prev.sitter_pet_sizes.includes('Маленький')) {
+            return { ...prev, sitter_pet_sizes: prev.sitter_pet_sizes.filter(el => el !== 'Маленький') }
           }
-          return { ...prev, sitter_pet_ages: [...prev.sitter_pet_ages, 'Маленький'] }
-        case 'adult':
-          if (prev.sitter_pet_ages.includes('Средний')) {
-            return { ...prev, sitter_pet_ages: prev.sitter_pet_ages.filter(el => el !== 'Средний') }
+          return { ...prev, sitter_pet_sizes: [...prev.sitter_pet_sizes, 'Маленький'] }
+        case 'medium':
+          if (prev.sitter_pet_sizes.includes('Средний')) {
+            return { ...prev, sitter_pet_sizes: prev.sitter_pet_sizes.filter(el => el !== 'Средний') }
           }
-          return { ...prev, sitter_pet_ages: [...prev.sitter_pet_ages, 'Средний'] }
-        case 'old':
-          if (prev.sitter_pet_ages.includes('Большой')) {
-            return { ...prev, sitter_pet_ages: prev.sitter_pet_ages.filter(el => el !== 'Большой') }
+          return { ...prev, sitter_pet_sizes: [...prev.sitter_pet_sizes, 'Средний'] }
+        case 'large':
+          if (prev.sitter_pet_sizes.includes('Большой')) {
+            return { ...prev, sitter_pet_sizes: prev.sitter_pet_sizes.filter(el => el !== 'Большой') }
           }
-          return { ...prev, sitter_pet_ages: [...prev.sitter_pet_ages, 'Большой'] }
+          return { ...prev, sitter_pet_sizes: [...prev.sitter_pet_sizes, 'Большой'] }
         default:
           return { ...prev }
       }
     })
   }
   function petAgeHandler(event) {
+    console.log(event.target.name);
     setValueInput((prev) => {
       switch (event.target.name) {
         case 'child':
@@ -95,12 +96,7 @@ export default function SearchResult() {
 
   function submitHandler(e) {
     e.preventDefault();
-    console.log(valueInput);
     dispatch(search(valueInput))
-  }
-
-  function updateSearch(distance, center) {
-    dispatch(search({ ...valueInput, distance, latitude: center[0], longitude: center[1] }))
   }
 
   useEffect(() => {
@@ -108,10 +104,10 @@ export default function SearchResult() {
       mapRef.current.events.add('boundschange', (e) => {
         const newBounds = e.originalEvent.newBounds;
         const distance = ymap.coordSystem.geo.getDistance(newBounds[0], newBounds[1]) / 2500;
-        updateSearch(distance, e.originalEvent.newCenter);
+        dispatch(search({ ...valueInput, distance, latitude: e.originalEvent.newCenter[0], longitude: e.originalEvent.newCenter[1] }))
       });
     }
-  }, [ymap])
+  }, [ymap, valueInput, dispatch])
 
   return (
     <div className='flex justify-center items-center min-h-full mt-10'>
@@ -230,7 +226,7 @@ export default function SearchResult() {
                           </label>
                         </li>
                         <li>
-                          <input type="checkbox" id="adult" name='adult' className="hidden peer" onChange={petAgeHandler} />
+                          <input type="checkbox" id="adult" name='adult' className="hidden peer" onChange={petAgeHandler} checked={valueInput.sitter_pet_ages.includes('Взрослый')} />
                           <label htmlFor="adult" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
                             <div className="flex flex-col justify-center items-center ">
                               <div className="w-full text-lg font-semibold">Взрослый</div>
@@ -239,7 +235,7 @@ export default function SearchResult() {
                           </label>
                         </li>
                         <li>
-                          <input type="checkbox" id="old" name='old' className="hidden peer" onChange={petAgeHandler} />
+                          <input type="checkbox" id="old" name='old' className="hidden peer" onChange={petAgeHandler} checked={valueInput.sitter_pet_ages.includes('Старый')} />
                           <label htmlFor="old" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
                             <div className="flex flex-col justify-center items-center ">
                               <div className="w-full text-lg font-semibold">Старенький</div>
@@ -253,7 +249,7 @@ export default function SearchResult() {
                       <span className="form-label inline-block mb-2 text-gray-700">Размер питомца</span>
                       <ul className="w-full flex justify-start">
                         <li>
-                          <input type="checkbox" id="small" name='small' className="hidden peer" required="" />
+                          <input type="checkbox" id="small" name='small' className="hidden peer" onChange={petSizeHandler} checked={valueInput.sitter_pet_sizes.includes('Маленький')} />
                           <label htmlFor="small" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
                             <div className="flex flex-col justify-center items-center">
                               <div className="w-full text-lg font-semibold">Маленький</div>
@@ -262,7 +258,7 @@ export default function SearchResult() {
                           </label>
                         </li>
                         <li>
-                          <input type="checkbox" id="medium" name='medium' className="hidden peer group" />
+                          <input type="checkbox" id="medium" name='medium' className="hidden peer" onChange={petSizeHandler} checked={valueInput.sitter_pet_sizes.includes('Средний')} />
                           <label htmlFor="medium" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
                             <div className="flex flex-col justify-center items-center ">
                               <div className="w-full text-lg font-semibold">Средний</div>
@@ -271,7 +267,7 @@ export default function SearchResult() {
                           </label>
                         </li>
                         <li>
-                          <input type="checkbox" id="large" name='large' className="hidden peer" />
+                          <input type="checkbox" id="large" name='large' className="hidden peer" onChange={petSizeHandler} checked={valueInput.sitter_pet_sizes.includes('Большой')} />
                           <label htmlFor="large" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
                             <div className="flex flex-col justify-center items-center ">
                               <div className="w-full text-lg font-semibold">Большой</div>
@@ -303,7 +299,9 @@ export default function SearchResult() {
                       <div className="flex flex-col space-y-2 p-2 col-span-2">
                         <label htmlFor="priceHour"
                           className="form-label inline-block mb-2 text-gray-700">
-                          {`Максимальная цена за прогулку (час): ${valueInput.price_per_hour === '1100' ? 'любая' : valueInput.price_per_hour}`}
+                          {`Максимальная цена за прогулку (час): ${valueInput.price_per_hour === '1100'
+                            ? 'любая'
+                            : valueInput.price_per_hour}`}
                         </label>
                         <input type="range"
                           id="priceHour"
@@ -334,13 +332,13 @@ export default function SearchResult() {
                       <span className="form-label inline-block mb-2 text-gray-700">Доп. параметры</span>
                       <div className="form-check form-switch">
                         <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm checked:bg-teal-200"
-                          type="checkbox" r
+                          type="checkbox"
                           role="switch"
                           onChange={onChangeCheckHendler}
                           checked={valueInput.noPets}
-                          name="noPets"
-                          id="noPets" />
-                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="hasPets">Без своих питомцев</label>
+                          name="noPet"
+                          id="noPet" />
+                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="noPet">Без своих питомцев</label>
                       </div>
                       <div className="form-check form-switch">
                         <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm checked:bg-teal-200"
@@ -351,7 +349,7 @@ export default function SearchResult() {
                           name="noChild"
                           id="noChild"
                         />
-                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="hasPets">Без детей</label>
+                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="noChild">Без детей</label>
                       </div>
                       <div className="form-check form-switch">
                         <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm checked:bg-teal-200"
@@ -364,6 +362,9 @@ export default function SearchResult() {
                         />
                         <label className="form-label inline-block mb-2 text-gray-700" htmlFor="supervision_24">Постоянный присмотр</label>
                       </div>
+                    </div>
+                    <div className='flex justify-end col-span-1 col-end-5'>
+                      <button type='button' className={classes.button} onClick={submitHandler}>Применить фильтры</button>
                     </div>
                   </div>
                 </div>
@@ -389,7 +390,7 @@ export default function SearchResult() {
             }
           </div>
           <div className='col-span-1'>
-            <YMaps className='mapBox col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
+            <YMaps className='col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
               <Map
                 modules={["geocode", "coordSystem.geo"]}
                 onLoad={(ymaps) => {
@@ -398,7 +399,7 @@ export default function SearchResult() {
                 defaultState={{
                   center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
                   zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
-                }} width='100%' height='100%' instanceRef={ref => {
+                }} width='100%' height='600px' instanceRef={ref => {
                   if (ref) {
                     mapRef.current = ref
                   }

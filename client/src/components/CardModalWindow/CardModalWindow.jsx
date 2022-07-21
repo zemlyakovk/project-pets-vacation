@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef } from 'react';
 

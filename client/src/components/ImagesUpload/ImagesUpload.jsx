@@ -38,7 +38,7 @@ export default function ImagesUpload({ images, setImages, removedFilesNames, set
         <div className="mb-3 w-96">
           <input ref={uploadRef} className='hidden' type="file" id="formFileMultiple" multiple onChange={inputFilesHandler} />
           <div className='flex justify-center mt-5'>
-            <button onClick={uploadHandler} className={`${classes.button}`}>Загрузить фото</button>
+            <button type='button' onClick={uploadHandler} className={`${classes.button}`}>Загрузить фото</button>
           </div>
         </div>
       </div>
