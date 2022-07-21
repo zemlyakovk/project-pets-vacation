@@ -23,14 +23,15 @@ useEffect(()=> {
     'Опыт присмотра (лет)':  `${sitter?.experience}`, 
     'Присмотрю за собакой' : sitter?.dog_flag ? 'да' : 'нет',  
     'Присмотрю за кошкой' : sitter?.cat_flag ? 'да' : 'нет',
-    'Условия содержания:' : 'да', 
-    'Цена за сутки' : `${sitter?.price_per_day}`,  
-    'Размер питомца' : 'да',  
-    'Возраст питомца' : 'да',  
-    'Выгул' : 'да',  
-    'Передержка' : 'да',  
+    'Условия содержания:' : `${sitter?.housing_type}`,   
+    'Есть свои питомцы' : sitter?.has_pet_flag ? 'да' : 'нет', 
+    'Выгул' : sitter?.walking ? 'да' : 'нет', 
+    'Передержка' : sitter?.staying ? 'да' : 'нет', 
+    'Постоянный присмотр' : sitter?.supervision_24 ? 'да' : 'нет', 
+    'Есть дети' : sitter?.has_child? 'да' : 'нет', 
+    'Цена за сутки' : `${sitter?.price_per_day}`,
     'Цена за час' : `${sitter?.price_per_hour}`,  
-    'Есть дети' : 'да',  
+      
   }
 
 
@@ -65,6 +66,20 @@ useEffect(()=> {
                </div>
       })}
       </div>
+          <div className='h-40  flex flex-wrap justify-start pl-8 mt-2'>
+      <div className='mr-4 mt-2 w-[250px]' > 
+                    <div className=' text-gray-500'>Возраст питомца </div> 
+                    <div>{`${sitter?.Pet_ages[0]['title']}`} {`${sitter?.Pet_ages[0]['desc']}`}</div>
+                    <div>{`${sitter?.Pet_ages[1]['title']}`} {`${sitter?.Pet_ages[1]['desc']}`}</div>
+                    <div>{`${sitter?.Pet_ages[2]['title']}`} {`${sitter?.Pet_ages[2]['desc']}`}</div>
+               </div>
+               <div className='mr-4 mt-2 w-[250px]' > 
+                    <div className=' text-gray-500'>Размер питомца </div> 
+                    <div>{`${sitter?.Pet_sizes[0]['title']}`} {`${sitter?.Pet_sizes[0]['desc']}`}</div>
+                    <div>{`${sitter?.Pet_sizes[1]['title']}`} {`${sitter?.Pet_sizes[1]['desc']}`}</div>
+                    <div>{`${sitter?.Pet_sizes[2]['title']}`} {`${sitter?.Pet_sizes[2]['desc']}`}</div>
+               </div>
+               </div>
       {/* <div className=' h-32 bg-slate-200'>Местоположение</div> */}
       <div className='mt-2 ml-8 '>
        <span className='font-bold text-lg'>Отзывы о ситтере</span> 

@@ -21,7 +21,7 @@ export default function SitterDetail() {
 
   },[])
 
-
+console.log('-----------------',sitter);
 
   return (
     <div className='flex flex-row justify-center'>
