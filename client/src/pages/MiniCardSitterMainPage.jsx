@@ -1,24 +1,30 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
+import { deleteFavorit, favorit } from '../store/actions/favorit.actions';
 
 
 export default function MiniCardSitterMainPage
-
-
   ({ id, User: { first_name }, User: { last_name }, desc, User: { profile_photo } }) {
-
 
   const [modal, setModal] = useState({
     show: false
   });
-
-  // console.log("modal.show", modal.show);
+  const dispatch = useDispatch();
+  const location = useLocation()
 
   function showModalHandler() {
     setModal((prev) => ({ ...prev, show: true, id }))
   }
 
+  function clickHand() {
+    if (location.pathname !== '/users/favorites') {
+      dispatch(favorit(id))
+    } else {
+      dispatch(deleteFavorit(id))
+    }
+  }
   let descUpd = desc
 
   if (descUpd.length > 50) {
@@ -37,7 +43,7 @@ export default function MiniCardSitterMainPage
         <div className="p-4 flex flex-col justify-start">
           <div className='flex flex-row justify-between'>
             <h5 className="text-gray-900 text-xl font-medium">{first_name} {last_name}</h5>
-            <div className=''>❤️</div>
+            <button onClick={clickHand}><img src="/icons8-bookmark-30.png" alt="favorit" /></button>
           </div>
 
           <div className='text-gray-700 text-base' >г. Москва</div>
@@ -67,5 +73,3 @@ export default function MiniCardSitterMainPage
 
   )
 }
-
-
