@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 const sittersRouter = require("./routes/sitters.route");
 const usersRouter = require("./routes/users.route");
 const search = require("./routes/search.router");
+const favorit = require("./routes/favorit.router");
 const reviews = require("./routes/reviews.router");
 const uploader = require('./middleware/uploader');
 
@@ -216,6 +217,7 @@ app.post('/uploads', uploader.array('images', 30), (req, res) => {
 app.use("/sitters", sittersRouter);
 app.use("/search", search);
 app.use("/reviews", reviews);
+app.use("/favorit", favorit);
 
 app.use("/users", usersRouter);
 
