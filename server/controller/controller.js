@@ -41,9 +41,6 @@ function customeWhere(query) {
   if (noPet) {
     where.has_pet_flag = false;
   }
-  if (noPet) {
-    where.has_pet_flag = false;
-  }
   if (supervision_24) {
     where.supervision_24 = true;
   }
