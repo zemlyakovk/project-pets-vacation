@@ -330,7 +330,6 @@ router.get('/profile/:id', async (req, res) => {
     },
     {
       model: Sitter_images
-
     },
     ],
 
