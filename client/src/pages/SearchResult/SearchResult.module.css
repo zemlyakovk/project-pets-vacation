@@ -49,16 +49,12 @@
   border
   border-transparent
   shadow-sm
-  text-sm
-  font-medium
   rounded-md
   text-white
-  bg-indigo-600
-  hover:bg-indigo-700
+  bg-teal-400 opacity-70 hover:bg-teal-600 focus:bg-teal-600 active:bg-teal-700
   focus:outline-none
   focus:ring-2
   focus:ring-offset-2
-  focus:ring-indigo-500
 }
 
 .myClass{
@@ -70,15 +66,86 @@
   transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
 }
 
-.cardsListGrid{
-  width: 80%;
-  min-height: max-content;
+.radioChecked{
+  @apply flex flex-col
+  items-center
+  opacity-30
+  border-solid
+  rounded
+  cursor-pointer
+  border-2
 }
-
-.flexCol {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  flex-wrap: wrap;
-  min-height: max-content;
+.collBtn{
+  @apply   flex 
+  justify-end
+  items-end
+  w-full
+  pb-4
+  px-5
+  text-gray-800
+  text-right
+  bg-white
+  transition
+  focus:outline-none
+  cursor-default
+}
+.groupCheckStart{
+  @apply rounded-l
+        px-6
+        py-2
+        border-2 border-blue-600
+        text-blue-600
+        font-medium
+        text-xs
+        leading-tight
+        uppercase
+        hover:bg-black hover:bg-opacity-5
+        focus:outline-none focus:ring-0
+        transition
+        duration-150
+        ease-in-out
+}
+.groupCheckMid{
+  @apply px-6
+  py-2
+  border-t-2 border-b-2 border-blue-600
+  text-blue-600
+  font-medium
+  text-xs
+  leading-tight
+  uppercase
+  hover:bg-black hover:bg-opacity-5
+  focus:outline-none focus:ring-0
+  transition
+  duration-150
+  ease-in-out
+}
+.groupCheckEnd{
+  @apply  rounded-r
+  px-6
+  py-2
+  border-2 border-blue-600
+  text-blue-600
+  font-medium
+  text-xs
+  leading-tight
+  uppercase
+  hover:bg-black hover:bg-opacity-5
+  focus:outline-none focus:ring-0
+  transition
+  duration-150
+  ease-in-out
+}
+.groupCheck{
+  @apply flex
+  justify-between
+  p-3
+  w-full
+  text-gray-700
+  bg-white
+  rounded-lg
+  border-2
+  border-gray-200
+  cursor-pointer
+  opacity-60
 }

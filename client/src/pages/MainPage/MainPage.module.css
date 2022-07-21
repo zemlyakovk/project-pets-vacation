@@ -25,23 +25,19 @@
   border
   border-transparent
   shadow-sm
-  text-sm
-  font-medium
   rounded-md
   text-white
-  bg-indigo-600
-  hover:bg-indigo-700
+  bg-teal-400 opacity-70 hover:bg-teal-600 focus:bg-teal-600 active:bg-teal-700
   focus:outline-none
   focus:ring-2
   focus:ring-offset-2
-  focus:ring-indigo-500
 }
-
-.custom-input {
-  border-radius: 15px;
-  border: 1px #0c8af8 solid;
-  padding: 4px 12px;
-  background-color: white;
-  height: 22px;
-  box-shadow: 0 0 2px #0074d9;
+.radioChecked{
+  @apply flex flex-col
+  items-center
+  opacity-30
+  border-solid
+  rounded
+  cursor-pointer
+  border-2
 }
