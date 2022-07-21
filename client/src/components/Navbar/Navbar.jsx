@@ -34,15 +34,6 @@ export default function Navbar() {
               src={`${process.env.REACT_APP_STATIC_URL}icons8-animal-shelter-100.png`}
               alt="" />
           </Link>
-
-          <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
-
-            {id &&
-              <li className="nav-item pr-2">
-                <Link className={classes.link} to="sitters/profile">ЛК ситтер</Link>
-              </li>
-            }
-          </ul>
         </div>
 
         <div className="flex items-center relative">
