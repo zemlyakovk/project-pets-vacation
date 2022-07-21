@@ -175,6 +175,7 @@ export default function Profile() {
                       filterToBound='house'
                       token="0e29acdc44dc991a2276e7b9055396891dfe379f"
                       value={address}
+                      count='5'
                       onChange={setAddress} />
                   }
                 </div>
