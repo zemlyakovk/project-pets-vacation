@@ -96,12 +96,12 @@ module.exports = {
       updatedAt: new Date()
     }, {
       sitter_id: 9,
-      url: '0ERloyjBFo6HeYyLhVbUdGQ4U69zeHBD.jpeg',
+      url: '2022-07-21 14.20.52.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
       sitter_id: 9,
-      url: '5RhDsvxSI21TcITsOMdHUSQif41VPaXh.jpeg',
+      url: '2022-07-21 14.21.05.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {

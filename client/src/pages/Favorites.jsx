@@ -15,7 +15,7 @@ export default function Favorites() {
   }, [dispatch])
 
   return (
-    <div className="flexCol m-auto w-40">
+    <div className="flexCol m-auto">
       {isLoading ? (
         <div className="flex items-center justify-center space-x-2 col-span-1">
           <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
