@@ -71,7 +71,7 @@ export default function Navbar() {
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src={profile_photo
                   ? process.env.REACT_APP_STATIC_URL + profile_photo
-                  : process.env.REACT_APP_STATIC_URL + '123.jpeg'} className="rounded-full w-10" alt="" loading="lazy" />
+                  : process.env.REACT_APP_STATIC_URL + '123.jpeg'} className="rounded-full w-10" alt="Личный кабинет" loading="lazy" />
               </Link>
               <ul className={`dropdown-menu ${classes.dropdowMenu}`} aria-labelledby="dropdownMenuButton2">
                 <li>

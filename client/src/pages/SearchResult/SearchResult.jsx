@@ -156,66 +156,86 @@ export default function SearchResult() {
   //     setUsers([...value]);
   //   }
   // }, [value])
-
-
-
-
-
-
-
   return (
-    <div className='container mx-auto'>
-      <div className="mt-10 flex justify-center flex-wrap">
-        <form method="POST" className='w-[70%] mt-10'>
-          <div className="shadow overflow-hidden">
-            <div className='flex justify-center'>
-              <div className='m-3'>
-                <input className='m-1' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} onChange={changeRadioHandler} />
-                <label htmlFor="dog">Собака</label>
-              </div>
-              <div className='m-3'>
-                <input className='m-1' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} onChange={changeRadioHandler} />
-                <label htmlFor="cat">Кошка</label>
-              </div>
-            </div>
+    <div className='flex justify-center items-center min-h-full mt-10'>
+      <div className="mx-auto w-5/6">
+        <form>
+          <div className="shadow rounded-t-xl">
+            <div className="px-4 py-5 bg-white sm:p-6">
+              <div className='grid grid-cols-4 gap-4'>
+                <div className='flex justify-center col-span-2 col-start-2'>
+                  <div className='m-1'>
+                    <label className=' text-gray-700' htmlFor="dog">
+                      <input className='m-1 hidden peer' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} />
+                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
+                        <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
+                        <span>Собака</span>
+                      </div>
+                    </label>
+                  </div>
+                  <div className='m-1'>
+                    <label className=' text-gray-700' htmlFor="cat">
+                      <input className='peer m-1 hidden' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} />
+                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
+                        <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
+                        <span>Кошка</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
 
-            <div className='flex items-center justify-evenly'>
-              <div className="flex">
-                <div className="mb-3 xl:w-96">
+                <div className="flex flex-col col-span-2">
                   <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
                   <AddressSuggestions
                     token="7e47857f6ca620ff5df72ae45b911b78fa0f61e4"
                     value={valueInput.address}
+                    inputProps={{
+                      placeholder: "Введите город, район или точный адрес",
+                      className: `${classes.formControl}`,
+                      id: 'street-address',
+                      name: 'address',
+                    }}
+                    count='5'
+                    filterFromBound='city'
+                    filterToBound='house'
                     onChange={changeTextHandler} />
                 </div>
-              </div>
 
-              <div className='flex flex-col justify-center max-w-xl h-5 items-baseline'>
-                <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Даты передержки</label>
-                <DatePicker className='border border-solid border-gray-300' value={[valueInput.dateFrom, valueInput.dateTo]}
-                  onChange={(date) => setValueInput({
-                    ...valueInput, dateFrom: `${date[0].year}-${date[0].month}-${date[0].day}`,
-                    dateTo: `${date[1]?.year}-${date[1]?.month}-${date[1]?.day}`
-                  })}
-                  multiple={true}
-                  numberOfMonths={2}
-                  minDate={new Date()}
-                  maxDate={new Date().setDate(90)}
-                  render={<CustomRangeInput />}
-                  range />
-              </div>
+                <div className='flex flex-col justify-center col-span-1'>
+                  <label htmlFor="date" className="block mb-2 text-gray-700 items-baseline">Даты передержки</label>
+                  <DatePicker value={[valueInput.dateFrom, valueInput.dateTo]}
+                    onChange={(date) => setValueInput({
+                      ...valueInput, dateFrom: `${date[0].day}-${date[0].month}-${date[0].year}`,
+                      dateTo: `${date[1]?.day}-${date[1]?.month}-${date[1]?.year}`
+                    })}
+                    multiple={true}
+                    numberOfMonths={2}
+                    minDate={new Date()}
+                    maxDate={new Date().setDate(90)}
+                    format="DD.MM.YYYY"
+                    range
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      paddingLeft: '0.75rem',
+                      paddingRight: '0.75rem',
+                      paddingTop: '0.375rem'
+                    }}
+                    inputClass={classes.formControl}
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 items-baseline">Тип услуги</label>
-                <select id="countries" value={valueInput.serviceType} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-50 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option value="Передержка">Передержка</option>
-                  <option value="Выгул">Выгул</option>
-                </select>
-              </div>
-            </div>
-            <div className="px-6 py-5 bg-white sm:p-6">
-              <div className="grid grid-cols-6 gap-6">
-                <div className="flex col-span-2">
+                <div className='flex flex-col justify-center col-span-1'>
+                  <label htmlFor="countries" className="block mb-2 text-gray-700 items-baseline">Тип услуги</label>
+                  <select id="countries" value={valueInput.serviceType} onChange={handleChange} className={classes.formControl}>
+                    <option value="Передержка">Передержка</option>
+                    <option value="Выгул">Выгул</option>
+                  </select>
+                </div>
+                <div className='flex justify-end col-span-1 col-end-5'>
+                  <button type='submit' className={classes.button}>Найти ситтера</button>
+                </div>
+                {/* <div className="px-6 py-5 bg-white sm:p-6">
                   <div>
                     <div className="form-check">
                       <input className={classes.checkInput} checked={valueInput.hasPetFlag} type="checkbox" value='' onChange={hasPetEtcHandler} id="flexCheckHasPet" name="has_pet_flag" />
@@ -245,9 +265,9 @@ export default function SearchResult() {
                     </label>
 
                   </div>
-                </div>
+                </div> */}
 
-                <label className="block text-left col-span-3">
+                {/* <label className="block text-left col-span-3">
                   <span className="text-gray-700">Размер питомца</span>
                   <ul className="grid gap-6 w-full md:grid-cols-3">
                     <li>
@@ -278,9 +298,9 @@ export default function SearchResult() {
                       </label>
                     </li>
                   </ul>
-                </label>
+                </label> */}
 
-                <label className="block text-left col-span-3">
+                {/* <label className="block text-left col-span-3">
                   <span className="text-gray-700">Возраст питомца</span>
                   <ul className="grid gap-6 w-full md:grid-cols-3">
                     <li>
@@ -311,9 +331,9 @@ export default function SearchResult() {
                       </label>
                     </li>
                   </ul>
-                </label>
+                </label> */}
 
-                <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
+                {/* <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
                   <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Опыт присмотра (лет)</label>
                   <input type="range" name='experience' className="w-full" min="1" max="6" step="1" oninput={valueInput.experience} onChange={hasPetEtcHandler} />
                   <ul className="flex justify-between w-full px-[10px]">
@@ -350,14 +370,49 @@ export default function SearchResult() {
                     <li className="flex justify-center relative"><span className="absolute">600</span></li>
                     <li className="flex justify-center relative"><span className="absolute">Любая</span></li>
                   </ul>
+                </div> */}
+              </div>
+            </div>
+          </div>
+          <div id="accordionExample5">
+            <div className="bg-white rounded-b-xl shadow-[0_3px_3px_0_rgba(0,0,0,0.1)]">
+              {/* box-shadow:       shadow-[0px_9px_16px_0px_rgba(0 0 0 / 0.1)]  0px 9px 16px 0px rgba(50, 50, 50, 0.85); */}
+              <button className={classes.collBtn} type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne5"
+                aria-expanded="true"
+                aria-controls="collapseOne5">
+                <label htmlFor="check">
+                  <input type="checkbox" id='check' className="hidden peer" />
+                  <div className='hover:text-teal-500 hover:opacity-70 peer-checked:hidden cursor-pointer text-gray-700'>
+                    <span className='mr-3 text-xs '>&#9660;</span>
+                    <span>Дополнительные фильтры</span>
+                  </div>
+                  <div className='hover:text-teal-500 hover:opacity-70 hidden peer-checked:block cursor-pointer text-gray-700'>
+                    <span className='mr-3 text-xs'>&#9650;</span>
+                    <span>Скрыть фильтры</span>
+                  </div>
+                </label>
+              </button>
+              <div id="collapseOne5" className="accordion-collapse collapse" aria-labelledby="headingOne5">
+                <div className="py-4 px-5">
+                  <div className='grid grid-cols-4 gap-4'>
+                    <div className="flex flex-col space-y-2 p-2 col-span-2">
+                      <label htmlFor="priceHour" className="form-label inline-block mb-2 text-gray-700">Максимальная цена за час</label>
+                      <input type="range" id="priceHour" className="w-full accent-teal-200 cursor-pointer" min="100" max="1000" step="100" />
+                    </div>
+                    <div className="flex flex-col space-y-2 p-2 col-span-2">
+                      <label htmlFor="priceDay" className="form-label inline-block mb-2 text-gray-700">Максимальная цена за сутки</label>
+                      <input type="range" id="priceDay" className="w-full accent-teal-200 cursor-pointer" min="100" max="2000" step="100" />
+                    </div>
+                  </div>
                 </div>
-
               </div>
             </div>
           </div>
         </form >
-        <div className='cardsListGrid'>
-          <div className="flexCol">
+        <div className='grid grid-cols-2 mt-3'>
+          <div className="col-span-1 overflow-scroll">
             {isLoading ? (
               <div className="flex items-center justify-center space-x-2 col-span-1">
                 <div className="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full" role="status">
@@ -368,12 +423,12 @@ export default function SearchResult() {
             ) : //MiniCardSitter()
               <div className='flex col-span-1 flex-wrap'>
                 {sitters && sitters.map((sitter) =>
-                  <MiniCardSitterMainPage  key={sitter.id}  {...sitter} />
+                  <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
                 )}
               </div>
             }
           </div>
-          <div className='map '>
+          <div className='col-span-1'>
             <YMaps className='mapBox col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
               <Map
                 modules={["geocode", "coordSystem.geo"]}
@@ -383,7 +438,7 @@ export default function SearchResult() {
                 defaultState={{
                   center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
                   zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
-                }} width='400px' height='400px' instanceRef={ref => {
+                }} width='100%' height='100%' instanceRef={ref => {
                   if (ref) {
                     mapRef.current = ref
                   }
@@ -413,9 +468,9 @@ export default function SearchResult() {
           </div>
         </div >
 
-      </div>
+      </div >
 
-    </div>
+    </div >
 
 
 

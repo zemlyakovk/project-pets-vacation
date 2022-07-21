@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import classes from './Registration.module.css'
 
 
-import useLocalStorage from "../hooks/useLS";
-import { setRegistr } from "../store/actions/auth.action";
+import useLocalStorage from "../../hooks/useLS";
+import { setRegistr } from "../../store/actions/auth.action";
 
 export default function Registration() {
   const [login, setLogin] = useLocalStorage("login", "");
@@ -17,14 +18,10 @@ export default function Registration() {
   function registrHandler(evt) {
     evt.preventDefault();
 
-    dispatch(setRegistr({ login, password, email}));
+    dispatch(setRegistr({ login, password, email }));
     setLogin("");
     setPassword("");
     setEmail("");
-    // setLast_name("")
-    // setPhone("")
-    // setAge("")
-    // navigate("/");
   }
 
   return (
@@ -38,25 +35,9 @@ export default function Registration() {
               setLogin(evt.target.value);
             }}
             id="first_name"
-            type="text" className="form-control block
-        w-full
-        px-3
-        py-1.5
-        text-base
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            placeholder="Логин" />
+            type="text" className={classes.formControl}
+            placeholder="Имя" />
         </div>
-
-
-
         <div className="form-group mb-6">
           <label htmlFor="exampleInputEmail1" className="form-label inline-block mb-2 text-gray-700">Почта</label>
           <input name="email"
@@ -66,21 +47,7 @@ export default function Registration() {
             }}
             id="email"
             type="email"
-            className="form-control
-        block
-        w-full
-        px-3
-        py-1.5
-        text-base
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            className={classes.formControl}
             aria-describedby="emailHelp" placeholder="Почта" />
           <small id="emailHelp" className="block mt-1 text-xs text-gray-600">Мы никому не покажем ваши личные данные.</small>
         </div>
@@ -92,40 +59,11 @@ export default function Registration() {
               setPassword(evt.target.value);
             }}
             id="password"
-            className="form-control block
-        w-full
-        px-3
-        py-1.5
-        text-base
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            className={classes.formControl}
             placeholder="Пароль" />
         </div>
 
-        <button type="submit" className="
-      px-6
-      py-2.5
-      bg-blue-600
-      text-white
-      font-medium
-      text-xs
-      leading-tight
-      uppercase
-      rounded
-      shadow-md
-      hover:bg-blue-700 hover:shadow-lg
-      focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-      active:bg-blue-800 active:shadow-lg
-      transition
-      duration-150
-      ease-in-out">Зарегистрироваться</button>
+        <button type="submit" className={classes.button}>Зарегистрироваться</button>
 
       </form>
     </div>
