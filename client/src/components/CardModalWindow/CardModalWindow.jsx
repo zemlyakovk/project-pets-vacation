@@ -11,8 +11,6 @@ import "./styles.css";
 import { Navigation } from "swiper";
 
 
-
-
 // { active, setActive }
 // onClick={() => setActive(false)}
 export default function CardModalWindow({ setModal, id }) {
