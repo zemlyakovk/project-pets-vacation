@@ -14,15 +14,6 @@ export default function MiniCardSitterMainPage
   });
   const dispatch = useDispatch();
   const location = useLocation()
-  console.log(location);
-
-  // function clickHand() {
-  //   if (location.pathname === '/users/favorites') {
-  //     dispatch(deleteFavorit(id))
-  //   }
-  // }
-
-  // console.log("modal.show", modal.show);
 
   function showModalHandler() {
     setModal((prev) => ({ ...prev, show: true, id }))
@@ -33,9 +24,7 @@ export default function MiniCardSitterMainPage
       dispatch(favorit(id))
     } else {
       dispatch(deleteFavorit(id))
-      console.log('asdasd');
     }
-    // console.log(id); // ИД ситтера по которому кликнули
   }
   let descUpd = desc
 

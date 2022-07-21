@@ -102,7 +102,7 @@ module.exports = {
       phone: '89786675562',
       password: '123',
       age: '29',
-      profile_photo: 'mIimrAUmPJL825KcOlrIT7vOvTUJiMux.jpeg',
+      profile_photo: '1658245010846-Untitled-55.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -126,7 +126,7 @@ module.exports = {
       phone: '89452556320',
       password: '123',
       age: '36',
-      profile_photo: 'aNOjBV7pcP9IJRtBC5JzrXblkk5Wcpzg.jpeg',
+      profile_photo: 'kartinki-schastlivyh-lyudej-12.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -138,7 +138,7 @@ module.exports = {
       phone: '89563223011',
       password: '123',
       age: '33',
-      profile_photo: 'BmlEnNanwJEoC2JFuovM8yz_Eu1R0DEy.jpeg',
+      profile_photo: 'dfd.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -146,11 +146,11 @@ module.exports = {
       last_name: 'Фокина',
       email: 'foka@mail.ru',
       sex: 'Женский',
-      desc: 'Мне 52 года. Живу в трёхкомнатной квартире. Рядом огромный парк. Очень люблю собак. Смогу высылать фото собаки . Дома есть котик.',
+      desc: 'Мне 26 года. Живу в трёхкомнатной квартире. Рядом огромный парк. Очень люблю собак. Смогу высылать фото собаки . Дома есть котик.',
       phone: '89165232289',
       password: '123',
-      age: '52',
-      profile_photo: 'JrmQYzaLTpSQJ3PTnVN5V2nStn972BFh.jpeg',
+      age: '26',
+      profile_photo: 'screenshot_1-8.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
