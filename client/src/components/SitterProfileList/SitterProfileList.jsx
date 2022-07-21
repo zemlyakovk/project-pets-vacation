@@ -20,7 +20,7 @@ useEffect(()=> {
 // console.log(reviewsList);
 
   const spec = {
-    'Опыт присмотра (лет)':  'лет', 
+    'Опыт присмотра (лет)':  `${sitter?.experience}`, 
     'Присмотрю за собакой' : sitter?.dog_flag ? 'да' : 'нет',  
     'Присмотрю за кошкой' : sitter?.cat_flag ? 'да' : 'нет',
     'Условия содержания:' : 'да', 

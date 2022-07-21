@@ -20,7 +20,6 @@ export default function CardModalWindow({ setModal, id }) {
     setModal((prev) => ({ ...prev, show: false }))
   }
 
-
   const [sitter, setSitter] = useState({ loading: true });
   // const { id } = useParams();
 
