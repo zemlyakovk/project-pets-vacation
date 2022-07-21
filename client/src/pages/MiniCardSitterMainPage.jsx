@@ -33,7 +33,16 @@ export default function MiniCardSitterMainPage
 
   return (
 
+    // <div>
+    //   <div className=' relative'>
+    //     <div className=' absolute top-3 left-[380px]'>
+    //     <button onClick={showModalHandler} type="button" className=" bg-blue-500 text-white rounded-lg mt-2 py-2 text-center">Подробнее</button>
+    //     </div>
+    //   </div>
 
+   
+
+    // <Link target={'_blank'} to={`/sitters/${id}`}>
     <div className="flex mb-5">
       <div className="flex flexSitterCard flex-row rounded-lg bg-white shadow-lg">
         <div className=' flex items-center'>
@@ -59,9 +68,7 @@ export default function MiniCardSitterMainPage
 
           <button onClick={showModalHandler} type="button" className=" bg-blue-500 text-white rounded-lg mt-2 py-2 text-center">Подробнее</button>
 
-          {/* <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
-            Профиль ситтера
-          </Link> */}
+     
           <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
             Профиль ситтера
           </Link>
@@ -77,6 +84,11 @@ export default function MiniCardSitterMainPage
 
     </div>
 
+// </Link>
+ 
+
+
+// </div>
 
   )
 }
