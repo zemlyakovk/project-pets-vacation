@@ -6,13 +6,16 @@ import Review from './Review'
 
 
 export default function MiniCardSitterMainPage
+
+
   ({ id, User: { first_name }, User: { last_name }, desc, User: { profile_photo } }) {
+
 
   const [modal, setModal] = useState({
     show: false
   });
 
-  console.log("modal.show", modal.show);
+  // console.log("modal.show", modal.show);
 
   function showModalHandler() {
     setModal((prev) => ({ ...prev, show: true, id }))
