@@ -23,6 +23,7 @@ export default function SitterProfile() {
   const [images, setImages] = useState([]);
   const removedFilesNames = useRef([]);
   const [files, setFiles] = useState([]);
+  // const refDates = useRef();
 
   const [map, setMap] = useState({
     show: false
@@ -65,12 +66,11 @@ export default function SitterProfile() {
   useEffect(() => {
     setState((prev) => ({ ...prev, Pet_sizes: selectedSize.map(el => ({ title: el.value, desc: el.desc })) }))
   }, [selectedSize])
-  //* Для отслеживания расписания
-  useEffect(() => {
-    console.log('Dates====>', dates);
+  // //* Для отслеживания расписания
+  function datesHandler(dates) {
+    setDates(dates)
     setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
-  }, [dates])
-
+  }
   //! Сделать обработчик ошибок
   async function onSubmitHandler(event) {
     event.preventDefault();
@@ -126,7 +126,7 @@ export default function SitterProfile() {
   }, [address])
 
   function showMapHandler() {
-    const center = address.value ? [address.data.geo_lat, address.data.geo_lon] : [55.75396, 37.620393];
+    const center = state.Address ? [state.Address.latitude, state.Address.longitude] : [55.75396, 37.620393];
     setMap((prev) => ({ ...prev, show: true, center, zoom: 10 }))
   }
 
@@ -378,9 +378,10 @@ export default function SitterProfile() {
                   </div>
                 </div>
                 <div className='col-span-4 flex items-center'>
-                  <DatePicker value={dates}
+                  <DatePicker
+                    value={dates}
                     id="schedule"
-                    onChange={setDates}
+                    onChange={datesHandler}
                     multiple={true}
                     numberOfMonths={2}
                     minDate={new Date()}
