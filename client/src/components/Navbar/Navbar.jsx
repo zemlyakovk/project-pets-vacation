@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { setLogoutData } from '../../store/actions/auth.action';
@@ -5,14 +6,24 @@ import classes from './Navbar.module.css'
 
 export default function Navbar() {
 
-  const { auth: { id, profile_photo, Sitter } } = useSelector((state) => state);
+  const { auth: { id, profile_photo, Sitter, last_name, sex, Address } } = useSelector((state) => state);
   const dispatch = useDispatch();
-
+  const [show, setShow] = useState(false)
   function logoutHandler(evt) {
-
     dispatch(setLogoutData());
   }
 
+  function showFalse() {
+    setShow(false)
+  }
+
+  function check(e) {
+    if (!last_name && !sex) {
+      setShow(true)
+      setTimeout(showFalse, 1500)
+      e.preventDefault();
+    }
+  }
 
 
   return (
@@ -38,8 +49,13 @@ export default function Navbar() {
 
         <div className="flex items-center relative">
           <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto justify-center items-center">
-            <li className="nav-item pr-2">
+            {show ?
+              <div className="bg-green-100  py-4 px-2 text-base text-green-700 absolute right-14 top-10 rounded-lg" role="alert">
+                Необходимо заполнить карточку пользователя
+              </div> : <></>}
+            <li className="nav-item pr-2" >
               <Link to="sitters/profile/new"
+                onClick={check}
                 type="button"
                 className={classes.becomeSitterBtn}>
                 {Sitter?.id ? 'Мой профиль ситтера' : 'Стать ситтером'}
