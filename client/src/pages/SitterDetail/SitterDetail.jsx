@@ -12,23 +12,19 @@ export default function SitterDetail() {
   const [sitter, setSitter] = useState()
 
   const getSitter = () => {
-    axios.get(`/sitters/profile/${params.id}`).then((data)=>{setSitter(data.data)})
+    axios.get(`/sitters/profile/${params.id}`).then((data) => { setSitter(data.data) })
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getSitter()
 
-  },[])
-
-console.log('-----------------',sitter);
+  }, [])
 
   return (
     <div className='flex flex-row justify-center'>
-      <SitterProfileCard sitter={sitter}/>
-     
-      <SitterProfileList sitter={sitter}/>
-      
+      <SitterProfileCard sitter={sitter} />
+      <SitterProfileList sitter={sitter} />
     </div>
   )
 }
