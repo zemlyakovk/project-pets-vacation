@@ -332,12 +332,14 @@ router.get('/profile/:id', async (req, res) => {
       model: Sitter_images
     },
     {
+      model: Sitter_date
+    },
+    {
       model: Pet_age
     },
     {
       model: Pet_size
     },
-
 
     ],
 
