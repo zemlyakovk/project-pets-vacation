@@ -66,7 +66,7 @@ export default function Navbar() {
               </Link>
               <ul className={`dropdown-menu ${classes.dropdowMenu}`} aria-labelledby="dropdownMenuButton2">
                 <li>
-                  <Link className={classes.linkDrop} to="users/chat">Сообщения</Link>
+                  <Link className={classes.linkDrop} to="users/mychats">Сообщения</Link>
                 </li>
                 <li>
                   <Link className={classes.linkDrop} to="users/favorites">Избранное</Link>

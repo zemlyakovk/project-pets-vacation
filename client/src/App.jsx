@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout';
-import Chat from './components/Chat';
+import Chat from './components/Chat/Chat';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login/Login';
 import MainPage from './pages/MainPage/MainPage';
@@ -16,6 +16,7 @@ import { setSitter } from './store/actions/sitter.action';
 import ResultMap from './pages/ResultMap/ResultMap';
 import SitterDetail from './pages/SitterDetail/SitterDetail';
 import CardModalWindow from './components/CardModalWindow/CardModalWindow';
+import Chats from './pages/Chats/Chats';
 
 function App() {
 
@@ -25,7 +26,6 @@ function App() {
     dispatch(getUser());
     dispatch(setSitter());
   }, [dispatch, id])
-
 
   return (
     <>
@@ -37,8 +37,8 @@ function App() {
           <Route path='search' element={<SearchResult />} />
           <Route path='sitters/:id' element={<SitterDetail />} />
           <Route path='users'>
-            <Route path='chat' element={<Chat />} />
             <Route path='chat/:id' element={<Chat />} />
+            <Route path='mychats' element={<Chats />} />
             <Route path='profile' element={<Profile />} />
             <Route path='favorites' element={<Favorites />} />
           </Route>

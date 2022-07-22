@@ -14,6 +14,7 @@ export default function Profile() {
   const [state, setState] = useState({});
   const dispatch = useDispatch();
   const uploadRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   const [pic, setPic] = useState({
     cropperOpen: false,
@@ -46,11 +47,15 @@ export default function Profile() {
   async function onSubmitHandler(event) {
     event.preventDefault();
     try {
+      setLoading(true);
       await axios.patch(`/users/${state.id}`, { ...state, newAvatar: pic.new ? pic.croppedImg : null });
-      dispatch({
-        type: SET_USER_DATA,
-        paylod: state
-      })
+      setTimeout(() => {
+        dispatch({
+          type: SET_USER_DATA,
+          paylod: state
+        })
+        setLoading(false);
+      }, 300);
     } catch (error) {
       console.log(error.message);
     }
@@ -99,7 +104,7 @@ export default function Profile() {
 
   return (
     <>
-      <div className="mt-10 flex justify-center ">
+      <div className={`mt-10 flex justify-center ${loading && classes.loading}`}>
         <form onSubmit={onSubmitHandler} method="POST" className='w-[70%] mt-10'>
           <div className="shadow overflow-hidden">
             <div className="px-4 py-5 bg-white sm:p-6">

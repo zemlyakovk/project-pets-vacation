@@ -1,30 +1,31 @@
-import * as React from "react";
+import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "../../hooks/useLS";
+// import useLocalStorage from "../../hooks/useLS";
 import { setLoginData } from "../../store/actions/auth.action";
 import classes from './Login.module.css'
 
 
 export default function Login() {
-  const [email, setEmail] = useLocalStorage("email", "");
-  const [password, setPassword] = useLocalStorage("password", "");
+  // const [email, setEmail] = useLocalStorage("email", "");
+  const [email, setEmail] = useState('');
+  // const [password, setPassword] = useLocalStorage("password", "");
+  const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   function loginHandler(evt) {
     evt.preventDefault();
-    console.log({ email });
-
-    dispatch(setLoginData({ email, password }));
-    setEmail("");
-    setPassword("");
-    navigate("/");
+    if (email && password) {
+      dispatch(setLoginData({ email, password }));
+      setEmail("");
+      setPassword("");
+    }
   }
 
   return (
-    <div className="formPosition block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+    <div className="formPosition block p-6 rounded-lg shadow-lg bg-white w-1/5">
       <form onSubmit={loginHandler}>
         <div className="form-group mb-6">
           <label htmlFor="exampleInputPassword1" className="form-label inline-block mb-2 text-gray-700">Почта</label>

@@ -5,3 +5,4 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_SITTER = 'SET_SITTER';
 export const SEARCH = 'SEARCH';
 export const SEARCH_LIST = 'SEARCH_LIST';
+export const SET_CHAT = 'SET_CHAT';

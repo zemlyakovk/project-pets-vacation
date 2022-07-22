@@ -24,7 +24,6 @@
 
 .formControl{
   @apply
-  form-control
   block
   w-full
   px-3
@@ -38,7 +37,7 @@
   transition
   ease-in-out
   m-0
-  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+  focus:text-gray-700 focus:bg-white focus:border-teal-400 focus:outline-none
 }
 
 .button{
@@ -148,4 +147,8 @@
   border-gray-200
   cursor-pointer
   opacity-60
+}
+
+.loading{
+  @apply opacity-60 pointer-events-none
 }
