@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
 const {
-  Sitter, Pet_size, Pet_age, Sitter_date, Sitter_pet_age, Sitter_pet_size, Address, User, sequelize, Sitter_images
+  Sitter, Pet_size, Reviews, Pet_age, Sitter_date, Sitter_pet_age, Sitter_pet_size, Address, User, sequelize, Sitter_images
 } = require('../db/models');
 const sitter = require('../db/models/sitter');
 const user = require('../db/models/user');
@@ -332,18 +332,31 @@ router.get('/profile/:id', async (req, res) => {
       model: Sitter_images
     },
     {
+      model: Sitter_date
+    },
+    {
       model: Pet_age
     },
     {
       model: Pet_size
     },
 
-
     ],
 
   });
 
   res.json(onePost);
+});
+
+router.get('/rating/:id', async (req, res) => {
+  const { id } = req.params;
+  const rating = await Reviews.findOne({
+    where: { sitter_id: id },
+    attributes: [sequelize.fn("AVG", sequelize.col("rating"))],
+    raw: true
+  });
+
+  res.json(rating);
 });
 
 module.exports = router;

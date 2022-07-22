@@ -1,31 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import classes from './Registration.module.css'
-
-
-import useLocalStorage from "../../hooks/useLS";
+// import useLocalStorage from "../../hooks/useLS";
 import { setRegistr } from "../../store/actions/auth.action";
 
 export default function Registration() {
-  const [login, setLogin] = useLocalStorage("login", "");
-  const [password, setPassword] = useLocalStorage("password", "");
-  const [email, setEmail] = useLocalStorage("email", "");
+  // const [login, setLogin] = useLocalStorage("login", "");
+  // const [password, setPassword] = useLocalStorage("password", "");
+  // const [email, setEmail] = useLocalStorage("email", "");
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
 
   const dispatch = useDispatch();
-
-
   function registrHandler(evt) {
     evt.preventDefault();
-
-    dispatch(setRegistr({ login, password, email }));
-    setLogin("");
-    setPassword("");
-    setEmail("");
+    if (login && email && password) {
+      dispatch(setRegistr({ login, password, email }));
+      setLogin("");
+      setPassword("");
+      setEmail("");
+    }
   }
 
   return (
-    <div className="formPosition block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+    <div className="formPosition block p-6 rounded-lg shadow-lg bg-white w-1/5">
       <form onSubmit={registrHandler}>
         <div className="form-group mb-6">
           <label htmlFor="exampleInputPassword1" className="form-label inline-block mb-2 text-gray-700">Логин</label>

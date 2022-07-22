@@ -110,7 +110,7 @@ export default function SearchResult() {
   }, [ymap, valueInput, dispatch])
 
   return (
-    <div className='flex justify-center items-center min-h-full mt-10'>
+    <div className={`flex justify-center items-center min-h-full mt-10 ${isLoading && classes.loading}`}>
       <div className="mx-auto w-5/6">
         <form onSubmit={submitHandler}>
           <div className="shadow rounded-t-xl">
@@ -120,18 +120,16 @@ export default function SearchResult() {
                   <div className='m-1'>
                     <label className=' text-gray-700' htmlFor="dog">
                       <input className='m-1 hidden peer' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} onChange={changeRadioHandler} />
-                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
-                        <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
-                        <span>Собака</span>
+                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100 pb-1`}>
+                        <img className='w-full' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
                       </div>
                     </label>
                   </div>
                   <div className='m-1'>
                     <label className=' text-gray-700' htmlFor="cat">
                       <input className='peer m-1 hidden' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} onChange={changeRadioHandler} />
-                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
-                        <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
-                        <span>Кошка</span>
+                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100 pb-1`}>
+                        <img className='w-full' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
                       </div>
                     </label>
                   </div>
@@ -409,7 +407,7 @@ export default function SearchResult() {
                     key={'placemark#' + i}
                     geometry={[sitter.Address.latitude, sitter.Address.longitude]}
                     properties={{
-                      balloonContentHeader: `<img src="${process.env.REACT_APP_STATIC_URL}${sitter.User.profile_photo}" width="150" height="161"  />${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
+                      balloonContentHeader: `<img src="${process.env.REACT_APP_STATIC_URL}${sitter.User.profile_photo}" width="100" height="111"  />${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
                       balloonContentBody: sitter.title,
                     }}
                     modules={

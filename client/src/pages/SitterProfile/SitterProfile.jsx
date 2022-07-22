@@ -306,6 +306,7 @@ export default function SitterProfile() {
                       "selectAllFiltered": "Выбрать все",
                       "selectSomeItems": "Выберите возраст",
                     }}
+                    className='multi'
                   />
                 </div>
                 <div className="text-left col-span-2">
