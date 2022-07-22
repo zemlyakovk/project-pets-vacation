@@ -18,7 +18,6 @@ export default function SitterDetail() {
 
   useEffect(() => {
     getSitter()
-
   }, [])
 
   return (

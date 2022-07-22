@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listFavorit } from '../store/actions/favorit.actions';
-import MiniCardSitterMainPage from './MiniCardSitterMainPage'
+import MiniCardSitterMainPage from './MiniCardSitterMainPage/MiniCardSitterMainPage'
 // import SearchResult from './SearchResult/SearchResult'
 
 

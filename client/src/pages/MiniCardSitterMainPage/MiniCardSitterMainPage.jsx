@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import axios from '../axios/axios';
-import CardModalWindow from '../components/CardModalWindow/CardModalWindow';
-import { deleteFavorit, favorit } from '../store/actions/favorit.actions';
-
+import axios from '../../axios/axios';
+import CardModalWindow from '../../components/CardModalWindow/CardModalWindow';
+import { deleteFavorit, favorit } from '../../store/actions/favorit.actions';
+import classes from './MiniCardSitterMainPage.module.css'
 
 
 
@@ -80,10 +80,10 @@ export default function MiniCardSitterMainPage
             {descUpd}
           </p>
 
-          <button onClick={showModalHandler} type="button" className=" bg-blue-500 text-white rounded-lg mt-2 py-2 text-center">Подробнее</button>
+          <button onClick={showModalHandler} type="button" className={classes.button}>Подробнее</button>
 
 
-          <Link className=' bg-blue-500 text-white rounded-lg mt-2 py-2 text-center' to={`/sitters/${id}`}>
+          <Link className={classes.button} to={`/sitters/${id}`}>
             Профиль ситтера
           </Link>
         </div>

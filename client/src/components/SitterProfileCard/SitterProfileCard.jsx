@@ -5,6 +5,7 @@ import axios from '../../axios/axios';
 import Review from '../../pages/Review'
 import { setChat } from '../../store/actions/chat.action';
 import { Calendar } from 'react-multi-date-picker';
+import classes from './SitterProfileCard.module.css'
 
 export default function SitterProfileCard({ sitter }) {
   const dispatch = useDispatch();
@@ -38,9 +39,9 @@ export default function SitterProfileCard({ sitter }) {
   }, [sitter])
 
   return (
-    <div class="flex justify-center mt-4 mr-2 h-[400px]">
+    <div class="flex justify-center mt-4 mr-2 h-[600px]">
 
-      <div class="rounded-lg shadow-lg bg-white w-4/6">
+      <div class="rounded-lg shadow-lg bg-white w-full">
         <div className='flex flex-row mt-2 ml-5 items-center'>
           <a href="#!">
             <img class="rounded-full w-[96px] h-[96px] object-cover" src={`${process.env.REACT_APP_STATIC_URL}${sitter?.User?.profile_photo}`} alt="" />
@@ -53,7 +54,20 @@ export default function SitterProfileCard({ sitter }) {
         </div>
 
         <div className="p-4 w-full">
-          <button type="button" onClick={startChat} className=" inline-block px-6  py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mb-2">Написать ситтеру</button>
+          <button type="button" onClick={startChat} className="inline-flex
+  justify-center
+  py-2
+  px-4
+  border
+  border-transparent
+  shadow-sm
+  rounded-md
+  text-white
+  bg-teal-400 opacity-70 hover:bg-teal-600 focus:bg-teal-600 active:bg-teal-700
+  focus:outline-none
+  focus:ring-2
+  focus:ring-offset-2
+  mb-2">Написать ситтеру</button>
           <div><Review /></div>
           <div className='flex flex-row mt-2'>
             <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" className="w-4 text-yellow-500 mr-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">

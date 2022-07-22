@@ -132,7 +132,7 @@ export default function SitterProfile() {
 
   return (
     <>
-      <div className={`mt-10 flex justify-center ${sitter.isLoading && classes.loading}`}>
+      <div className={`mt-10 flex justify-center mb-10 ${sitter.isLoading && classes.loading}`}>
         <form onSubmit={onSubmitHandler} method="POST" className='w-[70%] mt-10'>
           <div className="shadow overflow-hidden">
             <div className="px-4 py-5 bg-white sm:p-6">

@@ -7,7 +7,7 @@ import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
 import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps'
-import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
+import MiniCardSitterMainPage from '../MiniCardSitterMainPage/MiniCardSitterMainPage';
 import "./styles.css";
 
 export default function SearchResult() {
