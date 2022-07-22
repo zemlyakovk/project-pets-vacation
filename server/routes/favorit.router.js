@@ -6,7 +6,7 @@ router.post('/add', async (req, res) => {
   try {
     const sitterId = req.body.params; // кого надо добавить в избранное
     const { userId } = res.locals // кому надо добавить в избранное
-    const favorit = await Favorit_sitters.create({ sitter_id: sitterId, user_id: userId });
+    const favorit = await Favorit_sitters.findOrCreate({ where: { sitter_id: sitterId, user_id: userId }, defaults: { sitter_id: sitterId, user_id: userId } });
     res.json(favorit)
   } catch (err) {
     console.log(err);
