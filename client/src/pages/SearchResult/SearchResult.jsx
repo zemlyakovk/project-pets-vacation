@@ -409,7 +409,7 @@ export default function SearchResult() {
                     key={'placemark#' + i}
                     geometry={[sitter.Address.latitude, sitter.Address.longitude]}
                     properties={{
-                      balloonContentHeader: `<img src="${process.env.REACT_APP_STATIC_URL}${sitter.User.profile_photo}" width="150" height="161"  />${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
+                      balloonContentHeader: `<img src="${process.env.REACT_APP_STATIC_URL}${sitter.User.profile_photo}" width="100" height="111"  />${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
                       balloonContentBody: sitter.title,
                     }}
                     modules={
