@@ -102,5 +102,5 @@ function* logoutWorker() {
 export function* userSaga() {
   yield debounce(100, REG_USER, regWorker);
   yield debounce(100, LOGIN_USER, loginWorker);
-  yield takeEvery(LOGOUT_USER, logoutWorker)
+  yield takeEvery(LOGOUT_USER, logoutWorker);
 }

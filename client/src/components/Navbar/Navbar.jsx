@@ -51,7 +51,7 @@ export default function Navbar() {
           <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto justify-center items-center">
             {show ?
               <div className="bg-green-100  py-4 px-2 text-base text-green-700 absolute right-14 top-10 rounded-lg" role="alert">
-                Необходимо заполнить карточку пользователя
+                {id ? 'Необходимо заполнить карточку пользователя' : 'Что бы стать ситтером надо войти или зарегистрироваться'}
               </div> : <></>}
             <li className="nav-item pr-2" >
               <Link to="sitters/profile/new"
