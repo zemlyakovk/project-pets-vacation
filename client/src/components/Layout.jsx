@@ -10,10 +10,13 @@ export default function Layout() {
       <header>
         <Navbar />
       </header>
-      <main className="grow flex flex-col justify-center bg-[url('http://localhost:3000/images/frame-with-dogs-vector-white-background_53876-127700.webp')]">
+      <main className="grow flex flex-col justify-center 
+      bg-[url('http://localhost:3000/images/frame-with-dogs-vector-white-background_53876-127700.webp')]
+      bg-no-repeat
+      bg-cover
+      bg-fixed">
         <Outlet />
       </main>
-
       <footer>
         <Footer />
       </footer>

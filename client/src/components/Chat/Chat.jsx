@@ -27,7 +27,7 @@ export default function Chat() {
   }, [value])
 
   return (
-    <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen w-3/4 self-center shadow">
+    <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen w-3/4 self-center shadow bg-white">
       <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
         <div className="relative flex items-center space-x-4">
           <div className="relative">

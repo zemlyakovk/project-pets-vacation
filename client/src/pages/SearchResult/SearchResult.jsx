@@ -380,10 +380,12 @@ export default function SearchResult() {
               </div>
 
             ) : //MiniCardSitter()
-              <div className='flex col-span-1 flex-wrap'>
-                {sitters && sitters.map((sitter) =>
-                  <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
-                )}
+              <div className='h-screen'>
+                <div className='flex col-span-1 flex-wrap overflow-scroll'>
+                  {sitters && sitters.map((sitter) =>
+                    <MiniCardSitterMainPage key={sitter.id}  {...sitter} />
+                  )}
+                </div>
               </div>
             }
           </div>

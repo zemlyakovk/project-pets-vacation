@@ -200,7 +200,7 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className="px-4 py-3  text-right sm:px-6">
+            <div className="px-4 py-3  text-right sm:px-6 bg-white">
               <button type="submit" className={classes.button}>Сохранить</button>
             </div>
           </div>
