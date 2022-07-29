@@ -1,4 +1,6 @@
-
+.body{
+  background-image: url('http://localhost:3000/images/frame-with-dogs-vector-white-background_53876-127700.webp');
+}
 
 .page {
   overflow: hidden;

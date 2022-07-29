@@ -12,7 +12,7 @@ import classes from './MainPage.module.css'
 export default function MainPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [valueInput, setValueInput] = useState({ radioValue: '', address: {}, dateFrom: null, dateTo: null, serviceType: 'Передержка' });
+  const [valueInput, setValueInput] = useState({ radioValue: 'Собака', address: {}, dateFrom: null, dateTo: null, serviceType: 'Передержка' });
 
   const changeHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
@@ -56,24 +56,20 @@ export default function MainPage() {
                     <div className='m-1'>
                       <label className=' text-gray-700' htmlFor="dog">
                         <input className='m-1 hidden peer' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} onChange={changeHandler} />
-                        <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
-                          <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
-                          <span>Собака</span>
+                        <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100 pb-1`}>
+                          <img className='w-full' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
                         </div>
                       </label>
                     </div>
                     <div className='m-1'>
                       <label className=' text-gray-700' htmlFor="cat">
                         <input className='peer m-1 hidden' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} onChange={changeHandler} />
-                        <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
-                          <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
-                          <span>Кошка</span>
+                        <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100 pb-1`}>
+                          <img className='w-full' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
                         </div>
                       </label>
                     </div>
                   </div>
-
-
                   <div className="flex flex-col col-span-2">
                     <label htmlFor="exampleFormControlInput1" className="form-label inline-block mb-2 text-gray-700">Где искать?</label>
                     <AddressSuggestions

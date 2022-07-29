@@ -23,6 +23,7 @@ export default function SitterProfile() {
   const [images, setImages] = useState([]);
   const removedFilesNames = useRef([]);
   const [files, setFiles] = useState([]);
+  // const refDates = useRef();
 
   const [map, setMap] = useState({
     show: false
@@ -31,7 +32,6 @@ export default function SitterProfile() {
 
   useEffect(() => {
     setState((prev) => ({ ...prev, ...sitter.value }));
-    console.log(sitter.value);
     if (sitter.value.Pet_ages) {
       setSelectedAge(sitter.value.Pet_ages.map(el => ({ label: `${el.title} ${el.desc}`, value: el.title, desc: el.desc })))
     }
@@ -66,11 +66,11 @@ export default function SitterProfile() {
   useEffect(() => {
     setState((prev) => ({ ...prev, Pet_sizes: selectedSize.map(el => ({ title: el.value, desc: el.desc })) }))
   }, [selectedSize])
-  //* Для отслеживания расписания
-  useEffect(() => {
+  // //* Для отслеживания расписания
+  function datesHandler(dates) {
+    setDates(dates)
     setState((prev) => ({ ...prev, Sitter_dates: dates.map(date => ({ aval_date: `${date.year}-${date.month}-${date.day}` })) }))
-  }, [dates])
-
+  }
   //! Сделать обработчик ошибок
   async function onSubmitHandler(event) {
     event.preventDefault();
@@ -88,6 +88,7 @@ export default function SitterProfile() {
         body = { addFiles: response.data, removedFilesNames: removedFilesNames.current }
       }
       body = { ...body, state }
+      console.log(body);
       if (state.id) {
         await axios.patch(`/sitters/${state.id}`, body);
         dispatch(setSitter());
@@ -125,13 +126,13 @@ export default function SitterProfile() {
   }, [address])
 
   function showMapHandler() {
-    const center = address.value ? [address.data.geo_lat, address.data.geo_lon] : [55.75396, 37.620393];
+    const center = state.Address ? [state.Address.latitude, state.Address.longitude] : [55.75396, 37.620393];
     setMap((prev) => ({ ...prev, show: true, center, zoom: 10 }))
   }
 
   return (
     <>
-      <div className={`mt-10 flex justify-center ${sitter.isLoading && classes.loading}`}>
+      <div className={`mt-10 flex justify-center mb-10 ${sitter.isLoading && classes.loading}`}>
         <form onSubmit={onSubmitHandler} method="POST" className='w-[70%] mt-10'>
           <div className="shadow overflow-hidden">
             <div className="px-4 py-5 bg-white sm:p-6">
@@ -305,6 +306,7 @@ export default function SitterProfile() {
                       "selectAllFiltered": "Выбрать все",
                       "selectSomeItems": "Выберите возраст",
                     }}
+                    className='multi'
                   />
                 </div>
                 <div className="text-left col-span-2">
@@ -377,9 +379,10 @@ export default function SitterProfile() {
                   </div>
                 </div>
                 <div className='col-span-4 flex items-center'>
-                  <DatePicker value={dates}
+                  <DatePicker
+                    value={dates}
                     id="schedule"
-                    onChange={setDates}
+                    onChange={datesHandler}
                     multiple={true}
                     numberOfMonths={2}
                     minDate={new Date()}

@@ -40,6 +40,21 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
+      sitter_id: 1,
+      aval_date: '2022-08-01',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 1,
+      aval_date: '2022-08-02',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 1,
+      aval_date: '2022-08-03',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
       sitter_id: 2,
       aval_date: '2022-07-25',
       createdAt: new Date(),
@@ -62,6 +77,21 @@ module.exports = {
     }, {
       sitter_id: 2,
       aval_date: '2022-07-29',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 2,
+      aval_date: '2022-08-01',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 2,
+      aval_date: '2022-08-02',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 2,
+      aval_date: '2022-08-03',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -591,6 +621,11 @@ module.exports = {
       updatedAt: new Date()
     }, {
       sitter_id: 10,
+      aval_date: '2022-08-01',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 10,
       aval_date: '2022-08-02',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -681,6 +716,11 @@ module.exports = {
       updatedAt: new Date()
     }, {
       sitter_id: 11,
+      aval_date: '2022-08-01',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 11,
       aval_date: '2022-08-02',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -767,6 +807,11 @@ module.exports = {
     }, {
       sitter_id: 12,
       aval_date: '2022-07-29',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      sitter_id: 12,
+      aval_date: '2022-08-01',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {

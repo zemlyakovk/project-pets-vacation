@@ -19,7 +19,7 @@ function customeWhere(query) {
     housing_type,
     price_per_day,
     price_per_hour,
-    experience
+    experience,
 
   } = query;
   const where = {};
@@ -35,34 +35,31 @@ function customeWhere(query) {
   if (serviceType === 'Выгул') {
     where.walking = true;
   }
-  if (noChild) {
+  if (noChild && JSON.parse(noChild)) {
     where.has_child = false;
   }
-  if (noPet) {
+  if (noPet && JSON.parse(noPet)) {
     where.has_pet_flag = false;
   }
-  if (noPet) {
-    where.has_pet_flag = false;
-  }
-  if (supervision_24) {
+  if (supervision_24 && JSON.parse(supervision_24)) {
     where.supervision_24 = true;
   }
-  if (housing_type) {
+  if (housing_type && housing_type !== 'Любой') {
     where.housing_type = housing_type;
   }
-  if (price_per_day > 0) {
+  if (+price_per_day < 2100) {
     where.price_per_day = {
-      [Op.lte]: price_per_day
+      [Op.lte]: +price_per_day
     }
   }
-  if (price_per_hour > 0) {
+  if (price_per_hour < 1100) {
     where.price_per_hour = {
-      [Op.lte]: price_per_hour
+      [Op.lte]: +price_per_hour
     }
   }
   if (experience > 0) {
     where.experience = {
-      [Op.gte]: experience
+      [Op.gte]: +experience
     }
   }
   return where;

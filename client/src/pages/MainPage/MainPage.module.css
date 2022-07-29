@@ -1,6 +1,5 @@
 .formControl{
   @apply
-  form-control
   block
   w-full
   px-3
@@ -14,10 +13,10 @@
   transition
   ease-in-out
   m-0
-  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+  focus:text-gray-700 focus:bg-white focus:border-teal-400 focus:outline-none
 }
 
-.button{
+.button {
   @apply inline-flex
   justify-center
   py-2
@@ -32,6 +31,7 @@
   focus:ring-2
   focus:ring-offset-2
 }
+
 .radioChecked{
   @apply flex flex-col
   items-center

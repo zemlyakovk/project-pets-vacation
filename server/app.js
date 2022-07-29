@@ -7,16 +7,23 @@ const path = require("path");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
+const http = require('http');
 const sittersRouter = require("./routes/sitters.route");
 const usersRouter = require("./routes/users.route");
 const search = require("./routes/search.router");
+const favorit = require("./routes/favorit.router");
 const reviews = require("./routes/reviews.router");
 const uploader = require("./middleware/uploader");
 
 const { User, Address, Sitter, Sitter_images } = require("./db/models");
 
 const app = express();
-
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
 const PORT = process.env.PORT || 3100;
 const saltRounds = 10;
 
@@ -232,9 +239,42 @@ app.post("/uploads", uploader.array("images", 30), (req, res) => {
 app.use("/sitters", sittersRouter);
 app.use("/search", search);
 app.use("/reviews", reviews);
+app.use("/favorit", favorit);
 
 app.use("/users", usersRouter);
 
-app.listen(PORT, () => {
+const registerMessageHandlers = require('./handlers/messageHandlers')
+const registerUserHandlers = require('./handlers/userHandlers')
+
+const onConnection = (socket) => {
+  // выводим сообщение о подключении пользователя
+  console.log('User connected SOCKET');
+
+  // получаем название комнаты из строки запроса "рукопожатия"
+  const { roomId } = socket.handshake.query
+  // сохраняем название комнаты в соответствующем свойстве сокета
+  socket.roomId = roomId
+
+  // присоединяемся к комнате (входим в нее)
+  socket.join(roomId)
+
+  // регистрируем обработчики
+  // обратите внимание на передаваемые аргументы
+  registerMessageHandlers(io, socket)
+  // registerUserHandlers(io, socket)
+
+  // обрабатываем отключение сокета-пользователя
+  socket.on('disconnect', () => {
+    // выводим сообщение
+    console.log('User disconnected')
+    // покидаем комнату
+    socket.leave(roomId)
+  })
+}
+
+// обрабатываем подключение
+io.on('connection', onConnection)
+
+server.listen(PORT, () => {
   console.log(`Server is up on port: ${PORT}!`);
 });

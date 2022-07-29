@@ -11,16 +11,6 @@ module.exports = {
     */
     await queryInterface.bulkInsert('Sitter_images', [{
       sitter_id: 1,
-      url: 'KObLWdvhMOMQ5W_0VpB1gBNQdN2wYE9D.jpeg',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      sitter_id: 1,
-      url: '2-oCla7TDoDPjrXsErhNL-Lhxf9J66-Q.jpeg',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      sitter_id: 1,
       url: 'mORsKp6l1ZTG-e21iwIC9lE7O9pSFQOf.jpeg',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -31,32 +21,17 @@ module.exports = {
       updatedAt: new Date()
     }, {
       sitter_id: 2,
-      url: 'xgzuTtAEFwJRH6oAd7_DJyhyS5kAl--g.jpeg',
+      url: 'x8V8pd2juDuFoCbn5p7u8W_YoXsWpbJQ.jpeg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
       sitter_id: 2,
-      url: 'foUWQhhdJQED9pPnbdj2ef-nJsQFxr70.jpeg',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      sitter_id: 2,
-      url: 'pUWKpfPTzIv4u_snotv7OnKgcpKPhaCT.jpeg',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      sitter_id: 2,
-      url: 'yiRca3o4j9somYS9z-arQHoukjzkBvlf.jpeg',
+      url: 'R_xLOiZqM7Uyb4xuTeQsm9kVqSvlaKQU.jpeg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
       sitter_id: 3,
       url: 'KoCL9mvsz4qj3c5AgKMCaG4CjI_maY43.jpeg',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      sitter_id: 3,
-      url: 'GQgPXh2j79m-j-49FzYXUBCAV18LSONu.jpeg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -120,18 +95,13 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      sitter_id: 8,
-      url: 'x8V8pd2juDuFoCbn5p7u8W_YoXsWpbJQ.jpeg',
+      sitter_id: 9,
+      url: '2022-07-21 14.20.52.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
       sitter_id: 9,
-      url: '0ERloyjBFo6HeYyLhVbUdGQ4U69zeHBD.jpeg',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      sitter_id: 9,
-      url: '5RhDsvxSI21TcITsOMdHUSQif41VPaXh.jpeg',
+      url: '2022-07-21 14.21.05.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {

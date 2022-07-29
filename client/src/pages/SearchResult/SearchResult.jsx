@@ -7,27 +7,8 @@ import 'react-dadata/dist/react-dadata.css';
 import classes from './SearchResult.module.css'
 import DatePicker from 'react-multi-date-picker';
 import { Map, YMaps, Placemark, ZoomControl } from 'react-yandex-maps'
-import MiniCardSitterMainPage from '../MiniCardSitterMainPage';
+import MiniCardSitterMainPage from '../MiniCardSitterMainPage/MiniCardSitterMainPage';
 import "./styles.css";
-import CardModalWindow from '../../components/CardModalWindow/CardModalWindow';
-
-// функция для иконки календаря
-function CustomRangeInput({ openCalendar, value }) {
-  let from = value[0] || ""
-  let to = value[1] || ""
-
-  value = from && to ? "От " + from + ", до " + to : from
-
-  return (
-    <input
-      onFocus={openCalendar}
-      value={value}
-      readOnly
-      className='border border-solid border-gray-300 w-60'
-      id='date'
-    />
-  )
-}
 
 export default function SearchResult() {
   const { value: sitters,
@@ -35,78 +16,87 @@ export default function SearchResult() {
     isLoading } = useSelector((state) => state.search)
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const [valueInput, setValueInput] = useState({ ...state, hasPetFlag: false, hasChild: false, supervision: false, experience: 1, housingType: 'Квартира', pricePerDay: 0, pricePerHour: 0, petSyze: '', petAge: '' });
+  const [valueInput, setValueInput] = useState({ ...state, noPet: false, noChild: false, supervision_24: false, experience: '0', housing_type: 'Любой', price_per_day: '2100', price_per_hour: '1100', sitter_pet_sizes: [], sitter_pet_ages: [] });
   // const [users, setUsers] = useState([]);
   const mapRef = useRef();
   const [ymap, setYmap] = useState();
 
   const changeRadioHandler = (event) => {
     setValueInput({ ...valueInput, radioValue: event.target.value });
-    dispatch(search(valueInput))
   };
 
   const changeTextHandler = (address) => {
-    setValueInput({ ...valueInput, address: address });
+    setValueInput({
+      ...valueInput,
+      address: address,
+      latitude: address.data.geo_lat,
+      longitude: address.data.geo_lon,
+      zoom: address.data.street || address.data.settlement ? 13 : 10,
+      distance: address.data.street || address.data.settlement ? 5 : 30
+    });
   };
 
   const handleChange = (event) => {
-    setValueInput({ ...valueInput, serviceType: event.target.value });
+    setValueInput({ ...valueInput, [event.target.name]: event.target.value });
   };
 
-  const hasPetEtcHandler = (e) => {
-    if (e.target.name === 'has_pet_flag') {
-      setValueInput((prev) => ({ ...prev, hasPetFlag: !prev.hasPetFlag }));
-    } else if (e.target.name === 'has_child') {
-      setValueInput((prev) => ({ ...prev, hasChild: !prev.hasChild }));
-    } else if (e.target.name === 'supervision_24') {
-      setValueInput((prev) => ({ ...prev, supervision: !prev.supervision }));
-    } else if (e.target.name === 'housing_type') {
-      setValueInput((prev) => ({ ...prev, housingType: e.target.value }));
-    } else if (e.target.name === 'small') {
-      setValueInput((prev) => ({ ...prev, petSyze: e.target.name }));
-    } else if (e.target.name === 'medium') {
-      setValueInput((prev) => ({ ...prev, petSyze: e.target.name }));
-    } else if (e.target.name === 'large') {
-      setValueInput((prev) => ({ ...prev, petSyze: e.target.name }));
-    } else if (e.target.name === 'puppy') {
-      setValueInput((prev) => ({ ...prev, petAge: e.target.name }));
-    } else if (e.target.name === 'adult') {
-      setValueInput((prev) => ({ ...prev, petAge: e.target.name }));
-    } else if (e.target.name === 'old') {
-      setValueInput((prev) => ({ ...prev, petAge: e.target.name }));
-    } else if (e.target.name === 'experience') {
-      if (e.target.value === '1') {
-        setValueInput((prev) => ({ ...prev, experience: 1 }));
-      } else if (e.target.value === '2') {
-        setValueInput((prev) => ({ ...prev, experience: 2 }));
-      } else if (e.target.value === '3') {
-        setValueInput((prev) => ({ ...prev, experience: 3 }));
-      } else if (e.target.value === '4') {
-        setValueInput((prev) => ({ ...prev, experience: 4 }));
-      } else if (e.target.value === '5') {
-        setValueInput((prev) => ({ ...prev, experience: 5 }));
-      } else if (e.target.value === '6') {
-        setValueInput((prev) => ({ ...prev, experience: 6 }));
+  function petSizeHandler(event) {
+    console.log(event.target.name);
+    setValueInput((prev) => {
+      switch (event.target.name) {
+        case 'small':
+          if (prev.sitter_pet_sizes.includes('Маленький')) {
+            return { ...prev, sitter_pet_sizes: prev.sitter_pet_sizes.filter(el => el !== 'Маленький') }
+          }
+          return { ...prev, sitter_pet_sizes: [...prev.sitter_pet_sizes, 'Маленький'] }
+        case 'medium':
+          if (prev.sitter_pet_sizes.includes('Средний')) {
+            return { ...prev, sitter_pet_sizes: prev.sitter_pet_sizes.filter(el => el !== 'Средний') }
+          }
+          return { ...prev, sitter_pet_sizes: [...prev.sitter_pet_sizes, 'Средний'] }
+        case 'large':
+          if (prev.sitter_pet_sizes.includes('Большой')) {
+            return { ...prev, sitter_pet_sizes: prev.sitter_pet_sizes.filter(el => el !== 'Большой') }
+          }
+          return { ...prev, sitter_pet_sizes: [...prev.sitter_pet_sizes, 'Большой'] }
+        default:
+          return { ...prev }
       }
-    } else if (e.target.name === 'pricePerDay') {
-      if (e.target.value === '1') {
-        setValueInput((prev) => ({ ...prev, pricePerDay: 500 }));
-      } else if (e.target.value === '2') {
-        setValueInput((prev) => ({ ...prev, pricePerDay: 700 }));
-      } else if (e.target.value === '3') {
-        setValueInput((prev) => ({ ...prev, pricePerDay: 900 }));
-      } else if (e.target.value === '4') {
-        setValueInput((prev) => ({ ...prev, pricePerDay: 1100 }));
-      } else if (e.target.value === '5') {
-        setValueInput((prev) => ({ ...prev, pricePerDay: 1300 }));
-      } else if (e.target.value === '6') {
-        setValueInput((prev) => ({ ...prev, pricePerDay: 1500 }));
+    })
+  }
+  function petAgeHandler(event) {
+    console.log(event.target.name);
+    setValueInput((prev) => {
+      switch (event.target.name) {
+        case 'child':
+          if (prev.sitter_pet_ages.includes('Щенок')) {
+            return { ...prev, sitter_pet_ages: prev.sitter_pet_ages.filter(el => el !== 'Щенок') }
+          }
+          return { ...prev, sitter_pet_ages: [...prev.sitter_pet_ages, 'Щенок'] }
+        case 'adult':
+          if (prev.sitter_pet_ages.includes('Взрослый')) {
+            return { ...prev, sitter_pet_ages: prev.sitter_pet_ages.filter(el => el !== 'Взрослый') }
+          }
+          return { ...prev, sitter_pet_ages: [...prev.sitter_pet_ages, 'Взрослый'] }
+        case 'old':
+          if (prev.sitter_pet_ages.includes('Старый')) {
+            return { ...prev, sitter_pet_ages: prev.sitter_pet_ages.filter(el => el !== 'Старый') }
+          }
+          return { ...prev, sitter_pet_ages: [...prev.sitter_pet_ages, 'Старый'] }
+        default:
+          return { ...prev }
       }
-    }
-  };
+    })
+  }
 
-  function updateSearch(distance, center) {
-    dispatch(search({ ...valueInput, distance, latitude: center[0], longitude: center[1] }))
+  //* Обработчик для чекбоксов
+  function onChangeCheckHendler(event) {
+    setValueInput((prev) => ({ ...prev, [event.target.name]: !prev[event.target.name] }))
+  }
+
+  function submitHandler(e) {
+    e.preventDefault();
+    dispatch(search(valueInput))
   }
 
   useEffect(() => {
@@ -114,71 +104,32 @@ export default function SearchResult() {
       mapRef.current.events.add('boundschange', (e) => {
         const newBounds = e.originalEvent.newBounds;
         const distance = ymap.coordSystem.geo.getDistance(newBounds[0], newBounds[1]) / 2500;
-        updateSearch(distance, e.originalEvent.newCenter);
+        dispatch(search({ ...valueInput, distance, latitude: e.originalEvent.newCenter[0], longitude: e.originalEvent.newCenter[1] }))
       });
     }
-  }, [ymap])
+  }, [ymap, valueInput, dispatch])
 
-  // useEffect(() => {
-  //   setUsers(() => value.filter((el) => el.Sitter.has_child === valueInput.hasChild))
-  // }, [value, valueInput.hasChild])
-
-  // useEffect(() => {
-  //   setUsers(() => value.filter((el) => el.Sitter.supervision_24 === valueInput.supervision))
-  // }, [value, valueInput.supervision])
-
-  // useEffect(() => {
-  //   setUsers(() => value.filter((el) => el.Sitter.housing_type === valueInput.housingType))
-  // }, [value, valueInput.housingType])
-
-  // useEffect(() => {
-  //   setUsers(() => value.filter((el) => el.Sitter.has_pet_flag === valueInput.hasPetFlag))
-  // }, [value, valueInput.hasPetFlag])
-
-  // useEffect(() => {
-  //   if (valueInput.pricePerDay === 1500) {
-  //     setUsers(() => value.filter((el) => el.Sitter.price_per_day >= 0))
-  //   } else {
-  //     setUsers(() => value.filter((el) => el.Sitter.price_per_day >= valueInput.pricePerDay))
-  //   }
-  // }, [value, valueInput.pricePerDay])
-
-  // useEffect(() => {
-  //   if (valueInput.experience === 6) {
-  //     setUsers(() => value.filter((el) => el.Sitter.experience >= 0))
-  //   } else {
-  //     setUsers(() => value.filter((el) => el.Sitter.experience >= valueInput.experience))
-  //   }
-  // }, [value, valueInput.experience])
-
-  // useEffect(() => {
-  //   if (value.length) {
-  //     setUsers([...value]);
-  //   }
-  // }, [value])
   return (
-    <div className='flex justify-center items-center min-h-full mt-10'>
+    <div className={`flex justify-center items-center min-h-full mt-10 ${isLoading && classes.loading}`}>
       <div className="mx-auto w-5/6">
-        <form>
+        <form onSubmit={submitHandler}>
           <div className="shadow rounded-t-xl">
             <div className="px-4 py-5 bg-white sm:p-6">
               <div className='grid grid-cols-4 gap-4'>
                 <div className='flex justify-center col-span-2 col-start-2'>
                   <div className='m-1'>
                     <label className=' text-gray-700' htmlFor="dog">
-                      <input className='m-1 hidden peer' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} />
-                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
-                        <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
-                        <span>Собака</span>
+                      <input className='m-1 hidden peer' type="radio" id="dog" name="type" value="Собака" checked={valueInput.radioValue === "Собака"} onChange={changeRadioHandler} />
+                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100 pb-1`}>
+                        <img className='w-full' src={`${process.env.REACT_APP_STATIC_URL}icons8-dog-100.png`} alt="Собака" />
                       </div>
                     </label>
                   </div>
                   <div className='m-1'>
                     <label className=' text-gray-700' htmlFor="cat">
-                      <input className='peer m-1 hidden' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} />
-                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100`}>
-                        <img className='w-3/4' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
-                        <span>Кошка</span>
+                      <input className='peer m-1 hidden' type="radio" id="cat" name="type" value="Кошка" checked={valueInput.radioValue === "Кошка"} onChange={changeRadioHandler} />
+                      <div className={`${classes.radioChecked} peer-checked:opacity-100 peer-checked:border-teal-100 pb-1`}>
+                        <img className='w-full' src={`${process.env.REACT_APP_STATIC_URL}icons8-cat-100.png`} alt="Кошка" />
                       </div>
                     </label>
                   </div>
@@ -227,156 +178,19 @@ export default function SearchResult() {
 
                 <div className='flex flex-col justify-center col-span-1'>
                   <label htmlFor="countries" className="block mb-2 text-gray-700 items-baseline">Тип услуги</label>
-                  <select id="countries" value={valueInput.serviceType} onChange={handleChange} className={classes.formControl}>
+                  <select id="countries" value={valueInput.serviceType} name="serviceType" onChange={handleChange} className={classes.formControl}>
                     <option value="Передержка">Передержка</option>
                     <option value="Выгул">Выгул</option>
                   </select>
                 </div>
                 <div className='flex justify-end col-span-1 col-end-5'>
-                  <button type='submit' className={classes.button}>Найти ситтера</button>
+                  <button type='submit' className={classes.button} >Найти ситтера</button>
                 </div>
-                {/* <div className="px-6 py-5 bg-white sm:p-6">
-                  <div>
-                    <div className="form-check">
-                      <input className={classes.checkInput} checked={valueInput.hasPetFlag} type="checkbox" value='' onChange={hasPetEtcHandler} id="flexCheckHasPet" name="has_pet_flag" />
-                      <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheckHasPet">
-                        Есть собственный питомец
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input className={classes.checkInput} checked={valueInput.hasChild} type="checkbox" value="" onChange={hasPetEtcHandler} id="flexCheckHasChild" name="has_child" />
-                      <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheckHasChild">
-                        Есть дети
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input className={classes.checkInput} checked={valueInput.supervision} type="checkbox" value="" onChange={hasPetEtcHandler} id="flexCheck24" name="supervision_24" />
-                      <label className="form-check-label inline-block text-gray-800" htmlFor="flexCheck24">
-                        Постоянный присмотр
-                      </label>
-                    </div>
-
-                    <label className="block text-left col-span-1">
-                      <span className="text-gray-700">Тип жилья</span>
-                      <select className={classes.formControl} value={valueInput.housingType} onChange={hasPetEtcHandler} name="housing_type">
-                        <option value="Квартира">Квартира</option>
-                        <option value="Частный дом">Частный дом</option>
-                      </select>
-                    </label>
-
-                  </div>
-                </div> */}
-
-                {/* <label className="block text-left col-span-3">
-                  <span className="text-gray-700">Размер питомца</span>
-                  <ul className="grid gap-6 w-full md:grid-cols-3">
-                    <li>
-                      <input type="checkbox" id="small" name='small' checked={valueInput.petSyze === 'small'} onChange={hasPetEtcHandler} className="hidden peer" required="" />
-                      <label htmlFor="small" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <div className="block">
-                          <div className="w-full text-lg font-semibold">Маленький</div>
-                          <div className="w-full text-sm">от 1 до 10 кг</div>
-                        </div>
-                      </label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="medium" name='medium' checked={valueInput.petSyze === 'medium'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label htmlFor="medium" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <div className="block">
-                          <div className="w-full text-lg font-semibold">Средний</div>
-                          <div className="w-full text-sm">от 10 до 30 кг</div>
-                        </div>
-                      </label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="large" name='large' checked={valueInput.petSyze === 'large'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label htmlFor="large" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <div className="block">
-                          <div className="w-full text-lg font-semibold">Большой</div>
-                          <div className="w-full text-sm">от 30 кг</div>
-                        </div>
-                      </label>
-                    </li>
-                  </ul>
-                </label> */}
-
-                {/* <label className="block text-left col-span-3">
-                  <span className="text-gray-700">Возраст питомца</span>
-                  <ul className="grid gap-6 w-full md:grid-cols-3">
-                    <li>
-                      <input type="checkbox" id="puppy" name='puppy' checked={valueInput.petAge === 'puppy'} onChange={hasPetEtcHandler} className="hidden peer" required="" />
-                      <label htmlFor="puppy" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <div className="block">
-                          <div className="w-full text-lg font-semibold">Щенок</div>
-                          <div className="w-full text-sm">до 1 года</div>
-                        </div>
-                      </label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="adult" name='adult' checked={valueInput.petAge === 'adult'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label htmlFor="adult" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <div className="block">
-                          <div className="w-full text-lg font-semibold">Взрослый</div>
-                          <div className="w-full text-sm">от 1 до 7 лет</div>
-                        </div>
-                      </label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="old" name='old' checked={valueInput.petAge === 'old'} onChange={hasPetEtcHandler} className="hidden peer" />
-                      <label htmlFor="old" className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <div className="block">
-                          <div className="w-full text-lg font-semibold">Старый</div>
-                          <div className="w-full text-sm">от 7 лет</div>
-                        </div>
-                      </label>
-                    </li>
-                  </ul>
-                </label> */}
-
-                {/* <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
-                  <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Опыт присмотра (лет)</label>
-                  <input type="range" name='experience' className="w-full" min="1" max="6" step="1" onInput={valueInput.experience} onChange={hasPetEtcHandler} />
-                  <ul className="flex justify-between w-full px-[10px]">
-                    <li className="flex justify-center relative"><span className="absolute">1</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">2</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">3</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">4</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">5</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">Более 5 лет</span></li>
-                  </ul>
-                </div>
-
-                <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
-                  <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Цена за сутки</label>
-                  <input type="range" name='pricePerDay' className="w-full" min="1" max="6" step="1" onInput={valueInput.pricePerDay} onChange={hasPetEtcHandler} />
-                  <ul className="flex justify-between w-full px-[10px]">
-                    <li className="flex justify-center relative"><span className="absolute">Менее 500</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">700</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">900</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">1100</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">1300</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">Любая</span></li>
-                  </ul>
-                </div>
-
-                <div className="flex flex-col space-y-2 p-2 w-80 col-span-3">
-                  <label htmlFor="exampleNumber0" className="form-label inline-block mb-2 text-gray-700">Цена за час</label>
-                  <input type="range" className="w-full" min="1" max="6" step="1" />
-                  <ul className="flex justify-between w-full px-[10px]">
-                    <li className="flex justify-center relative"><span className="absolute">Менее 200</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">300</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">400</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">500</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">600</span></li>
-                    <li className="flex justify-center relative"><span className="absolute">Любая</span></li>
-                  </ul>
-                </div> */}
               </div>
             </div>
           </div>
           <div id="accordionExample5">
             <div className="bg-white rounded-b-xl shadow-[0_3px_3px_0_rgba(0,0,0,0.1)]">
-              {/* box-shadow:       shadow-[0px_9px_16px_0px_rgba(0 0 0 / 0.1)]  0px 9px 16px 0px rgba(50, 50, 50, 0.85); */}
               <button className={classes.collBtn} type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#collapseOne5"
@@ -397,13 +211,158 @@ export default function SearchResult() {
               <div id="collapseOne5" className="accordion-collapse collapse" aria-labelledby="headingOne5">
                 <div className="py-4 px-5">
                   <div className='grid grid-cols-4 gap-4'>
-                    <div className="flex flex-col space-y-2 p-2 col-span-2">
-                      <label htmlFor="priceHour" className="form-label inline-block mb-2 text-gray-700">Максимальная цена за час</label>
-                      <input type="range" id="priceHour" className="w-full accent-teal-200 cursor-pointer" min="100" max="1000" step="100" />
+                    <div className="col-span-2">
+                      <span className="form-label inline-block mb-2 text-gray-700">Возраст питомца</span>
+                      <ul className="w-full flex justify-start">
+                        <li>
+                          <input type="checkbox" id="child" name='child' className="hidden peer" onChange={petAgeHandler} checked={valueInput.sitter_pet_ages.includes('Щенок')} />
+                          <label htmlFor="child" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
+                            <div className="flex flex-col justify-center items-center">
+                              <div className="w-full text-lg font-semibold">Малыш</div>
+                              <div className="w-full text-sm">до 1 года</div>
+                            </div>
+                          </label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="adult" name='adult' className="hidden peer" onChange={petAgeHandler} checked={valueInput.sitter_pet_ages.includes('Взрослый')} />
+                          <label htmlFor="adult" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
+                            <div className="flex flex-col justify-center items-center ">
+                              <div className="w-full text-lg font-semibold">Взрослый</div>
+                              <div className="w-full text-sm">от 1 до 7 лет</div>
+                            </div>
+                          </label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="old" name='old' className="hidden peer" onChange={petAgeHandler} checked={valueInput.sitter_pet_ages.includes('Старый')} />
+                          <label htmlFor="old" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
+                            <div className="flex flex-col justify-center items-center ">
+                              <div className="w-full text-lg font-semibold">Старенький</div>
+                              <div className="w-full text-sm">от 7 лет</div>
+                            </div>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="form-label inline-block mb-2 text-gray-700">Размер питомца</span>
+                      <ul className="w-full flex justify-start">
+                        <li>
+                          <input type="checkbox" id="small" name='small' className="hidden peer" onChange={petSizeHandler} checked={valueInput.sitter_pet_sizes.includes('Маленький')} />
+                          <label htmlFor="small" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
+                            <div className="flex flex-col justify-center items-center">
+                              <div className="w-full text-lg font-semibold">Маленький</div>
+                              <div className="w-full text-sm">от 1 до 10 кг</div>
+                            </div>
+                          </label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="medium" name='medium' className="hidden peer" onChange={petSizeHandler} checked={valueInput.sitter_pet_sizes.includes('Средний')} />
+                          <label htmlFor="medium" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
+                            <div className="flex flex-col justify-center items-center ">
+                              <div className="w-full text-lg font-semibold">Средний</div>
+                              <div className="w-full text-sm">от 10 до 30 кг</div>
+                            </div>
+                          </label>
+                        </li>
+                        <li>
+                          <input type="checkbox" id="large" name='large' className="hidden peer" onChange={petSizeHandler} checked={valueInput.sitter_pet_sizes.includes('Большой')} />
+                          <label htmlFor="large" className={`${classes.groupCheck} peer-checked:bg-teal-600 peer-checked:opacity-40 peer-checked:text-white`}>
+                            <div className="flex flex-col justify-center items-center ">
+                              <div className="w-full text-lg font-semibold">Большой</div>
+                              <div className="w-full text-sm">от 30 кг</div>
+                            </div>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                    {valueInput.serviceType === 'Передержка' &&
+                      <div className="flex flex-col space-y-2 p-2 col-span-2">
+                        <label htmlFor="priceDay"
+                          className="form-label inline-block mb-2 text-gray-700">
+                          {`Максимальная цена за передержку (сутки): ${valueInput.price_per_day === '2100' ? 'любая' : valueInput.price_per_day}`}
+                        </label>
+                        <input type="range"
+                          id="priceDay"
+                          name="price_per_day"
+                          value={valueInput.price_per_day}
+                          onChange={handleChange}
+                          className="w-full accent-teal-200 cursor-pointer"
+                          min="100"
+                          max="2100"
+                          step="100"
+                        />
+                      </div>}
+                    {
+                      valueInput.serviceType === 'Выгул' &&
+                      <div className="flex flex-col space-y-2 p-2 col-span-2">
+                        <label htmlFor="priceHour"
+                          className="form-label inline-block mb-2 text-gray-700">
+                          {`Максимальная цена за прогулку (час): ${valueInput.price_per_hour === '1100'
+                            ? 'любая'
+                            : valueInput.price_per_hour}`}
+                        </label>
+                        <input type="range"
+                          id="priceHour"
+                          name="price_per_hour"
+                          value={valueInput.price_per_hour}
+                          onChange={handleChange}
+                          className="w-full accent-teal-200 cursor-pointer"
+                          min="100"
+                          max="1100"
+                          step="100"
+                        />
+                      </div>
+                    }
+                    <div className="text-left col-span-2">
+                      <label className="form-label inline-block mb-2 text-gray-700">Тип жилья для передержки</label>
+                      <select className={classes.formControl} name="housing_type" value={valueInput.housing_type} onChange={handleChange}>
+                        <option value="Любой">Любой</option>
+                        <option value="Квартира">Квартира</option>
+                        <option value="Частный дом">Частный дом</option>
+                        <option value="Отель для питомцев">Отель для питомцев</option>
+                      </select>
                     </div>
                     <div className="flex flex-col space-y-2 p-2 col-span-2">
-                      <label htmlFor="priceDay" className="form-label inline-block mb-2 text-gray-700">Максимальная цена за сутки</label>
-                      <input type="range" id="priceDay" className="w-full accent-teal-200 cursor-pointer" min="100" max="2000" step="100" />
+                      <label htmlFor="experience" className="form-label inline-block mb-2 text-gray-700">{`Опыт ухода от (лет): ${valueInput.experience === '0' ? 'не важно' : valueInput.experience}`}</label>
+                      <input type="range" id="experience" value={valueInput.experience} onChange={handleChange} name="experience" className="w-full accent-teal-200 cursor-pointer" min="0" max="10" step="1" />
+                    </div>
+                    <div className="flex flex-col justify-center col-span-2">
+                      <span className="form-label inline-block mb-2 text-gray-700">Доп. параметры</span>
+                      <div className="form-check form-switch">
+                        <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm checked:bg-teal-200"
+                          type="checkbox"
+                          role="switch"
+                          onChange={onChangeCheckHendler}
+                          checked={valueInput.noPets}
+                          name="noPet"
+                          id="noPet" />
+                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="noPet">Без своих питомцев</label>
+                      </div>
+                      <div className="form-check form-switch">
+                        <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm checked:bg-teal-200"
+                          type="checkbox"
+                          role="switch"
+                          onChange={onChangeCheckHendler}
+                          checked={valueInput.noChild}
+                          name="noChild"
+                          id="noChild"
+                        />
+                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="noChild">Без детей</label>
+                      </div>
+                      <div className="form-check form-switch">
+                        <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm checked:bg-teal-200"
+                          type="checkbox"
+                          role="switch"
+                          onChange={onChangeCheckHendler}
+                          checked={valueInput.supervision_24}
+                          name="supervision_24"
+                          id="supervision_24"
+                        />
+                        <label className="form-label inline-block mb-2 text-gray-700" htmlFor="supervision_24">Постоянный присмотр</label>
+                      </div>
+                    </div>
+                    <div className='flex justify-end col-span-1 col-end-5'>
+                      <button type='button' className={classes.button} onClick={submitHandler}>Применить фильтры</button>
                     </div>
                   </div>
                 </div>
@@ -429,7 +388,7 @@ export default function SearchResult() {
             }
           </div>
           <div className='col-span-1'>
-            <YMaps className='mapBox col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
+            <YMaps className='col-span-2' query={{ apikey: '5aa9357e-d3dd-4bd8-a386-c1b9aed33f24' }}>
               <Map
                 modules={["geocode", "coordSystem.geo"]}
                 onLoad={(ymaps) => {
@@ -438,7 +397,7 @@ export default function SearchResult() {
                 defaultState={{
                   center: [valueInput.address.data.geo_lat, valueInput.address.data.geo_lon],
                   zoom: valueInput.address.data.street || valueInput.address.data.settlement ? 13 : 10
-                }} width='100%' height='100%' instanceRef={ref => {
+                }} width='100%' height='600px' instanceRef={ref => {
                   if (ref) {
                     mapRef.current = ref
                   }
@@ -448,9 +407,8 @@ export default function SearchResult() {
                     key={'placemark#' + i}
                     geometry={[sitter.Address.latitude, sitter.Address.longitude]}
                     properties={{
-                      balloonContentHeader: `${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
+                      balloonContentHeader: `<img src="${process.env.REACT_APP_STATIC_URL}${sitter.User.profile_photo}" width="100" height="111"  />${sitter.User.first_name}, ${sitter.Address.city || sitter.Address.settlement}, ${sitter.Address.street}`,
                       balloonContentBody: sitter.title,
-
                     }}
                     modules={
                       ['geoObject.addon.balloon', 'geoObject.addon.hint']
@@ -467,9 +425,7 @@ export default function SearchResult() {
             </YMaps>
           </div>
         </div >
-
       </div >
-
     </div >
 
 
