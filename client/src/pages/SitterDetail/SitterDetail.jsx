@@ -18,24 +18,12 @@ export default function SitterDetail() {
 
   useEffect(() => {
     getSitter()
-
   }, [])
-<<<<<<< HEAD
-=======
-
-  // console.log('-----------------', sitter);
->>>>>>> dev
 
   return (
     <div className='flex flex-row justify-center'>
       <SitterProfileCard sitter={sitter} />
-<<<<<<< HEAD
       <SitterProfileList sitter={sitter} />
-=======
-
-      <SitterProfileList sitter={sitter} />
-
->>>>>>> dev
     </div>
   )
 }

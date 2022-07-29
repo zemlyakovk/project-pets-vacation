@@ -38,7 +38,7 @@ export default function SitterProfileList({ sitter }) {
 
 
   return (
-    <div className='rounded-lg shadow-lg bg-white w-1/2'>
+    <div className='rounded-lg shadow-lg bg-white w-1/2 m-3'>
       <div className=' h-52 '>
         <section className="overflow-hidden text-gray-700 ">
           <div className="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
